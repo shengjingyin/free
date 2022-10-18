@@ -136,7 +136,7 @@ const DATA_LIST = [
 export const BASIC_LIST = [
   {
     name: '按钮',
-    type: 'button',
+    type: 'free-button', //对应组件名称，一定要和注册的全局组件对应上
     mode: 'edit', // show or edit
     icon: 'SwitchButton',
     actions: [],

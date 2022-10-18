@@ -1,3 +1,4 @@
+import './styles/mixin.less';
 import './styles/lowcode.less';
 import { createApp } from 'vue';
 import App from './App.vue';

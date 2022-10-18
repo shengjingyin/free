@@ -27,9 +27,9 @@
           @add="add"
           @update="update"
         >
-          <template #item="{ element }">
+          <template #item="{ element, index }">
             <div class="widget-box">
-              {{ element }}
+              <CompWrap :element="element" :index="index"></CompWrap>
             </div>
           </template>
         </draggable>
@@ -42,6 +42,7 @@
 import { ref, computed } from 'vue';
 import Draggable from 'vuedraggable';
 import { useStore } from '@/store/lowcode';
+import CompWrap from './comp-wrap.vue';
 const props = defineProps({
   disabled: {
     type: Boolean,

@@ -560,19 +560,14 @@
 
         .widget-view-drag {
           position: absolute;
-          left: -2px;
-          top: -2px;
-          bottom: -18px;
-          height: 28px;
-          line-height: 28px;
+          left: 0px;
+          top: 0px;
+          height: 20px;
+          width: 20px;
           background: @primary-color;
-          z-index: 10;
-          // display: none;
-
+          z-index: 1;
           i {
-            font-size: 14px;
             color: #fff;
-            margin: 0 5px;
             cursor: move;
           }
         }
@@ -595,10 +590,6 @@
           &.active {
             outline: none;
             border: 1px solid @primary-color;
-          }
-
-          .widget-view-drag {
-            display: block;
           }
         }
 
