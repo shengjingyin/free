@@ -1,7 +1,8 @@
 import { App } from 'vue';
 
-import { setupRouter } from './router/index';
 import api from './api/index';
+import { setupRouter } from './router/index';
+import { setupElement } from './plugin/element/index';
 
 const install = (app: App) => {
   console.log('🚀 ~ file: install.ts ~ line 4 ~ install ~ app', app);
@@ -9,6 +10,7 @@ const install = (app: App) => {
 };
 const setupInit = (app: App) => {
   setupRouter(app);
+  setupElement(app);
   // setupElement(app);
   // setupDirective(app);
   // setupComponents(app);

@@ -14,4 +14,12 @@ export default defineConfig({
       },
     ],
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {},
+        javascriptEnabled: true,
+      },
+    },
+  },
 });

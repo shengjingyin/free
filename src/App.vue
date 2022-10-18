@@ -1,9 +1,4 @@
-<template>
-  <div> {{ useCounter }} </div>
-  <div> {{ useCounter.count }} </div>
-  <div> {{ useCounter.doubleCount }} </div>
-  <button @click="useCounter.increment">increment</button>
-</template>
+<template> <router-view></router-view></template>
 
 <script lang="ts" setup>
 import { getCurrentInstance } from 'vue';

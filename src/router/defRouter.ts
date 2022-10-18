@@ -12,6 +12,13 @@ const arr: Route[] = [
       title: '低代码',
     },
     component: () => import('@/App.vue'),
+    redirect: '/lowcode',
+    children: [
+      {
+        path: '/lowcode',
+        component: () => import('@/page/lowcode/index.vue'),
+      },
+    ],
   },
 ];
 
