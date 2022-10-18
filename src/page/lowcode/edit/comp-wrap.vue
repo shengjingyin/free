@@ -20,8 +20,7 @@
       :draggable="draggable"
     />
  -->
-    <free-button :is="element?.type" :element="element">12313123</free-button>
-    <!-- <component :is="element?.type" :element="element">12313123</component> -->
+    <component :is="element?.type" :element="element"></component>
     <!-- <div>{{ element }}</div> -->
     <div v-if="select.key == element?.key" class="widget-view-action flex-center-y">
       <el-icon title="复制" :size="16" @click.stop="copyComp"><CopyDocument /></el-icon>
@@ -50,9 +49,10 @@ const props = defineProps({
     type: Number,
   },
 });
-const { select, data } = useStore();
+const { select, data, SET_CUR_SELECT } = useStore();
+// 更新当前选中的组件
 const handleSelect = () => {
-  console.log('props.index', props.index);
+  SET_CUR_SELECT(props.element);
 };
 const copyComp = () => {
   console.log('props.index', props.index);

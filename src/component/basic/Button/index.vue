@@ -1,11 +1,17 @@
 <template>
-  <el-button  v-bind="attrs" @click.stop="click">
+  <el-button v-bind="element.options" @click.stop="click">
     <slot>{{ '-' }}</slot>
   </el-button>
 </template>
 
-<script lang="ts" setup name='FreeButton'>
+<script lang="ts" setup name="FreeButton">
 import { useAttrs } from 'vue';
+defineProps({
+  element: {
+    type: Object,
+    required: true,
+  },
+});
 const attrs = useAttrs();
 const click = () => {
   if (attrs.disabled) {

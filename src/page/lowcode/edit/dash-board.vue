@@ -21,9 +21,8 @@
             scrollSensitivity: 150,
           }"
           :disabled="isDisabled"
-          class="draggable-area"
           tag="transition-group"
-          :component-data="{ name: 'fade', class: 'widget-list page-index' }"
+          :component-data="{ name: 'fade' }"
           @add="add"
           @update="update"
         >
@@ -49,8 +48,7 @@ const props = defineProps({
     default: false,
   },
 });
-const lowcode = useStore();
-const { select, data } = lowcode;
+const { select, data } = useStore();
 const isDisabled = computed(() => props.disabled);
 const handleSelectPage = () => {};
 const add = (...a) => {

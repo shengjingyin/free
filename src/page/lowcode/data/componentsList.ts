@@ -152,7 +152,7 @@ export const BASIC_LIST = [
       paramsList: [{ paramsKey: '', paramsValue: '' }], // 请求参数
       method: '',
       busName: '',
-      text: '按钮',
+      text: false,
       visibleExpression: '',
       visible: true,
       disabledExpression: '',

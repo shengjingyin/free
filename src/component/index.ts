@@ -1,5 +1,4 @@
 import { App, defineAsyncComponent } from 'vue';
-import FreeButton from '';
 
 const components = import.meta.glob('./**/*.vue'); // 异步方式
 // 自动注册当前页组件
