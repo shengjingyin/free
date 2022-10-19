@@ -27,6 +27,7 @@ const init = {
 };
 /* 这里是关于配置项配置 */
 const property = [
+  { label: '文本内容', key: 'textDetail', component: 'input' },
   {
     label: '尺寸',
     key: 'size',

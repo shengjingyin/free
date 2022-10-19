@@ -1,7 +1,7 @@
 <template>
   <!-- 配置中心，根据配置项，来渲染对应的配置内容 -->
   <template v-for="item of config.property" :key="item.key">
-    <el-form-item :label="item.label">
+    <el-form-item :label="item.label" :show-message="false">
       <component
         :is="configurator[item.component]"
         :config="item"
@@ -19,6 +19,7 @@ const configurator = ref({
   switch: shallowRef(defineAsyncComponent(() => import('./comp/switch.vue'))),
   radio: shallowRef(defineAsyncComponent(() => import('./comp/radio.vue'))),
   select: shallowRef(defineAsyncComponent(() => import('./comp/select.vue'))),
+  input: shallowRef(defineAsyncComponent(() => import('./comp/input.vue'))),
 });
 const props = defineProps({
   config: {
@@ -27,4 +28,8 @@ const props = defineProps({
   },
 });
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+:deep(.el-form-item) {
+  margin-bottom: 0;
+}
+</style>

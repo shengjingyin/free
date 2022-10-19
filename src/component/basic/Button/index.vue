@@ -1,18 +1,20 @@
 <template>
-  <el-button v-bind="element.options" @click.stop="click">
-    <slot>{{ '-' }}</slot>
+  <el-button v-bind="options" @click.stop="click">
+    {{ options.textDetail || '-' }}
+    <slot> </slot>
   </el-button>
 </template>
 
 <script lang="ts" setup name="FreeButton">
-import { useAttrs } from 'vue';
-defineProps({
+import { useAttrs, computed } from 'vue';
+const props = defineProps({
   element: {
     type: Object,
     required: true,
   },
 });
 const attrs = useAttrs();
+const options = computed(() => props.element.options);
 const click = () => {
   if (attrs.disabled) {
     return;

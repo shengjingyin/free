@@ -137,28 +137,28 @@ export const BASIC_LIST = [
   {
     name: '按钮',
     component: 'free-button', //对应组件名称，一定要和注册的全局组件对应上
-    model: '', // 绑定值
+    model: '', // 绑定的key
     mode: 'edit', // show or edit
     icon: 'SwitchButton',
     actions: [],
     // 组件配置
     options: {
-      hideLabel: true,
-      width: '',
       type: 'primary', // 样式类型
-      icon: '',
       size: 'small',
-      workType: 'submit', // 操作类型
-      url: '',
-      paramsList: [{ paramsKey: '', paramsValue: '' }], // 请求参数
-      method: '',
-      busName: '',
+      icon: 'Search',
       plain: false,
       text: false,
-      visibleExpression: '',
-      visible: true,
-      disabledExpression: '',
-      disabled: false,
+      round: false,
+      textDetail: '按钮文本',
+      // workType: 'submit', // 操作类型
+      // url: '',
+      // paramsList: [{ paramsKey: '', paramsValue: '' }], // 请求参数
+      // method: '',
+      // busName: '',
+      // visibleExpression: '',
+      // visible: true,
+      // disabledExpression: '',
+      // disabled: false,
     },
   },
 ];
