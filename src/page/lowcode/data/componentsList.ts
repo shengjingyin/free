@@ -136,7 +136,8 @@ const DATA_LIST = [
 export const BASIC_LIST = [
   {
     name: '按钮',
-    type: 'free-button', //对应组件名称，一定要和注册的全局组件对应上
+    component: 'free-button', //对应组件名称，一定要和注册的全局组件对应上
+    model: '', // 绑定值
     mode: 'edit', // show or edit
     icon: 'SwitchButton',
     actions: [],
@@ -146,12 +147,13 @@ export const BASIC_LIST = [
       width: '',
       type: 'primary', // 样式类型
       icon: '',
-      size: 'medium',
+      size: 'small',
       workType: 'submit', // 操作类型
       url: '',
       paramsList: [{ paramsKey: '', paramsValue: '' }], // 请求参数
       method: '',
       busName: '',
+      plain: false,
       text: false,
       visibleExpression: '',
       visible: true,

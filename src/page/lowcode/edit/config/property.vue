@@ -1,22 +1,17 @@
 <template>
-  <div> 属性配置 </div>
-  <template v-if="select.options">
-    是否文字按钮：<el-switch v-model="select.options.text" size="large" />
-  </template>
+  <ConfigRender :config="conf"></ConfigRender>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { useStore } from '@/store/lowcode';
+import { ref, watch, computed } from 'vue';
+import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
-const { select, data } = storeToRefs(useStore());
-const value = ref(false);
+import ConfigRender from '@/business-component/config-render/index.vue';
+const { select } = storeToRefs(useLowcodeStore());
 
-watch(value, val => {
-  // select.value.options.text = val;
-});
-watch(select, val => {
-  console.log('当前选中：', val);
-});
+// 如何获取到当前选中组件的配置项
+import config from '@/component/config';
+
+const conf = computed(() => config[select.value.component]);
 </script>
 <style lang="less" scoped></style>

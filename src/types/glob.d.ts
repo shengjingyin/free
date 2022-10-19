@@ -39,3 +39,5 @@ declare type Comp = {
     requestConfig;
   };
 };
+
+declare type AnyObj = Record<string, any>;

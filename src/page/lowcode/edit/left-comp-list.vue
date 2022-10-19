@@ -17,7 +17,10 @@
         @start="handleMoveStart"
       >
         <template #item="{ element }">
-          <li :class="{ [`is-${element.type}`]: element.type }" class="widget-edit-label no-put">
+          <li
+            :class="{ [`is-${element.component}`]: element.component }"
+            class="widget-edit-label no-put"
+          >
             <a class="widget-pick-element">
               <el-icon v-if="element.icon" :size="16">
                 <component :is="element.icon"></component>
@@ -35,11 +38,11 @@
 import { ref, computed } from 'vue';
 import Draggable from 'vuedraggable';
 import { BASE_LIST } from '../data/componentsList';
-import { useStore } from '@/store/lowcode';
-const lowcode = useStore();
+import { useLowcodeStore } from '@/store/lowcode';
+const lowcode = useLowcodeStore();
 console.log('store', lowcode);
-const allComponents = computed(() => (lowcode.select?.type === 'form' ? [] : BASE_LIST));
-const listTitle = computed(() => (lowcode.select?.type === 'form' ? '表单组件' : '页面组件'));
+const allComponents = computed(() => (lowcode.select?.component === 'form' ? [] : BASE_LIST));
+const listTitle = computed(() => (lowcode.select?.component === 'form' ? '表单组件' : '页面组件'));
 
 const isMove = ref(false);
 // 正在移动

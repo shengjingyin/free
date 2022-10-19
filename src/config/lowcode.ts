@@ -91,5 +91,5 @@ export const initPage = cloneDeep({
     skip,
     request,
   },
-  list: [],
+  list: [] as AnyObj[],
 });

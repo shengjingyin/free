@@ -20,7 +20,8 @@
       :draggable="draggable"
     />
  -->
-    <component :is="element?.type" :element="element"></component>
+    <!-- 根据配置项中定义的 -->
+    <component :is="element?.component" :element="element"></component>
     <!-- <div>{{ element }}</div> -->
     <div v-if="select.key == element?.key" class="widget-view-action flex-center-y">
       <el-icon title="复制" :size="16" @click.stop="copyComp"><CopyDocument /></el-icon>
@@ -32,7 +33,8 @@
       <el-icon :size="16"><Rank /></el-icon>
     </div>
     <!-- 展示绑定的数据值 -->
-    <div v-if="element?.options.dataBind" class="widget-view-model">
+    <!-- v-if="element?.options.dataBind" -->
+    <div class="widget-view-model">
       <span>{{ element.model }}</span>
     </div>
   </div>
@@ -40,7 +42,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useStore } from '@/store/lowcode';
+import { useLowcodeStore } from '@/store/lowcode';
+import { storeToRefs } from 'pinia';
 const props = defineProps({
   element: {
     type: Object,
@@ -49,7 +52,8 @@ const props = defineProps({
     type: Number,
   },
 });
-const { select, data, SET_CUR_SELECT } = useStore();
+const { select } = storeToRefs(useLowcodeStore());
+const { SET_CUR_SELECT } = useLowcodeStore();
 // 更新当前选中的组件
 const handleSelect = () => {
   SET_CUR_SELECT(props.element);
