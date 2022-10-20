@@ -139,7 +139,7 @@ export const BASIC_LIST = [
     component: 'free-button', //对应组件名称，一定要和注册的全局组件对应上
     model: '', // 绑定的key
     mode: 'edit', // show or edit
-    icon: 'SwitchButton',
+    // 动作配置
     actions: [],
     // 组件配置
     options: {
@@ -160,6 +160,8 @@ export const BASIC_LIST = [
       // disabledExpression: '',
       // disabled: false,
     },
+    // 样式配置
+    style: {},
   },
 ];
 // 基础组件列表

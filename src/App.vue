@@ -3,7 +3,6 @@
 <script lang="ts" setup>
 import { getCurrentInstance } from 'vue';
 import { useSystemStore } from '@/store/index';
-
 const $api = getCurrentInstance().proxy?.$api;
 // console.log('$api', $api);
 const useCounter = useSystemStore();
