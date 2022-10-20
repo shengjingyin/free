@@ -1,16 +1,15 @@
 import { defineStore } from 'pinia';
-export const useCounterStore = defineStore('counter', {
+import store from 'storejs';
+export const useSystemStore = defineStore('system', {
   state: () => {
     return {
-      count: 0,
+      iconList: store.get('iconList') ? JSON.parse(store.get('iconList')) : [],
     };
   },
   getters: {
-    doubleCount: state => state.count * 2,
-  },
-  actions: {
-    increment() {
-      this.count++;
+    iconListInSelect(state) {
+      return state.iconList.map(name => ({ label: name, value: name }));
     },
   },
+  actions: {},
 });

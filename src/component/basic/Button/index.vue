@@ -1,6 +1,6 @@
 <template>
   <el-button v-bind="options" @click.stop="click">
-    {{ options.textDetail || '-' }}
+    {{ options.textDetail || '请输入文本' }}
     <slot> </slot>
   </el-button>
 </template>

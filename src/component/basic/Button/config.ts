@@ -1,3 +1,5 @@
+import { useSystemStore } from '@/store/index';
+const store = useSystemStore();
 /* 这里是关于初始化时，按钮的配置 */
 const init = {
   name: '按钮',
@@ -33,9 +35,9 @@ const property = [
     key: 'size',
     component: 'radio',
     option: [
-      { label: '大尺寸', key: 'large' },
-      { label: '中等尺寸', key: 'default' },
-      { label: '小尺寸', key: 'small' },
+      { label: '大尺寸', value: 'large' },
+      { label: '中等尺寸', value: 'default' },
+      { label: '小尺寸', value: 'small' },
     ],
   },
   {
@@ -43,17 +45,17 @@ const property = [
     key: 'type',
     component: 'radio',
     option: [
-      { label: 'primary', key: 'primary' },
-      { label: 'success', key: 'success' },
-      { label: 'warning', key: 'warning' },
-      { label: 'danger', key: 'danger' },
-      { label: 'info', key: 'info' },
+      { label: 'primary', value: 'primary' },
+      { label: 'success', value: 'success' },
+      { label: 'warning', value: 'warning' },
+      { label: 'danger', value: 'danger' },
+      { label: 'info', value: 'info' },
     ],
   },
   { label: '朴素按钮', key: 'plain', component: 'switch' },
   { label: '文字按钮', key: 'text', component: 'switch' },
   { label: '圆角按钮', key: 'round', component: 'switch' },
-  { label: '前置icon', key: 'icon', component: 'select' },
+  { label: '前置icon', key: 'icon', component: 'select', option: store.iconListInSelect },
 ];
 /* 单选、输入、颜色 */
 const style = [];

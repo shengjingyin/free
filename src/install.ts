@@ -6,7 +6,6 @@ import { setupElement } from './plugin/element/index';
 import { setupGlobComponent } from './component/index';
 
 const install = (app: App) => {
-  console.log('🚀 ~ file: install.ts ~ line 4 ~ install ~ app', app);
   setupInit(app); // 初始化安装开始
 };
 const setupInit = (app: App) => {

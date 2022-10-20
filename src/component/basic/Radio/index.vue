@@ -1,6 +1,6 @@
 <template>
   <el-radio-group>
-    <el-radio :label="item.key" v-for="item of option" :key="item.key">
+    <el-radio :label="item.value" v-for="item of option" :key="item.value">
       {{ item.label }}
     </el-radio>
   </el-radio-group>

@@ -8,6 +8,7 @@ specifiers:
   '@types/lodash': ^4.14.186
   '@types/node': 18.8.3
   '@types/nprogress': ^0.2.0
+  '@types/storejs': ^2.0.3
   '@typescript-eslint/eslint-plugin': ^4.33.0
   '@typescript-eslint/parser': ^4.33.0
   '@vitejs/plugin-vue': ^3.1.2
@@ -29,6 +30,7 @@ specifiers:
   nprogress: ^0.2.0
   pinia: ^2.0.23
   prettier: ^2.6.2
+  storejs: ^2.0.1
   vite: ^3.1.8
   vue: ^3.2.41
   vue-eslint-parser: ^7.11.0
@@ -43,6 +45,7 @@ dependencies:
   lodash: registry.npmmirror.com/lodash/4.17.21
   nprogress: registry.npmmirror.com/nprogress/0.2.0
   pinia: registry.npmmirror.com/pinia/2.0.23_l7r24p6nevbtlimqmqcwa3ouhu
+  storejs: registry.npmmirror.com/storejs/2.0.1
   vue: registry.npmmirror.com/vue/3.2.41
   vue-grid-layout: registry.npmmirror.com/vue-grid-layout/3.0.0-beta1_farzh4kmmmdsqeu7trbjloi3zi
   vue-router: registry.npmmirror.com/vue-router/4.1.5_vue@3.2.41
@@ -55,6 +58,7 @@ devDependencies:
   '@types/lodash': registry.npmmirror.com/@types/lodash/4.14.186
   '@types/node': registry.npmmirror.com/@types/node/18.8.3
   '@types/nprogress': registry.npmmirror.com/@types/nprogress/0.2.0
+  '@types/storejs': registry.npmmirror.com/@types/storejs/2.0.3
   '@typescript-eslint/eslint-plugin': registry.npmmirror.com/@typescript-eslint/eslint-plugin/4.33.0_k4l66av2tbo6kxzw52jzgbfzii
   '@typescript-eslint/parser': registry.npmmirror.com/@typescript-eslint/parser/4.33.0_3rubbgt5ekhqrcgx4uwls3neim
   '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/3.1.2_vite@3.1.8+vue@3.2.41
@@ -2386,6 +2390,12 @@ packages:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/stack-utils/-/stack-utils-2.0.1.tgz}
     name: '@types/stack-utils'
     version: 2.0.1
+    dev: true
+
+  registry.npmmirror.com/@types/storejs/2.0.3:
+    resolution: {integrity: sha512-VF/KPGUEKxi7j3//HaPCKaKbMtKOnWYf+aLzZcBQrhQAcHevA4OA2HwFpeJ6S6JD7xpS06G3K7oZkyIfp9lfeQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/storejs/-/storejs-2.0.3.tgz}
+    name: '@types/storejs'
+    version: 2.0.3
     dev: true
 
   registry.npmmirror.com/@types/web-bluetooth/0.0.16:
@@ -6196,6 +6206,12 @@ packages:
     dependencies:
       escape-string-regexp: registry.npmmirror.com/escape-string-regexp/2.0.0
     dev: true
+
+  registry.npmmirror.com/storejs/2.0.1:
+    resolution: {integrity: sha512-hN/Rb7noRSxwTMdO1ksotketRqAy8fyzwXIXe0wPurV1YzlUVdgL0wC9eSOPpzCLiCPSoHICeX4paFrzigeGeg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/storejs/-/storejs-2.0.1.tgz}
+    name: storejs
+    version: 2.0.1
+    dev: false
 
   registry.npmmirror.com/string-length/4.0.2:
     resolution: {integrity: sha512-+l6rNN5fYHNhZZy41RXsYptCjA2Igmq4EG7kZAYFQI1E1VTXarr6ZPXBg6eq7Y6eK4FEhY6AJlyuFIb/v/S0VQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/string-length/-/string-length-4.0.2.tgz}
