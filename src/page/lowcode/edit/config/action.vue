@@ -22,7 +22,11 @@
 
     <!-- 触发动作 -->
     <el-form-item label="动作" v-if="action.type === 'action'">
-      <el-cascader v-model="action.event" :options="lowcode.eventOption" :show-all-levels="false" />
+      <el-cascader
+        v-model="action.action"
+        :options="lowcode.actionOption"
+        :show-all-levels="false"
+      />
     </el-form-item>
   </div>
 </template>

@@ -7,6 +7,7 @@
 <script lang="ts" setup name="FreeButton">
 import { getCurrentInstance, computed, useAttrs, ref, watch } from 'vue';
 import { executeAction } from '@/shared/action';
+import { useLowcodeStore } from '@/store/lowcode';
 import emitter from '@/plugin/mitt';
 const props = defineProps({
   element: {
@@ -15,6 +16,7 @@ const props = defineProps({
   },
 });
 console.log('props.element', JSON.stringify(props.element, null, 2));
+const lowcode = useLowcodeStore();
 const attrs = useAttrs();
 const disabled = ref(false);
 
@@ -45,11 +47,12 @@ const click = () => {
   }
   executeActionList();
   function executeActionList() {
+    debugger;
     const { actions } = props.element;
     for (let i = 0; i < actions.length; i++) {
-      const ac = actions[i];
-      if (instance && ac.trigger === 'click') {
-        executeAction(instance, ac);
+      const action = actions[i];
+      if (action.trigger === 'click') {
+        executeAction(lowcode.data, action);
       }
     }
   }

@@ -10,7 +10,7 @@
 
       <div class="widget-list page-index">
         <draggable
-          v-model="data.list"
+          v-model="data.children"
           item-key="id"
           v-bind="{
             group: 'people',
@@ -55,7 +55,7 @@ const handleSelectPage = () => {};
 // 添加组件（添加唯一key、全局data添加属性）
 const add = (event: any) => {
   const newIndex = event.newIndex;
-  let target = data.list[newIndex];
+  let target = data.children[newIndex];
 
   const key = generateKey();
   SET_DATA_LIST(

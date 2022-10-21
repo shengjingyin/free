@@ -14,7 +14,7 @@ function parseEvent(node) {
   return [tree];
 }
 function _parseEvent(node, parent) {
-  const { list: children } = node;
+  const { children } = node;
   if (children && children.length > 0) {
     for (let i = 0; i < children.length; i++) {
       const item = children[i];
@@ -33,34 +33,31 @@ function _parseEvent(node, parent) {
     parent.children = [...cloneDeep(parent.children), ...cloneDeep(defAction)];
   }
 }
+// 触发其他组件的动作
 function parseAction(root) {
   const tree = {
     label: root.name + root.model,
     value: root.model,
     children: [] as any[],
-    actions: [],
   };
   _parseAction(root, tree);
   return [tree];
 }
 function _parseAction(node, parent) {
-  const { list: children } = node;
+  const { children } = node;
   if (children && children.length > 0) {
     for (let i = 0; i < children.length; i++) {
       const item = children[i];
       const info = {
         label: item.name + item.model,
         value: item.model,
-        children: [] as any[],
-        actions: [],
+        children: item.actions.map(ac => ({ label: ac.name, value: ac.name })),
       };
-      parent.children.push(info);
+      if (item.actions.length > 0) {
+        parent.children.push(info);
+      }
       _parseAction(item, info);
     }
-  }
-  if (node.component) {
-    const defAction = conf[node.component].action.eventList;
-    parent.children = [...cloneDeep(parent.children), ...cloneDeep(defAction)];
   }
 }
 export const useLowcodeStore = defineStore('lowcode', {
@@ -84,7 +81,7 @@ export const useLowcodeStore = defineStore('lowcode', {
     },
     SET_DATA_LIST(val, index: number, type: 'add' | 'delete') {
       const newComp = cloneDeep(val);
-      this.data.list.splice(index, 1, newComp);
+      this.data.children.splice(index, 1, newComp);
       if (type === 'add') {
         this.SET_CUR_SELECT(newComp);
       }

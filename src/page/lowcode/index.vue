@@ -7,18 +7,20 @@
   <el-row class="debugger">
     <el-col :span="12" style="height: 100%">
       <!-- 所有属性 -->
+      <h4>所有属性</h4>
       <free-raw-displayer
         :readOnly="true"
         :defaultValue="dataString"
-        v-model:modelValue="dataString"
+        :modelValue="dataString"
       ></free-raw-displayer>
     </el-col>
     <el-col :span="12" style="height: 100%">
       <!-- 当前选中 -->
+      <h4>当前选中</h4>
       <free-raw-displayer
         :readOnly="true"
         :defaultValue="selectString"
-        v-model:modelValue="selectString"
+        :modelValue="selectString"
       ></free-raw-displayer>
     </el-col>
   </el-row>

@@ -65,7 +65,7 @@ const DATA_LIST = [
     type: 'form',
     widgetType: 'page',
     icon: 'el-icon-tickets',
-    list: [],
+    children: [],
     rules: {},
     form: {},
     options: {
@@ -114,7 +114,7 @@ const DATA_LIST = [
           xl: 24,
           customClass: '',
         },
-        list: [],
+        children: [],
       },
     ],
     options: {
