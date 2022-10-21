@@ -41,6 +41,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "axios": "^0.26.1",
+    "codemirror": "5.65.9",
     "element-plus": "^2.2.18",
     "lodash": "^4.17.21",
     "mitt": "^3.0.0",

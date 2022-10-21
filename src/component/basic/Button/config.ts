@@ -1,6 +1,6 @@
 import { useSystemStore } from '@/store/index';
 const store = useSystemStore();
-/* 这里是关于初始化时，按钮的配置 */
+//* 这里是关于初始化时，按钮的配置 */
 const init = {
   name: '按钮',
   component: 'free-button', //对应组件名称，一定要和注册的全局组件对应上
@@ -27,8 +27,9 @@ const init = {
     disabled: false,
   },
 };
-/* 这里是关于配置项配置 列表 */
+//* 这里是关于配置项配置 列表 */
 const property = [
+  { label: '绑定字段', key: 'model', component: 'input' },
   { label: '文本内容', key: 'textDetail', component: 'input' },
   {
     label: '尺寸',
@@ -57,21 +58,18 @@ const property = [
   { label: '圆角按钮', key: 'round', component: 'switch' },
   { label: '前置icon', key: 'icon', component: 'select', option: store.iconListInSelect },
 ];
-/* 单选、输入、颜色 */
+//* 单选、输入、颜色 */
 const style = [];
 
+//* 动作配置 */
 const action = {
   // 触发条件
-  triggerCondition: {
-    click: {
-      name: '点击',
-      value: 'click',
-    },
-  },
+  triggerCondition: [
+    { label: '点击', value: 'click' },
+    { label: '等待触发', value: 'await' },
+  ],
   // 动作类型
   type: [
-    { label: '显示', value: 'show' },
-    { label: '隐藏', value: 'hide' },
     { label: '下载', value: 'download' },
     { label: '跳转', value: 'href' },
     { label: '触发事件', value: 'event' },
@@ -81,12 +79,19 @@ const action = {
     { label: '触发数值更新', value: 'setModel' },
   ],
   // 默认监听事件
-  eventList: [{ name: '显示' }, { name: '隐藏' }, { name: '禁用' }, { name: '取消禁用' }],
+  eventList: [
+    // { value: 'show', label: '显示' },
+    // { value: 'hide', label: '隐藏' },
+    { value: 'disabled', label: '禁用' },
+    { value: 'cancelDisabled', label: '取消禁用' },
+  ],
 };
-
+//* 请求+通用+跳转配置 */
+const other = {};
 export default {
   init,
   property,
   style,
   action,
+  other,
 };

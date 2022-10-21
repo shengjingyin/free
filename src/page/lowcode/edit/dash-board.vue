@@ -58,7 +58,6 @@ const add = (event: any) => {
   let target = data.list[newIndex];
 
   const key = generateKey();
-
   SET_DATA_LIST(
     {
       ...target,

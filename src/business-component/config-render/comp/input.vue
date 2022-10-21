@@ -15,12 +15,14 @@ const props = defineProps({
   },
 });
 const key = computed(() => props.config.key);
+// 如果配置项的options中有目标属性，则取，否则返回
+const target = props.select!.options[key.value] ? props.select!.options : props.select;
 const value = computed({
   get: () => {
-    return props.select!.options[key.value];
+    return target[key.value];
   },
   set: val => {
-    props.select!.options[key.value] = val;
+    target[key.value] = val;
   },
 });
 </script>

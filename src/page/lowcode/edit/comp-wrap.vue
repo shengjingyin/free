@@ -10,16 +10,6 @@
     class="widget-view no-mask"
     @click.stop="handleSelect"
   >
-    <!-- <widget-element-item
-      :element="element"
-      :is-table="false"
-      :key="element.key"
-      :index="index"
-      :data="data"
-      :parent="parent"
-      :draggable="draggable"
-    />
- -->
     <!-- 根据配置项中定义的 -->
     <component :is="element?.component" :element="element"></component>
     <!-- <div>{{ element }}</div> -->

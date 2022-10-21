@@ -1,12 +1,11 @@
 <template>
-  <el-button v-bind="options" @click.stop="click">
-    {{ options.textDetail || '请输入文本' }}
-    <slot> </slot>
+  <el-button v-bind="options" :disabled="disabled" @click.stop="click">
+    <slot> {{ options.textDetail || '请输入文本' }}</slot>
   </el-button>
 </template>
 
 <script lang="ts" setup name="FreeButton">
-import { getCurrentInstance, computed } from 'vue';
+import { getCurrentInstance, computed, useAttrs, ref, watch } from 'vue';
 import { executeAction } from '@/shared/action';
 import emitter from '@/plugin/mitt';
 const props = defineProps({
@@ -15,25 +14,41 @@ const props = defineProps({
     required: true,
   },
 });
-// const attrs = useAttrs();
-const instance = getCurrentInstance();
-console.log('🚀 ~ file: index.vue ~ line 18 ~ instance', instance);
-const options = computed(() => props.element.options);
+console.log('props.element', JSON.stringify(props.element, null, 2));
+const attrs = useAttrs();
+const disabled = ref(false);
 
-emitter.on('click', args => {
-  console.log('🚀 ~ file: index.vue ~ line 26 ~ emitter.on ~ args', args);
+const instance = getCurrentInstance();
+
+const options = computed(() => {
+  return props.element ? props.element.options : attrs;
 });
+
+// 按钮中触发时机只有点击、双击、等待
+watch(
+  () => props.element.model,
+  model => {
+    if (model) {
+      emitter.on(model + 'disabled', () => {
+        disabled.value = true;
+      });
+      emitter.on(model + 'cancelDisabled', () => {
+        disabled.value = false;
+      });
+    }
+  },
+  { immediate: true }
+);
 const click = () => {
   if (options.value.disabled) {
     return;
   }
-  emitter.emit('click', ['g1', 'g2']);
   executeActionList();
   function executeActionList() {
     const { actions } = props.element;
     for (let i = 0; i < actions.length; i++) {
       const ac = actions[i];
-      if (instance) {
+      if (instance && ac.trigger === 'click') {
         executeAction(instance, ac);
       }
     }

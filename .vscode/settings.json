@@ -5,5 +5,6 @@
   "prettier.useTabs": true, // 使用tab缩进
   "editor.defaultFormatter": "esbenp.prettier-vscode", // 使用prettier作为格式化插件
   "files.autoSave": "off", // 自动保存文件失焦自动保存
-  "editor.formatOnSave": true // 保存时格式化
+  "editor.formatOnSave": true,
+  "cSpell.words": ["displayer"] // 保存时格式化
 }
