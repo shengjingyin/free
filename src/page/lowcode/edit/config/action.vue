@@ -28,18 +28,26 @@
         :show-all-levels="false"
       />
     </el-form-item>
+    <!-- 请求配置 -->
+    <el-form-item label="请求配置" v-if="action.type === 'request'">
+      <el-button @click="openRequestConfig(i)">配置</el-button>
+    </el-form-item>
   </div>
+  <RequestConfig ref="requestRef"></RequestConfig>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import EditableText from '@/business-component/editable-text/index.vue';
+import RequestConfig from './comp/request.vue';
 const lowcode = useLowcodeStore(); // lowcode.select.actions
 window.lowcode = lowcode;
 const props = defineProps({
   conf: { type: Object, required: true },
 });
+type RequestRef = (action: Action) => void;
+const requestRef = ref<{ openDialog: RequestRef }>();
 const actionList = ref([]);
 const actionTriggerList = computed(() => props.conf.action.triggerCondition);
 const actionTypeList = computed(() => props.conf.action.type);
@@ -54,6 +62,9 @@ const getAction = (element: any) => {
   console.log('type', element);
   return { name: `${element.name} - 动作 ${element.actions.length + 1}` };
 };
-console.log('props.conf.action', props.conf.action);
+const openRequestConfig = (index: number) => {
+  const curAction = lowcode.select.actions[index];
+  requestRef.value?.openDialog(curAction);
+};
 </script>
 <style lang="less" scoped></style>

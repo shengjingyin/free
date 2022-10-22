@@ -4,10 +4,16 @@
     <el-col :span="selected ? 15 : 21"><DashBoard></DashBoard></el-col>
     <el-col :span="6" v-if="selected"><ConfigurationCenter></ConfigurationCenter></el-col>
   </el-row>
+  <el-row class="debugger-title">
+    <el-col :span="12" style="height: 100%">
+      <h4>所有属性</h4>
+    </el-col>
+    <el-col :span="12" style="height: 100%">
+      <h4>当前选中</h4>
+    </el-col>
+  </el-row>
   <el-row class="debugger">
     <el-col :span="12" style="height: 100%">
-      <!-- 所有属性 -->
-      <h4>所有属性</h4>
       <free-raw-displayer
         :readOnly="true"
         :defaultValue="dataString"
@@ -15,8 +21,6 @@
       ></free-raw-displayer>
     </el-col>
     <el-col :span="12" style="height: 100%">
-      <!-- 当前选中 -->
-      <h4>当前选中</h4>
       <free-raw-displayer
         :readOnly="true"
         :defaultValue="selectString"
@@ -42,6 +46,11 @@ const selectString = computed(() => JSON.stringify(select.value, null, 2));
 const selected = computed(() => isPlainObject(select.value) && !isEmptyObject(select.value));
 </script>
 <style lang="css" scoped>
+.debugger-title {
+  bottom: 500px;
+  position: absolute;
+  width: 100vw;
+}
 .debugger {
   position: absolute;
   bottom: 0;

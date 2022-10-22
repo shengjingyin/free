@@ -8,7 +8,7 @@ function parseEvent(node) {
     label: node.name + node.model,
     value: node.model,
     children: [] as any[],
-    actions: [],
+    actions: [] as Action[],
   };
   _parseEvent(node, tree);
   return [tree];
@@ -60,6 +60,7 @@ function _parseAction(node, parent) {
     }
   }
 }
+function parseModel(root) {}
 export const useLowcodeStore = defineStore('lowcode', {
   state: () => ({
     data: initPage, // 仪表盘内所有组件集合
@@ -73,6 +74,9 @@ export const useLowcodeStore = defineStore('lowcode', {
     // 解析动作树，执行对应的动作
     actionOption(state) {
       return parseAction(state.data);
+    },
+    modelMap(state) {
+      return parseModel(state.data);
     },
   },
   actions: {
