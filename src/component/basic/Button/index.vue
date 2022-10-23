@@ -15,7 +15,6 @@ const props = defineProps({
     required: true,
   },
 });
-console.log('props.element', JSON.stringify(props.element, null, 2));
 const lowcode = useLowcodeStore();
 const attrs = useAttrs();
 const disabled = ref(false);
@@ -47,7 +46,6 @@ const click = () => {
   }
   executeActionList();
   function executeActionList() {
-    debugger;
     const { actions } = props.element;
     for (let i = 0; i < actions.length; i++) {
       const action = actions[i];

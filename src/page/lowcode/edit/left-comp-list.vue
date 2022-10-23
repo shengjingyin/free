@@ -37,11 +37,11 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import Draggable from 'vuedraggable';
-import { BASE_LIST } from '../data/componentsList';
+import { COMPONENT_LIST } from '../data/componentsList';
 import { useLowcodeStore } from '@/store/lowcode';
 const lowcode = useLowcodeStore();
 console.log('store', lowcode);
-const allComponents = computed(() => (lowcode.select?.component === 'form' ? [] : BASE_LIST));
+const allComponents = computed(() => (lowcode.select?.component === 'form' ? [] : COMPONENT_LIST));
 const listTitle = computed(() => (lowcode.select?.component === 'form' ? '表单组件' : '页面组件'));
 
 const isMove = ref(false);

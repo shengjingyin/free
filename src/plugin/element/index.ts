@@ -11,5 +11,7 @@ export const setupElement = (app: App) => {
     iconList.push(key);
     app.component(key, ElementIcon[key]); // 全局注册ICON
   }
-  store.set('iconList', JSON.stringify(iconList)); // 全局保存所有的icon 名称列表
+  if (!store.get('iconList')) {
+    store.set('iconList', JSON.stringify(iconList)); // 全局保存所有的icon 名称列表
+  }
 };

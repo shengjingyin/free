@@ -1,6 +1,8 @@
 import button from './basic/Button/config';
-console.log('🚀 ~ file: config.ts ~ line 2 ~ button', button);
+import link from './basic/Link/config';
 
 export default {
+  basic: ['free-button', 'free-link'],
   'free-button': button,
+  'free-link': link,
 };

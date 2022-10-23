@@ -69,11 +69,8 @@ export const request = cloneDeep({
 // 初始化页面
 export const initPage = cloneDeep({
   type: 'page',
-  key: 'page_' + new Date().getTime(),
-  widgetType: 'page',
   name: '页面',
   model: 'page',
-  version: '1.1.7',
   actions: [],
   options: {
     width: '100%',

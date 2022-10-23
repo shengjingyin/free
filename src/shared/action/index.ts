@@ -1,6 +1,6 @@
-import { ComponentInternalInstance } from 'vue';
 import emitter from '@/plugin/mitt';
 import { cloneDeep } from 'lodash';
+import http from '@/api/index';
 
 const dealFunc = {
   event: dealEvent, // 处理event
@@ -13,9 +13,30 @@ function dealEvent(action) {
   emitter.emit(order);
 }
 function dealRequest(action) {
-  console.log('🚀 ~ file: index.ts ~ line 16 ~ dealRequest ~ action', action);
+  const { request } = action;
+  const queryParam = genQueryParam(request);
+  http({
+    url: request.url,
+    method: request.method,
+    ...queryParam,
+  })
+    .then(res => {
+      console.log('res', res);
+    })
+    .catch(err => {
+      console.log('err', err);
+    })
+    .finally(() => {});
 }
-
+function genQueryParam(request: HttpData) {
+  const data = {} as AnyObj;
+  request.params.forEach(param => {
+    if (param.key !== '') {
+      data[param.key] = param.value;
+    }
+  });
+  return { data };
+}
 function dealAction(action, data) {
   // 执行其他组件、自己本身的动作
   // 找到目标event

@@ -42,7 +42,6 @@ import { useLowcodeStore } from '@/store/lowcode';
 import EditableText from '@/business-component/editable-text/index.vue';
 import RequestConfig from './comp/request.vue';
 const lowcode = useLowcodeStore(); // lowcode.select.actions
-window.lowcode = lowcode;
 const props = defineProps({
   conf: { type: Object, required: true },
 });
@@ -59,7 +58,6 @@ const addAction = () => {
 };
 // 返回配置信息
 const getAction = (element: any) => {
-  console.log('type', element);
   return { name: `${element.name} - 动作 ${element.actions.length + 1}` };
 };
 const openRequestConfig = (index: number) => {

@@ -28,6 +28,9 @@ module.exports = defineConfig({
     'plugin:prettier/recommended', // prettier
   ],
   rules: {
+    // eslint 规则重写
+    'no-unused-vars': 'error', // 禁止出现未使用的变量
+    'space-before-function-paren': 'off', // 函数左括号之前是否需要空格
     // ts 规则 https://typescript-eslint.io/rules/
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off', // 函数是否需要明确返回值类型
@@ -44,9 +47,7 @@ module.exports = defineConfig({
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     '@typescript-eslint/no-unused-vars': 'off', // 作用和 no-unused-vars 相同, 没必要重复提示
-    // eslint 规则重写
-    'no-unused-vars': 'error', // 禁止出现未使用的变量
-    'space-before-function-paren': 'off', // 函数左括号之前是否需要空格
+
     // plugin:vue/vue3-recommended 规则重写
     // vue规则 https://eslint.vuejs.org/rules/one-component-per-file.html
     'vue/script-setup-uses-vars': 'error', // script 中的方法，在template中使用，是否算被使用
@@ -59,17 +60,6 @@ module.exports = defineConfig({
     'vue/attribute-hyphenation': 'off', // 属性是否必须使用短横线连接方式
     'vue/require-default-prop': 'off', // props是否需要默认值
     'vue/custom-event-name-casing': 'off', // 应用小驼峰、短横线
-    'vue/html-self-closing': [
-      'off', // 闭合标签关闭
-      {
-        html: {
-          void: 'always',
-          normal: 'never',
-          component: 'always',
-        },
-        svg: 'always',
-        math: 'always',
-      },
-    ],
+    'vue/html-self-closing': 'off', // 闭合标签关闭
   },
 });
