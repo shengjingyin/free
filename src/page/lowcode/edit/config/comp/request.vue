@@ -164,7 +164,7 @@ const data = ref<HttpData>({
     quietness: false,
   },
 });
-const updateModelMap = [];
+// const updateModelMap = [];
 const methodsOptions = ['get', 'post', 'put', 'update', 'delete'],
   paramOptions = [
     { label: '自定义', value: 'custom' },
