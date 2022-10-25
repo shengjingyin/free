@@ -59,7 +59,7 @@
               circle
               plain
               type="primary"
-              size="mini"
+              size="small"
               icon="Plus"
               style="padding: 4px; margin-left: 5px; height: 24px"
               @click="addParam(index)"
@@ -68,7 +68,7 @@
               circle
               plain
               type="danger"
-              size="mini"
+              size="small"
               icon="Minus"
               style="padding: 4px; margin-left: 5px; height: 24px"
               @click="delParam(index)"
@@ -100,7 +100,7 @@
           >
             <el-cascader
               v-model="item.key"
-              :options="updateModelMap"
+              :options="lowcode.modelMap"
               :show-all-levels="false"
               :props="{ checkStrictly: true }"
               clearable
@@ -128,7 +128,7 @@
               circle
               plain
               type="danger"
-              size="mini"
+              size="small"
               icon="el-icon-plus"
               style="padding: 4px; margin-left: 5px"
               @click="addUpdate(index)"
@@ -137,7 +137,7 @@
               circle
               plain
               type="danger"
-              size="mini"
+              size="small"
               icon="el-icon-minus"
               style="padding: 4px; margin-left: 5px"
               @click="delUpdate(index)"
@@ -153,6 +153,7 @@
 import { ref } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 const lowcode = useLowcodeStore(); // lowcode.select.actions
+window.lowcode = lowcode;
 const visible = ref(false);
 const props = defineProps({});
 const data = ref<HttpData>({
@@ -162,9 +163,10 @@ const data = ref<HttpData>({
   response: {
     node: 'data',
     quietness: false,
+    updateModelList: [{ key: [], type: 'fromServe', value: '' }],
   },
 });
-const updateModelMap = [];
+// const UpdatableList = computed(() => lowcode.modelMap);
 const methodsOptions = ['get', 'post', 'put', 'update', 'delete'],
   paramOptions = [
     { label: '自定义', value: 'custom' },
@@ -196,10 +198,10 @@ const delUpdate = (index: number) => {
 };
 const addUpdate = (index?: number) => {
   index = index || 0;
-  data.value?.response.updateModelList?.splice(index, 0, {
-    key: '',
-    value: '',
+  data.value?.response.updateModelList?.splice(index + 1, 0, {
+    key: [],
     type: 'fromServe',
+    value: '',
   });
 };
 const test = () => {};

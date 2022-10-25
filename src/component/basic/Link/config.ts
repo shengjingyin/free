@@ -9,7 +9,7 @@ const init = {
   actions: [],
   // 组件配置
   options: {
-    textDetail: '按钮文本',
+    textDetail: '',
     href: '',
     target: '_blank',
   },

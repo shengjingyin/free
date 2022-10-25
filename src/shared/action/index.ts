@@ -16,12 +16,15 @@ function dealRequest(action) {
   const { request } = action;
   const queryParam = genQueryParam(request);
   http({
+    ...request,
+    ...queryParam,
+    silence: false, // 是否静默请求（不提示成功与失败）
     url: request.url,
     method: request.method,
-    ...queryParam,
   })
     .then(res => {
       console.log('res', res);
+      // 对于错误进行过滤
     })
     .catch(err => {
       console.log('err', err);

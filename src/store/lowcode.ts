@@ -63,7 +63,6 @@ function _parseAction(node, parent) {
   }
 }
 function parseModel(root) {
-  console.log('🚀 ~ file: lowcode.ts ~ line 64 ~ parseModel ~ root', root);
   const tree = {
     label: root.name + root.model,
     value: root.model,
@@ -108,6 +107,8 @@ export const useLowcodeStore = defineStore('lowcode', {
       store.set('data', JSON.stringify(this.data));
       return parseModel(state.data);
     },
+    // 可更新列表(过滤不可更新组件，设置disabled即可)
+    UpdatableList(state) {},
   },
   actions: {
     SET_CUR_SELECT(val) {

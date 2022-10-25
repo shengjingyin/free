@@ -29,9 +29,9 @@ declare type HttpParam = {
   value: string[];
 };
 declare type UpdateModel = {
-  key: string;
+  key: string[];
   type: 'custom' | 'fromServe';
-  value: unknown;
+  value: string | unknown;
 };
 declare type HttpData = {
   url: string;
@@ -55,3 +55,7 @@ declare type Action = {
   action?: string;
   request?: HttpData;
 };
+
+declare interface Window {
+  lowcode: any;
+}
