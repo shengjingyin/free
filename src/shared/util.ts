@@ -1,3 +1,4 @@
+import store from 'storejs';
 export const emptyObj = Object.create({});
 
 // 类型判断
@@ -84,9 +85,11 @@ export function once(fn: Function): Function {
 
 export const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time));
 
-let key = 0;
+let key = Number(store.get('key')) || 0;
 export function generateKey(): number {
-  return key++;
+  const newKey = ++key;
+  store.set('key', newKey);
+  return newKey;
 }
 
 export const extend = Object.assign;

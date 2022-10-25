@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 const props = defineProps({
   select: {
     type: Object,
@@ -14,15 +14,17 @@ const props = defineProps({
     require: true,
   },
 });
-const key = computed(() => props.config.key);
+const key = computed(() => props.config?.key);
 // 如果配置项的options中有目标属性，则取，否则返回
-const target =
-  props.select!.options[key.value] !== undefined ? props.select!.options : props.select;
 const value = computed({
   get: () => {
+    const target =
+      props.select!.options[key.value] !== undefined ? props.select!.options : props.select;
     return target[key.value];
   },
   set: val => {
+    const target =
+      props.select!.options[key.value] !== undefined ? props.select!.options : props.select;
     target[key.value] = val;
   },
 });
