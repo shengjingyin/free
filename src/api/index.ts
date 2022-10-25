@@ -22,7 +22,9 @@ const http = new Request({
           type: 'error',
         });
       }
-      return response;
+      if (status === 200) {
+        return response.data;
+      }
     },
   },
 });

@@ -1,5 +1,5 @@
 import emitter from '@/plugin/mitt';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, set, get } from 'lodash';
 import http from '@/api/index';
 
 const dealFunc = {
@@ -12,7 +12,7 @@ function dealEvent(action) {
   const order = action.event.slice(-2).join(''); // 取后面两位组合 key
   emitter.emit(order);
 }
-function dealRequest(action) {
+function dealRequest(action, tree) {
   const { request } = action;
   const queryParam = genQueryParam(request);
   http({
@@ -21,15 +21,23 @@ function dealRequest(action) {
     silence: false, // 是否静默请求（不提示成功与失败）
     url: request.url,
     method: request.method,
-  })
-    .then(res => {
-      console.log('res', res);
-      // 对于错误进行过滤
-    })
-    .catch(err => {
-      console.log('err', err);
-    })
-    .finally(() => {});
+  }).then(res => {
+    // 对于错误进行过滤
+    const { data, code } = res;
+    if (code === 0) {
+      // 更新组件数据
+      if (action?.request?.response?.updateModelList) {
+        action.request.response.updateModelList.forEach(item => {
+          const target = _findEle([tree], item.key);
+          if (item.type === 'fromServe') {
+            set(target, target.value, get(data, item.value));
+          } else {
+            set(target, target.value, item.value);
+          }
+        });
+      }
+    }
+  });
 }
 function genQueryParam(request: HttpData) {
   const data = {} as AnyObj;
@@ -63,6 +71,26 @@ function findEle(root, path) {
   // 最后一步找到对应的动作
   const action = copyRoot.actions.find(action => action.name === path[path.length - 1]);
   return action.event;
+}
+// 当作多维数组处理
+/**
+ * 获取指定的元素
+ * @param {Array<component>} data - 所有元素集合
+ * @param {Array<string>} path - 路径《完整》
+ * @returns {Object} 具有响应式的目标元素
+ */
+function _findEle(data: any[] = [], path = []) {
+  let target;
+  while (path.length) {
+    const first = path.shift();
+    target = data.find(item => item.model === first);
+    if (target) {
+      data = target.children;
+    } else {
+      return null;
+    }
+  }
+  return target;
 }
 
 export function executeAction(data, action) {

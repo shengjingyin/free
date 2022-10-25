@@ -1,15 +1,16 @@
 //* 这里是关于初始化时，按钮的配置 */
-const init = {
+const init: Comp = {
   name: '文字',
   component: 'free-link', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定值
   mode: 'edit', // show or edit
+  value: 'options.textDetail', // 指向可以更新当前组件值的路径
   // 组件配置
   // 动作配置
   actions: [],
   // 组件配置
   options: {
-    textDetail: '',
+    textDetail: '', // 展示label
     href: '',
     target: '_blank',
   },

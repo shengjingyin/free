@@ -62,4 +62,12 @@ module.exports = defineConfig({
     'vue/custom-event-name-casing': 'off', // 应用小驼峰、短横线
     'vue/html-self-closing': 'off', // 闭合标签关闭
   },
+  overrides: [
+    {
+      files: ['./**/*.d.ts'],
+      rules: {
+        'no-unused-vars': 'off',
+      },
+    },
+  ],
 });

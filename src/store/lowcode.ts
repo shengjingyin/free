@@ -124,3 +124,8 @@ export const useLowcodeStore = defineStore('lowcode', {
     },
   },
 });
+
+/* 
+1、获取整棵树；能够根据指定参数，获取附带这个参数的整棵树
+2、更新请求体时，需要同步设置
+*/

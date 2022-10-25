@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup name="FreeButton">
-import { getCurrentInstance, computed, useAttrs, ref, watch } from 'vue';
+import { computed, useAttrs, ref, watch } from 'vue';
 import { executeAction } from '@/shared/action';
 import { useLowcodeStore } from '@/store/lowcode';
 import emitter from '@/plugin/mitt';
@@ -18,8 +18,6 @@ const props = defineProps({
 const lowcode = useLowcodeStore();
 const attrs = useAttrs();
 const disabled = ref(false);
-
-const instance = getCurrentInstance();
 
 const options = computed(() => {
   return props.element ? props.element.options : attrs;
