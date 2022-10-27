@@ -155,7 +155,6 @@ import { useLowcodeStore } from '@/store/lowcode';
 const lowcode = useLowcodeStore(); // lowcode.select.actions
 window.lowcode = lowcode;
 const visible = ref(false);
-const props = defineProps({});
 const data = ref<HttpData>({
   url: '',
   method: 'get',

@@ -1,3 +1,4 @@
+import { SkipType } from '@/shared/schema/data';
 //* 这里是关于初始化时，按钮的配置 */
 const init: Comp = {
   name: '链接',
@@ -26,12 +27,7 @@ const property = [
     label: '在何处打开文档',
     key: 'target',
     component: 'select',
-    option: [
-      { label: '在新窗口中打开被链接文档', value: '_blank' },
-      { label: '在当前窗口打开被链接文档', value: '_self' },
-      { label: '在父框架集中打开被链接文档', value: '_parent' },
-      { label: '在整个窗口中打开被链接文档', value: '_top' },
-    ],
+    option: SkipType,
   },
 ];
 //* 单选、输入、颜色 */
@@ -47,7 +43,7 @@ const action = {
   // 动作类型
   type: [
     { label: '下载', value: 'download' },
-    { label: '跳转', value: 'href' },
+    { label: '跳转', value: 'skip' },
     { label: '触发事件', value: 'event' },
     { label: '触发动作', value: 'action' },
     { label: '发送请求', value: 'request' },

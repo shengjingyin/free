@@ -65,7 +65,7 @@ const action = {
   // 动作类型
   type: [
     { label: '下载', value: 'download' },
-    { label: '跳转', value: 'href' },
+    { label: '跳转', value: 'skip' },
     { label: '触发事件', value: 'event' },
     { label: '触发动作', value: 'action' },
     { label: '发送请求', value: 'request' },

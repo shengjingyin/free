@@ -15,6 +15,26 @@
       <free-select :option="actionTypeList" v-model="action.type"></free-select>
     </el-form-item>
 
+    <!-- 跳转 -->
+    <template v-if="action.type === 'skip'">
+      <el-form-item label="资源地址">
+        <el-input v-model="action.skip.url" placeholder="请输入资源地址" />
+      </el-form-item>
+      <el-form-item label="在何处打开文档">
+        <!-- 下载的资源类型可选择 -->
+        <free-select :option="SkipType" v-model="action.skip.type"></free-select>
+      </el-form-item>
+    </template>
+    <!-- 触发下载 -->
+    <template v-if="action.type === 'download'">
+      <el-form-item label="资源地址">
+        <el-input v-model="action.download.url" placeholder="请输入资源地址" />
+      </el-form-item>
+      <el-form-item label="资源类型">
+        <!-- 下载的资源类型可选择 -->
+        <free-select :option="DownloadType" v-model="action.download.type"></free-select>
+      </el-form-item>
+    </template>
     <!-- 触发事件 -->
     <el-form-item label="事件" v-if="action.type === 'event'">
       <el-cascader v-model="action.event" :options="lowcode.eventOption" :show-all-levels="false" />
@@ -41,13 +61,12 @@ import { ref, computed } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import EditableText from '@/business-component/editable-text/index.vue';
 import RequestConfig from './comp/request.vue';
+import { DownloadType, SkipType } from '@/shared/schema/data';
 const lowcode = useLowcodeStore(); // lowcode.select.actions
 const props = defineProps({
   conf: { type: Object, required: true },
 });
-type RequestRef = (action: Action) => void;
 const requestRef = ref<{ openDialog: RequestRef }>();
-const actionList = ref([]);
 const actionTriggerList = computed(() => props.conf.action.triggerCondition);
 const actionTypeList = computed(() => props.conf.action.type);
 
@@ -57,8 +76,12 @@ const addAction = () => {
   lowcode.select.actions.push(emptyAction);
 };
 // 返回配置信息
-const getAction = (element: any) => {
-  return { name: `${element.name} - 动作 ${element.actions.length + 1}` };
+const getAction = (element: Comp) => {
+  return {
+    name: `${element.name} - 动作 ${element.actions.length + 1}`,
+    download: { type: 'image/jpeg' },
+    skip: { type: '_blank' },
+  } as Action;
 };
 const openRequestConfig = (index: number) => {
   const curAction = lowcode.select.actions[index];

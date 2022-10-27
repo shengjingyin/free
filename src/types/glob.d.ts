@@ -46,13 +46,23 @@ declare type HttpData = {
   };
 };
 
+declare type SourceType = 'image/jpeg';
+
 declare type Action = {
-  name: string;
-  trigger?: 'click' | 'await';
-  type?: 'event' | 'action' | 'request';
-  event?: string;
-  action?: string;
-  request?: HttpData;
+  name: string; // 动作名称（key）
+  trigger?: 'click' | 'await'; // 触发时机
+  type?: 'download' | 'skip' | 'event' | 'action' | 'request'; // 动作类型
+  event?: string[]; // 触发事件
+  action?: string[]; // 触发动作信息
+  request?: HttpData; // 请求参数
+  skip: {
+    url?: string; // 跳转地址
+    type: '_blank';
+  }; // 下载资源类型
+  download: {
+    url?: string; // 下载资源地址
+    type: SourceType;
+  }; // 下载资源类型
 };
 
 declare interface Window {
@@ -63,3 +73,5 @@ declare interface KV {
   key: string;
   value: unknown;
 }
+
+declare type RequestRef = (action: Action) => void;

@@ -2,13 +2,23 @@ import emitter from '@/plugin/mitt';
 import { set, get } from 'lodash';
 import http from '@/api/index';
 import { findEleByPath } from '@/shared/tree/index';
+import { download as Down } from '@/shared/download/index';
 
 const dealFunc = {
+  skip: dealSkip, // 处理跳转
+  download: dealDownload, // 处理下载
   event: dealEvent, // 处理event
   action: dealAction, // 处理action
   request: dealRequest, // 处理发送请求
 };
-
+function dealSkip({ skip }) {
+  window.open(skip.url, skip.type);
+}
+function dealDownload({ download }) {
+  if ((download.type as SourceType) === 'image/jpeg') {
+    Down(download.url);
+  }
+}
 function dealEvent(action) {
   const order = action.event.slice(-2).join(''); // 取后面两位组合 key
   emitter.emit(order);
@@ -61,6 +71,12 @@ function dealAction(action, data) {
     emitter.emit(order);
   }
 }
+/**
+ *
+ * @param {Object} data - json对象数据
+ * @param {Object} action - 当前执行的动作
+ */
 export function executeAction(data, action) {
+  // 执行对应策略
   return dealFunc[action.type](action, data);
 }
