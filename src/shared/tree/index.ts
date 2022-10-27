@@ -66,3 +66,25 @@ export function findEleByPath(tree, key: string, originPath: unknown[]) {
   }
   return target;
 }
+/**
+ * 寻找当前对象的父节点
+ * @param {Array<component>} tree - 所有元素集合
+ * @param {Object} target - 目标对象
+ * @returns {Object} 目标对象的父节点
+ */
+export function findParent(tree, target) {
+  debugger;
+  if (!tree.children) return false;
+  if (tree.children.length === 0 && tree === target) {
+    return false;
+  }
+  for (let i = 0; i < tree.children.length; i++) {
+    const child = tree.children[i];
+    if (child === target) {
+      return tree;
+    } else {
+      findParent(child, target);
+    }
+  }
+  return false;
+}

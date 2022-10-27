@@ -63,8 +63,6 @@ const add = (event: any) => {
       ...target,
       options: {
         ...target.options,
-        // remoteFunc: target.options.remoteFunc || 'func_' + key,
-        // remoteOption: target.options.remoteOption || 'option_' + key,
       },
       key: target.key || key,
       // 绑定键值
@@ -76,11 +74,6 @@ const add = (event: any) => {
 };
 const update = (...b) => {
   console.log('🚀 ~ file: dash-board.vue ~ line 58 ~ update ~ b', b);
-};
-const getKey = (...a) => {
-  console.log('🚀 ~ file: dash-board.vue ~ line 82 ~ getKey ~ a', a);
-  debugger;
-  return Math.random();
 };
 </script>
 <style lang="less" scoped></style>

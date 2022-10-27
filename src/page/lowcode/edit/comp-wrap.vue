@@ -2,7 +2,7 @@
   <!-- 对组件进行一层包装 -->
   <div
     :class="{
-      active: select.key === element?.key,
+      active: select.model === element?.model,
       is_req: element?.options.required,
       is_hidden: element?.options.hidden,
       [element?.options.customClass]: !!element?.options.customClass,
@@ -13,43 +13,51 @@
     <!-- 根据配置项中定义的 -->
     <component :is="element?.component" :element="element"></component>
     <!-- <div>{{ element }}</div> -->
-    <div v-if="select.key == element?.key" class="widget-view-action flex-center-y">
+    <div v-if="select.model == element?.model" class="widget-view-action flex-center-y">
       <el-icon title="复制" :size="16" @click.stop="copyComp"><CopyDocument /></el-icon>
       <el-icon title="删除" :size="16" @click.stop="deleteComp"><Delete /></el-icon>
     </div>
 
     <!-- 移动 -->
-    <div v-if="select.key == element?.key" class="widget-view-drag flex-center">
+    <div v-if="select.model == element?.model" class="widget-view-drag flex-center">
       <el-icon :size="16"><Rank /></el-icon>
     </div>
     <!-- 展示绑定的数据值 -->
     <!-- v-if="element?.options.dataBind" -->
     <div class="widget-view-model">
-      <span>{{ element.model }}</span>
+      <span>{{ element?.model }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { PropType } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
+import { cloneDeep } from 'lodash';
+import { findParent } from '@/shared/tree/index';
 const props = defineProps({
   element: {
-    type: Object,
+    type: Object as PropType<Comp>,
+    required: true,
   },
   index: {
     type: Number,
+    required: true,
   },
 });
-const { select } = storeToRefs(useLowcodeStore());
+const { select, data } = storeToRefs(useLowcodeStore());
 const { SET_CUR_SELECT } = useLowcodeStore();
 // 更新当前选中的组件
 const handleSelect = () => {
   SET_CUR_SELECT(props.element);
 };
 const copyComp = () => {
-  console.log('props.index', props.index);
+  // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
+  const parent = findParent(data.value, props.element);
+  const clone = cloneDeep(props.element);
+  clone.model = clone.model + '_copy';
+  parent.children.splice(props.index + 1, 0, clone);
 };
 const deleteComp = () => {
   console.log('props.index', props.index);

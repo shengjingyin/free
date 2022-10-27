@@ -11,7 +11,7 @@ declare type ContainerStyle = {
 };
 declare type Comp = {
   name: string; // 中文别名
-  component: `free-${string}`; //对应组件名称，一定要和注册的全局组件对应上
+  component: `free-${string}` | 'page'; //对应组件名称，一定要和注册的全局组件对应上
   model: string; // 组件绑定的key，唯一
   mode: 'edit' | 'show'; // 模式(编辑/展示)
   value?: string; // 指向可以更新当前组件值的路径, options.textDetail

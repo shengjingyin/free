@@ -1,4 +1,4 @@
-import { findEleDepth, findEleByKY, findEleByPath } from '../index';
+import { findEleDepth, findEleByKY, findEleByPath, findParent } from '../index';
 import { treeData } from './tree.data';
 describe('树形结构功能测试', () => {
   it('寻找某个元素在树的第几层', () => {
@@ -35,5 +35,11 @@ describe('树形结构功能测试', () => {
     const path2 = [0, 4, 99999];
     const r2 = findEleByPath(treeData, key, path2);
     expect(r2).toBe(false); // 怎么展示一个对象
+  });
+  it('寻找当前对象的父节点', () => {
+    // 找到目标
+    const target = treeData.children[1];
+    const r = findParent(treeData, target);
+    expect(r.name).toBe('全部');
   });
 });
