@@ -28,35 +28,35 @@
       </el-col>
     </el-row>
     <el-row class="debugger">
-      <el-col :span="5">
+      <el-col :span="5" style="height: 100%">
         <free-raw-displayer
           :readOnly="true"
           :defaultValue="dataString"
           :modelValue="dataString"
         ></free-raw-displayer>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" style="height: 100%">
         <free-raw-displayer
           :readOnly="true"
           :defaultValue="selectString"
           :modelValue="selectString"
         ></free-raw-displayer>
       </el-col>
-      <el-col :span="5">
+      <el-col :span="5" style="height: 100%">
         <free-raw-displayer
           :readOnly="true"
           :defaultValue="evenTree"
           :modelValue="evenTree"
         ></free-raw-displayer>
       </el-col>
-      <el-col :span="5">
+      <el-col :span="5" style="height: 100%">
         <free-raw-displayer
           :readOnly="true"
           :defaultValue="actionTree"
           :modelValue="actionTree"
         ></free-raw-displayer>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" style="height: 100%">
         <free-raw-displayer
           :readOnly="true"
           :defaultValue="modelMapTree"

@@ -44,6 +44,7 @@ const click = () => {
   }
   executeActionList();
   function executeActionList() {
+    debugger;
     const { actions } = props.element;
     for (let i = 0; i < actions.length; i++) {
       const action = actions[i];

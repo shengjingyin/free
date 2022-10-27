@@ -56,5 +56,10 @@ declare type Action = {
 };
 
 declare interface Window {
-  lowcode: any;
+  lowcode: unknown;
+}
+
+declare interface KV {
+  key: string;
+  value: unknown;
 }

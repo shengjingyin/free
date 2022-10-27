@@ -69,8 +69,7 @@ const action = {
     { label: '触发事件', value: 'event' },
     { label: '触发动作', value: 'action' },
     { label: '发送请求', value: 'request' },
-    { label: '自定义事件', value: 'communicate' },
-    { label: '触发数值更新', value: 'setModel' },
+    { label: '更新数据', value: 'setModel' },
   ],
   // 默认监听事件
   eventList: [
