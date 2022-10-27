@@ -57,11 +57,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import EditableText from '@/business-component/editable-text/index.vue';
 import RequestConfig from './comp/request.vue';
 import { DownloadType, SkipType } from '@/shared/schema/data';
+import store from 'storejs';
 const lowcode = useLowcodeStore(); // lowcode.select.actions
 const props = defineProps({
   conf: { type: Object, required: true },
@@ -70,9 +71,16 @@ const requestRef = ref<{ openDialog: RequestRef }>();
 const actionTriggerList = computed(() => props.conf.action.triggerCondition);
 const actionTypeList = computed(() => props.conf.action.type);
 
+watch(
+  () => lowcode.select,
+  () => {
+    // 只要属性有变化，就更新树
+    store.set('data', JSON.stringify(lowcode.data));
+  },
+  { deep: true }
+);
 const addAction = () => {
   const emptyAction = getAction(lowcode.select);
-
   lowcode.select.actions.push(emptyAction);
 };
 // 返回配置信息

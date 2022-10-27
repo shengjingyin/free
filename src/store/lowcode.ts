@@ -94,17 +94,14 @@ export const useLowcodeStore = defineStore('lowcode', {
   getters: {
     // 解析事件树
     eventOption(state) {
-      store.set('data', JSON.stringify(this.data));
       return parseEvent(state.data);
     },
     // 解析动作树，执行对应的动作
     actionOption(state) {
-      store.set('data', JSON.stringify(this.data));
       return parseAction(state.data);
     },
     // 解析数据树
     modelMap(state) {
-      store.set('data', JSON.stringify(this.data));
       return parseModel(state.data);
     },
     // 可更新列表(过滤不可更新组件，设置disabled即可)
@@ -117,7 +114,6 @@ export const useLowcodeStore = defineStore('lowcode', {
     SET_DATA_LIST(val, index: number, type: 'add' | 'delete') {
       const newComp = cloneDeep(val);
       this.data.children.splice(index, 1, newComp);
-      store.set('data', JSON.stringify(this.data));
       if (type === 'add') {
         this.SET_CUR_SELECT(newComp);
       }
