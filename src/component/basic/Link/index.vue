@@ -7,7 +7,9 @@
       :target="options.target"
       @click.stop="click"
     >
-      <slot>{{ options.textDetail ? options.textDetail : '文字链接' }}</slot>
+      <slot>
+        <p>{{ options.textDetail || '-' }}</p>
+      </slot>
     </a>
     <!-- <slot name="icon" :href="href" v-if="slots.icon && textDetail">
       <Download :title="textDetail" :url="href" />

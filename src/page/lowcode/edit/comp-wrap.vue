@@ -60,7 +60,9 @@ const copyComp = () => {
   parent.children.splice(props.index + 1, 0, clone);
 };
 const deleteComp = () => {
-  console.log('props.index', props.index);
+  const parent = findParent(data.value, props.element);
+  parent.children.splice(props.index, 1);
+  SET_CUR_SELECT({});
 };
 console.log('🚀 ~ file: comp-wrap.vue ~ line 12 ~ props', props.element);
 </script>

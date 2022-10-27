@@ -11,7 +11,7 @@ const init: Comp = {
   actions: [],
   // 组件配置
   options: {
-    textDetail: '', // 展示label
+    textDetail: '文字链接（有链接时，可跳转）', // 展示label
     href: '',
     target: '_blank',
   },
