@@ -1,5 +1,5 @@
 <template>
-  <el-button v-bind="options" :disabled="disabled" @click.stop="click">
+  <el-button class="el-button ellipsis" v-bind="options" :disabled="disabled" @click.stop="click">
     <slot> {{ options.textDetail || '请输入文本' }}</slot>
   </el-button>
 </template>
@@ -54,4 +54,9 @@ const click = () => {
   }
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.el-button {
+  max-width: 100%;
+  max-height: 100%;
+}
+</style>

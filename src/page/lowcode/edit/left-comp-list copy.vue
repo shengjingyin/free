@@ -3,7 +3,7 @@
     <div class="widget-list-title">{{ listTitle }}</div>
     <template v-for="(component, i) in allComponents" :key="i">
       <h5 class="widget-cate"> {{ component.title }} </h5>
-      <!--  <draggable
+      <draggable
         v-model="component.list"
         item-key="type"
         tag="ul"
@@ -29,26 +29,7 @@
             </a>
           </li>
         </template>
-      </draggable> -->
-      <ul>
-        <li
-          v-for="element of component.list"
-          :key="element.type"
-          :class="{ [`is-${element.component}`]: element.component }"
-          class="widget-edit-label no-put"
-          @drag="drag(element)"
-          @dragend="dragend(element)"
-          draggable="true"
-          unselectable="on"
-        >
-          <a class="widget-pick-element">
-            <el-icon v-if="element.icon" :size="16">
-              <component :is="element.icon"></component>
-            </el-icon>
-            <span>{{ element.name }}</span>
-          </a>
-        </li>
-      </ul>
+      </draggable>
     </template>
   </div>
 </template>
@@ -58,7 +39,6 @@ import { ref, computed } from 'vue';
 import Draggable from 'vuedraggable';
 import { COMPONENT_LIST } from '../data/componentsList';
 import { useLowcodeStore } from '@/store/lowcode';
-import emitter from '@/plugin/mitt';
 const lowcode = useLowcodeStore();
 console.log('store', lowcode);
 const allComponents = computed(() => COMPONENT_LIST);
@@ -75,12 +55,6 @@ const handleMoveEnd = () => {
 };
 const handleMoveStart = () => {
   console.log('123123', 1111111111111);
-};
-const drag = element => {
-  emitter.emit('add-component', element);
-};
-const dragend = element => {
-  emitter.emit('end-add-component', element);
 };
 </script>
 <style lang="less" scoped>

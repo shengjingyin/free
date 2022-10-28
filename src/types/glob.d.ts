@@ -9,7 +9,23 @@ declare type ContainerStyle = {
   bgType: undefined;
   borderType: undefined;
 };
-declare type Comp = {
+
+declare type Point = {
+  x: number;
+  y: number;
+};
+declare type Size = {
+  w: number;
+  h: number;
+};
+
+declare type GridItem = Point &
+  Size & {
+    i: string;
+    [key: string]: unknown;
+  };
+
+declare type Comp = GridItem & {
   name: string; // 中文别名
   component: `free-${string}` | 'page'; //对应组件名称，一定要和注册的全局组件对应上
   model: string; // 组件绑定的key，唯一
@@ -71,17 +87,3 @@ declare interface KV {
 }
 
 declare type RequestRef = (action: Action) => void;
-
-declare type Point = {
-  x: number;
-  y: number;
-};
-declare type Size = {
-  w: number;
-  h: number;
-};
-
-declare type GridItem = Point &
-  Size & {
-    i: string;
-  };

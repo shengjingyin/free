@@ -20,6 +20,10 @@ const init: Comp = {
   },
   // 样式配置
   style: {},
+  x: 0,
+  y: 0,
+  w: 1,
+  h: 1,
 };
 //* 这里是关于配置项配置 列表 */
 const property = [

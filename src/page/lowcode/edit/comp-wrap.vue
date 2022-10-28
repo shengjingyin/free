@@ -1,37 +1,27 @@
 <template>
-  <!-- 对组件进行一层包装 -->
-  <div
-    :class="{
-      active: select.model === element?.model,
-      is_req: element?.options.required,
-      is_hidden: element?.options.hidden,
-      [element?.options.customClass]: !!element?.options.customClass,
-    }"
-    class="widget-view no-mask"
-    @click.stop="handleSelect"
-  >
+  <div @click="clickGrid(element)" :class="['item-container', isSelectCur ? 'active' : '']">
     <!-- 根据配置项中定义的 -->
-    <component :is="element?.component" :element="element"></component>
-    <!-- <div>{{ element }}</div> -->
-    <div v-if="select.model == element?.model" class="widget-view-action flex-center-y">
-      <el-icon title="复制" :size="16" @click.stop="copyComp"><CopyDocument /></el-icon>
-      <el-icon title="删除" :size="16" @click.stop="deleteComp"><Delete /></el-icon>
-    </div>
+    <component :is="element.component" :element="element"></component>
 
     <!-- 移动 -->
-    <div v-if="select.model == element?.model" class="widget-view-drag flex-center drag-widget">
-      <el-icon :size="16"><Rank /></el-icon>
-    </div>
-    <!-- 展示绑定的数据值 -->
-    <!-- v-if="element?.options.dataBind" -->
-    <div class="widget-view-model">
-      <span>{{ element?.model }}</span>
-    </div>
+    <template v-if="isSelectCur">
+      <el-icon class="copy tool" title="复制" :size="16" @click.stop="copyComp"
+        ><CopyDocument
+      /></el-icon>
+      <el-icon class="delete tool" title="删除" :size="16" @click.stop="deleteComp"
+        ><Delete
+      /></el-icon>
+    </template>
+    <div class="drag-able"> </div>
+    <template v-if="element?.options.dataBind || true">
+      <!-- 展示绑定的数据值 -->
+      <span class="bind-model">{{ element?.model }}</span>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
+import { PropType, computed } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
 import { cloneDeep } from 'lodash';
@@ -48,9 +38,10 @@ const props = defineProps({
 });
 const { select, data } = storeToRefs(useLowcodeStore());
 const { SET_CUR_SELECT } = useLowcodeStore();
+const isSelectCur = computed(() => select.value.model == props.element.model);
 // 更新当前选中的组件
-const handleSelect = () => {
-  SET_CUR_SELECT(props.element);
+const clickGrid = element => {
+  SET_CUR_SELECT(element);
 };
 const copyComp = () => {
   // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
@@ -64,6 +55,72 @@ const deleteComp = () => {
   parent.children.splice(props.index, 1);
   SET_CUR_SELECT({});
 };
-console.log('🚀 ~ file: comp-wrap.vue ~ line 12 ~ props', props.element);
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.item-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &:hover {
+    .drag-able {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  &.active:hover {
+    .drag-able {
+      background-color: rgba(101, 142, 175, 0.2);
+    }
+  }
+}
+.drag-able {
+  position: absolute;
+  left: -20px;
+  right: -20px;
+  top: -20px;
+  bottom: -20px;
+  z-index: -1;
+  cursor: move;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+.drag-widget {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-120%);
+  z-index: 899999999999999999 !important;
+}
+.copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(120%);
+  cursor: pointer;
+}
+.delete {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  transform: translateX(120%);
+  cursor: pointer;
+}
+.bind-model {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  white-space: nowrap;
+  transform: translateY(120%);
+}
+.tool {
+  width: 25px;
+  height: 25px;
+  // background-color: #c6c0c0;
+  border-radius: 50%;
+  transition: all 0.3s;
+  &:hover {
+    background-color: skyblue;
+    color: #fff;
+  }
+}
+</style>
