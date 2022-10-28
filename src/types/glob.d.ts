@@ -65,10 +65,6 @@ declare type Action = {
   }; // 下载资源类型
 };
 
-declare interface Window {
-  lowcode: unknown;
-}
-
 declare interface KV {
   key: string;
   value: unknown;

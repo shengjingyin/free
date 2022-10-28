@@ -73,7 +73,6 @@ export function findEleByPath(tree, key: string, originPath: unknown[]) {
  * @returns {Object} 目标对象的父节点
  */
 export function findParent(tree, target) {
-  debugger;
   if (!tree.children) return false;
   if (tree.children.length === 0 && tree === target) {
     return false;
