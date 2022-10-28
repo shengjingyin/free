@@ -19,7 +19,7 @@
     </div>
 
     <!-- 移动 -->
-    <div v-if="select.model == element?.model" class="widget-view-drag flex-center">
+    <div v-if="select.model == element?.model" class="widget-view-drag flex-center drag-widget">
       <el-icon :size="16"><Rank /></el-icon>
     </div>
     <!-- 展示绑定的数据值 -->

@@ -13,7 +13,7 @@
           v-model="data.children"
           item-key="id"
           v-bind="{
-            group: 'people',
+            group: { name: 'people', put: true },
             ghostClass: 'ghost',
             animation: 200,
             handle: '.drag-widget',
@@ -43,6 +43,7 @@ import Draggable from 'vuedraggable';
 import { useLowcodeStore } from '@/store/lowcode';
 import CompWrap from './comp-wrap.vue';
 import { generateKey } from '@/shared/util';
+import store from 'storejs';
 const props = defineProps({
   disabled: {
     type: Boolean,
@@ -72,8 +73,9 @@ const add = (event: any) => {
     'add'
   );
 };
-const update = (...b) => {
-  console.log('🚀 ~ file: dash-board.vue ~ line 58 ~ update ~ b', b);
+const update = b => {
+  console.log('🚀 更新：', b, data);
+  store.set('data', JSON.stringify(data));
 };
 </script>
 <style lang="less" scoped></style>

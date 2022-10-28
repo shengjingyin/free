@@ -71,3 +71,17 @@ declare interface KV {
 }
 
 declare type RequestRef = (action: Action) => void;
+
+declare type Point = {
+  x: number;
+  y: number;
+};
+declare type Size = {
+  w: number;
+  h: number;
+};
+
+declare type GridItem = Point &
+  Size & {
+    i: string;
+  };

@@ -20,6 +20,26 @@ const arr: Route[] = [
       },
     ],
   },
+  {
+    path: '/test',
+    name: '测试',
+    tabFix: false,
+    meta: {
+      title: '测试',
+    },
+    component: () => import('@/App.vue'),
+    redirect: '/test/draggable/:type',
+    children: [
+      {
+        path: 'draggable/:type',
+        component: () => import('@/page/test/draggable/index.vue'),
+      },
+      {
+        path: 'vue-gird-layout/:type',
+        component: () => import('@/page/test/vue-gird-layout/index.vue'),
+      },
+    ],
+  },
 ];
 
 export const defRoutes = addUniqueId(arr, 'id_');
