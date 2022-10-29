@@ -1,13 +1,15 @@
 <template>
   <el-row class="freedom-main">
-    <el-col :span="3"><LeftCompList></LeftCompList></el-col>
-    <el-col :span="selected ? 15 : 21">
-      <div class="devtool">
-        <el-button @click="showDebugger = true">debugger</el-button>
-      </div>
+    <el-col :span="3">
+      <LeftCompList></LeftCompList>
+      <el-button @click="showDebugger = true" type="primary" plain class="debugger-btn"
+        >debugger</el-button
+      >
+    </el-col>
+    <el-col :span="17">
       <DashBoard></DashBoard>
     </el-col>
-    <el-col :span="6" v-if="selected"><ConfigurationCenter></ConfigurationCenter></el-col>
+    <el-col :span="4"><ConfigurationCenter></ConfigurationCenter></el-col>
   </el-row>
   <el-dialog
     v-model="showDebugger"
@@ -78,7 +80,6 @@ import { ref, computed } from 'vue';
 import LeftCompList from './edit/left-comp-list.vue';
 import DashBoard from './edit/dash-board.vue';
 import ConfigurationCenter from './edit/configuration-center.vue';
-import { isEmptyObject, isPlainObject } from '@/shared/util';
 import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
 const { select, data, eventOption, modelMap, actionOption } = storeToRefs(useLowcodeStore());
@@ -89,13 +90,16 @@ const evenTree = computed(() => JSON.stringify(eventOption.value, null, 2));
 const actionTree = computed(() => JSON.stringify(actionOption.value, null, 2));
 const modelMapTree = computed(() => JSON.stringify(modelMap.value, null, 2));
 
-const selected = computed(() => isPlainObject(select.value) && !isEmptyObject(select.value));
 const showDebugger = ref(false);
 </script>
 <style lang="less" scoped>
 @debugger-height: 600px;
 .debugger-title {
   width: 100%;
+}
+.debugger-btn {
+  position: absolute;
+  bottom: 20px;
 }
 .debugger {
   // position: absolute;
