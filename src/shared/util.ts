@@ -1,4 +1,6 @@
 import store from 'storejs';
+import { useLowcodeStore } from '@/store/lowcode';
+const lowcode = useLowcodeStore();
 export const emptyObj = Object.create({});
 
 // 类型判断
@@ -85,11 +87,15 @@ export function once(fn: Function): Function {
 
 export const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time));
 
-let key = Number(store.get('key')) || 0;
-export function generateKey(): number {
-  const newKey = ++key;
-  store.set('key', newKey);
-  return newKey;
+// 获取当前组件的最新id
+export function generateKey(type: string): number {
+  const id = lowcode.idMap.hasOwnProperty(type) ? lowcode.idMap[type] + 1 : 1;
+  return id;
+}
+// 保存id信息
+export function saveIdMap(type: string, id: number) {
+  lowcode.idMap[type] = id;
+  store.set('idMap', JSON.stringify(lowcode.idMap));
 }
 
 export const extend = Object.assign;

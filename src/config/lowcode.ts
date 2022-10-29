@@ -68,25 +68,24 @@ export const request = cloneDeep({
 });
 // 初始化页面
 export const initPage = cloneDeep({
-  type: 'page',
   name: '页面',
   model: 'page',
   actions: [],
   options: {
-    width: '100%',
-    height: '100%',
-    styles: {
-      backgroundColor: '#ffffff',
-      backgroundImage: '',
-      margin: '',
-      padding: '',
-      bgType: '1',
-    },
-    pageRegs: [],
+    // width: '100%',
+    // height: '100%',
+    // styles: {
+    //   backgroundColor: '#ffffff',
+    //   backgroundImage: '',
+    //   margin: '',
+    //   padding: '',
+    //   bgType: '1',
+    // },
+    // pageRegs: [],
   },
   common: {
-    skip,
-    request,
+    // skip,
+    // request,
   },
   children: [] as AnyObj[],
 });

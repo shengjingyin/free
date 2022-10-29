@@ -90,6 +90,7 @@ export const useLowcodeStore = defineStore('lowcode', {
   state: () => ({
     data: store.get('data') ? JSON.parse(store.get('data')) : initPage, // 仪表盘内所有组件集合
     select: {} as Comp, // 当前选中的组件
+    idMap: store.get('idMap') ? JSON.parse(store.get('idMap')) : {}, // 维护一个所有组件对应的id结合
   }),
   getters: {
     // 解析事件树
@@ -110,13 +111,6 @@ export const useLowcodeStore = defineStore('lowcode', {
   actions: {
     SET_CUR_SELECT(val) {
       this.select = val;
-    },
-    SET_DATA_LIST(val, index: number, type: 'add' | 'delete') {
-      const newComp = cloneDeep(val);
-      this.data.children.splice(index, 1, newComp);
-      if (type === 'add') {
-        this.SET_CUR_SELECT(newComp);
-      }
     },
   },
 });

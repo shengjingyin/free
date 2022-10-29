@@ -12,7 +12,7 @@
         ><Delete
       /></el-icon>
     </template>
-    <div class="drag-able"> </div>
+    <div :class="['drag-able', isSelectCur ? 'active' : '']"> </div>
     <template v-if="element?.options.dataBind || true">
       <!-- 展示绑定的数据值 -->
       <span class="bind-model">{{ element?.model }}</span>
@@ -26,6 +26,7 @@ import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
 import { cloneDeep } from 'lodash';
 import { findParent } from '@/shared/tree/index';
+import { generateKey, saveIdMap } from '@/shared/util';
 const props = defineProps({
   element: {
     type: Object as PropType<Comp>,
@@ -47,8 +48,15 @@ const copyComp = () => {
   // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
   const parent = findParent(data.value, props.element);
   const clone = cloneDeep(props.element);
-  clone.model = clone.model + '_copy';
-  parent.children.splice(props.index + 1, 0, clone);
+  const id = generateKey(clone.component);
+  clone.model = clone.component + `_${id}`;
+  clone.i = String(id);
+  // 还有位置信息也要改变
+  clone.x = clone.x;
+  clone.y = clone.y + clone.h;
+  parent.children.push(clone);
+  // 保存id信息
+  saveIdMap(clone.component, id);
 };
 const deleteComp = () => {
   const parent = findParent(data.value, props.element);
@@ -63,15 +71,11 @@ const deleteComp = () => {
   height: 100%;
   &:hover {
     .drag-able {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-  }
-  &.active:hover {
-    .drag-able {
-      background-color: rgba(101, 142, 175, 0.2);
+      background-color: rgba(101, 142, 175, 0.1);
     }
   }
 }
+
 .drag-able {
   position: absolute;
   left: -20px;
@@ -82,6 +86,9 @@ const deleteComp = () => {
   cursor: move;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+  &.active {
+    background-color: rgba(101, 142, 175, 0.2);
   }
 }
 .drag-widget {

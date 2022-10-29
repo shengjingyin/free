@@ -9,7 +9,13 @@
     </el-col>
     <el-col :span="6" v-if="selected"><ConfigurationCenter></ConfigurationCenter></el-col>
   </el-row>
-  <el-dialog v-model="showDebugger" width="100%" title="debugger" destroy-on-close>
+  <el-dialog
+    v-model="showDebugger"
+    width="100%"
+    style="height: 80%"
+    title="debugger"
+    destroy-on-close
+  >
     <el-row class="debugger-title">
       <el-col :span="5">
         <h4>所有属性</h4>
@@ -87,7 +93,7 @@ const selected = computed(() => isPlainObject(select.value) && !isEmptyObject(se
 const showDebugger = ref(false);
 </script>
 <style lang="less" scoped>
-@debugger-height: 300px;
+@debugger-height: 600px;
 .debugger-title {
   width: 100%;
 }

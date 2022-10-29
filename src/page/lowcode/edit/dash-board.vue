@@ -9,6 +9,7 @@
       <grid-layout
         ref="layoutRef"
         class="grid-layout"
+        :margin="[2, 2]"
         v-model:layout="layout"
         :col-num="12"
         :row-height="30"
@@ -39,30 +40,40 @@
 import { ref, computed, onMounted, nextTick, onUnmounted, watch } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import CompWrap from './comp-wrap.vue';
-import { generateKey } from '@/shared/util';
+import { generateKey, saveIdMap } from '@/shared/util';
 import emitter from '@/plugin/mitt';
 import { storeToRefs } from 'pinia';
-import store from 'storejs';
 import { saveTreeData } from '@/shared/app';
-const props = defineProps({
+import { debounce } from 'lodash';
+defineProps({
   disabled: {
     type: Boolean,
     default: false,
   },
 });
-const layout = ref<Comp[]>([]);
-const { select, SET_DATA_LIST } = useLowcodeStore();
+const { select } = useLowcodeStore();
 const { data } = storeToRefs(useLowcodeStore());
-console.log('🚀 ~ file: dash-board.vue ~ line 56 ~ data', data);
+// const layout = ref<Comp[]>([]);
+const layout = computed<Comp[]>({
+  get() {
+    return data.value.children;
+  },
+  set(newData) {
+    data.value.children = newData;
+  },
+});
 
 const handleSelectPage = () => {};
-const update = b => {
-  saveTreeData(data);
-};
+
+// 保存所有更新数据
+const _saveTreeData = debounce((...args) => {
+  console.log('🚀 ~ 更新数据', ...args);
+  saveTreeData.apply(null, args);
+}, 1000);
 watch(
   data,
   newData => {
-    console.log('val', newData);
+    _saveTreeData(newData);
   },
   { deep: true }
 );
@@ -94,62 +105,65 @@ const mouseInGrid = () => {
     mouseXY.y < parentRect.bottom
   );
 };
-let key = generateKey(),
-  _element;
+let _element;
 const dragComponent = async element => {
   const _mouseInGrid = mouseInGrid();
-
   _element = genElementInfo(element);
   let index = layout.value.findIndex(item => item.i === _element.i);
-  if (_mouseInGrid && index === -1) {
-    layout.value.push({
-      ..._element,
-      // 这里可以根据相应规则变化
-      x: (layout.value.length * 2) % 12,
-      y: layout.value.length + 12, // puts it at the bottom
-    });
+  if (_mouseInGrid) {
+    if (index === -1) {
+      layout.value.push({
+        ..._element,
+        // 这里可以根据相应规则变化
+        x: (layout.value.length * 2) % 12,
+        y: layout.value.length + 12, // puts it at the bottom
+      });
+    } else {
+      // 目标元素已经存在与布局中
+      await nextTick();
+      try {
+        const newGrid = gridItemRef.value[index];
+        // 根据坐标 计算 位置
+        let new_pos = newGrid.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
+        if (_mouseInGrid) {
+          /* (eventName, id, x, y, h, w) */
+          layoutRef.value.dragEvent('dragstart', _element.i, new_pos.x, new_pos.y, 1, 1);
+          DragPos.i = _element.i;
+          DragPos.x = layout.value[index].x;
+          DragPos.y = layout.value[index].y;
+        } else {
+          layoutRef.value.dragEvent('dragend', _element.i, new_pos.x, new_pos.y, 1, 1);
+          // 去除 当前添加的元素
+          layout.value = layout.value.filter(obj => obj.i !== _element.i);
+        }
+      } catch {}
+    }
   }
   if (index != -1) {
-    // 目标元素已经存在与布局中
-    await nextTick();
-    try {
-      const newGrid = gridItemRef.value[index];
-      // 根据坐标 计算 位置
-      let new_pos = newGrid.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
-      if (_mouseInGrid === true) {
-        /* (eventName, id, x, y, h, w) */
-        layoutRef.value.dragEvent('dragstart', _element.i, new_pos.x, new_pos.y, 1, 1);
-        DragPos.i = String(index);
-        DragPos.x = layout.value[index].x;
-        DragPos.y = layout.value[index].y;
-      }
-      if (_mouseInGrid === false) {
-        layoutRef.value.dragEvent('dragend', _element.i, new_pos.x, new_pos.y, 1, 1);
-        // 去除 drop
-        layout.value = layout.value.filter(obj => obj.i !== _element.i);
-      }
-    } catch {}
   }
 };
+let key;
 const dragEnd = () => {
-  key = generateKey(); // 每次结束拖拽 重新生成1个key
+  // key = generateKey(); // 每次结束拖拽 重新生成1个key
   const _mouseInGrid = mouseInGrid();
   if (_mouseInGrid) {
     try {
-      layoutRef.value.dragEvent('dragend', _element.i, DragPos.x, DragPos.y, 1, 1);
-      SET_DATA_LIST(_element, 1, 'add'); // 因为有了坐标，其实和顺序已经没有关系了
+      layoutRef.value.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 1, 1);
+      // 保存id信息
+      saveIdMap(_element.component, key);
     } catch {}
   }
 };
 const genElementInfo = (target: Comp) => {
+  key = generateKey(target.component);
   return {
     ...target,
     options: {
       ...target.options,
     },
-    i: String(key + 1),
+    i: String(key),
     // 绑定键值
-    model: target.model || target.component + '_' + key,
+    model: target.component + '_' + key,
   };
 };
 </script>
