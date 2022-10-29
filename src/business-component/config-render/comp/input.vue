@@ -1,5 +1,5 @@
 <template>
-  <free-input v-model="value"></free-input>
+  <free-input v-model="value" size="small"></free-input>
 </template>
 
 <script lang="ts" setup>

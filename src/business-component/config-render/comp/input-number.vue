@@ -1,5 +1,5 @@
 <template>
-  <el-input-number v-model="value" :min="1" :max="100" controls-position="right" />
+  <el-input-number v-model="value" :min="1" :max="100" controls-position="right" size="small" />
 </template>
 
 <script lang="ts" setup>

@@ -1,7 +1,7 @@
 <template>
-  <free-select v-model="value" :option="config?.option">
+  <free-select v-model="value" :option="config?.option" size="small">
     <!-- 定制 icon 列表渲染 -->
-    <template v-if="config.key === 'icon'" #="{ item }">
+    <template v-if="config?.key === 'icon'" #="{ item }">
       <span style="float: left">{{ item.label }}</span>
       <el-icon :size="18" style="float: right; top: 50%; transform: translateY(-50%)">
         <component :is="item.value"></component>
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 const props = defineProps({
   select: {
     type: Object,
@@ -24,10 +24,10 @@ const props = defineProps({
 });
 const value = computed({
   get: () => {
-    return props.select!.options[props.config.key];
+    return props.select!.options[props.config?.key];
   },
   set: val => {
-    props.select!.options[props.config.key] = val;
+    props.select!.options[props.config?.key] = val;
   },
 });
 </script>

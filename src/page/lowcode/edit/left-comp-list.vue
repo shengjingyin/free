@@ -1,5 +1,5 @@
 <template>
-  <div class="components-list">
+  <div class="module-container">
     <div class="widget-list-title">{{ listTitle }}</div>
     <template v-for="(component, i) in allComponents" :key="i">
       <h5 class="widget-cate"> {{ component.title }} </h5>

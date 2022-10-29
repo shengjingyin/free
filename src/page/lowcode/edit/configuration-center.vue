@@ -1,13 +1,15 @@
 <template>
   <!-- 卡片配置、组件属性、样式、动作 -->
-  <h5> 配置中心 </h5>
-  <el-tabs v-model="activeTab">
-    <template v-for="confRelation of confIndex" :key="confRelation.key">
-      <el-tab-pane :label="confRelation.key" :name="confRelation.key">
-        <component :is="getComp(confRelation.key)" :config="conf[confRelation.field]"></component>
-      </el-tab-pane>
-    </template>
-  </el-tabs>
+  <section class="module-container">
+    <h5> 配置中心 </h5>
+    <el-tabs v-model="activeTab">
+      <template v-for="confRelation of confIndex" :key="confRelation.key">
+        <el-tab-pane :label="confRelation.key" :name="confRelation.key">
+          <component :is="getComp(confRelation.key)" :config="conf[confRelation.field]"></component>
+        </el-tab-pane>
+      </template>
+    </el-tabs>
+  </section>
 </template>
 
 <script lang="ts" setup>
