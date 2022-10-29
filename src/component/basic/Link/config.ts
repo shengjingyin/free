@@ -17,17 +17,31 @@ const init: Comp = {
   },
   // 样式配置
   style: {},
+  x: 0,
+  y: 0,
+  w: 1,
+  h: 1,
 };
 //* 这里是关于配置项配置 列表 */
 const property = [
-  { label: '绑定字段', key: 'model', component: 'input' },
-  { label: '文本内容', key: 'textDetail', component: 'input' },
-  { label: '链接地址', key: 'href', component: 'input' },
   {
-    label: '在何处打开文档',
-    key: 'target',
-    component: 'select',
-    option: SkipType,
+    label: '基本信息',
+    group: '',
+    children: [{ label: '绑定字段', key: 'model', component: 'input' }],
+  },
+  {
+    label: '属性配置',
+    group: 'options',
+    children: [
+      { label: '文本内容', key: 'textDetail', component: 'input' },
+      { label: '链接地址', key: 'href', component: 'input' },
+      {
+        label: '在何处打开文档',
+        key: 'target',
+        component: 'select',
+        option: SkipType,
+      },
+    ],
   },
 ];
 //* 单选、输入、颜色 */
@@ -54,6 +68,10 @@ const action = {
 const other = {};
 export default {
   init,
+  confIndex: [
+    { key: '属性', field: 'property' },
+    { key: '动作', field: 'action' },
+  ],
   property,
   style,
   action,

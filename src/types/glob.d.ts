@@ -25,11 +25,11 @@ declare type GridItem = Point &
     [key: string]: unknown;
   };
 
-declare type Comp = GridItem & {
+declare type Comp = Partial<GridItem> & {
   name: string; // 中文别名
   component: `free-${string}` | 'page'; //对应组件名称，一定要和注册的全局组件对应上
   model: string; // 组件绑定的key，唯一
-  mode: 'edit' | 'show'; // 模式(编辑/展示)
+  mode?: 'edit' | 'show'; // 模式(编辑/展示)
   value?: string; // 指向可以更新当前组件值的路径, options.textDetail
   options: AnyObj; // 组件配置
   actions: Action[]; // 动作配置

@@ -30,6 +30,7 @@
 import { computed } from 'vue';
 import { COMPONENT_LIST } from '../data/componentsList';
 import { useLowcodeStore } from '@/store/lowcode';
+import { cloneDeep } from 'lodash';
 import emitter from '@/plugin/mitt';
 const lowcode = useLowcodeStore();
 console.log('store', lowcode);
@@ -37,10 +38,10 @@ const allComponents = computed(() => COMPONENT_LIST);
 const listTitle = computed(() => (lowcode.select?.component === 'page' ? '页面组件' : '表单组件'));
 
 const drag = element => {
-  emitter.emit('add-component', element);
+  emitter.emit('add-component', cloneDeep(element));
 };
 const dragend = element => {
-  emitter.emit('end-add-component', element);
+  emitter.emit('end-add-component', cloneDeep(element));
 };
 </script>
 <style lang="less" scoped>

@@ -27,34 +27,44 @@ const init: Comp = {
 };
 //* 这里是关于配置项配置 列表 */
 const property = [
-  { label: '绑定字段', key: 'model', component: 'input' },
-  { label: '文本内容', key: 'textDetail', component: 'input' },
   {
-    label: '尺寸',
-    key: 'size',
-    component: 'radio',
-    option: [
-      { label: '大尺寸', value: 'large' },
-      { label: '中等尺寸', value: 'default' },
-      { label: '小尺寸', value: 'small' },
-    ],
+    label: '基本信息',
+    group: '',
+    children: [{ label: '绑定字段', key: 'model', component: 'input' }],
   },
   {
-    label: '类型',
-    key: 'type',
-    component: 'radio',
-    option: [
-      { label: 'primary', value: 'primary' },
-      { label: 'success', value: 'success' },
-      { label: 'warning', value: 'warning' },
-      { label: 'danger', value: 'danger' },
-      { label: 'info', value: 'info' },
+    label: '属性配置',
+    group: 'options',
+    children: [
+      { label: '文本内容', key: 'textDetail', component: 'input' },
+      {
+        label: '尺寸',
+        key: 'size',
+        component: 'radio',
+        option: [
+          { label: '大尺寸', value: 'large' },
+          { label: '中等尺寸', value: 'default' },
+          { label: '小尺寸', value: 'small' },
+        ],
+      },
+      {
+        label: '类型',
+        key: 'type',
+        component: 'radio',
+        option: [
+          { label: 'primary', value: 'primary' },
+          { label: 'success', value: 'success' },
+          { label: 'warning', value: 'warning' },
+          { label: 'danger', value: 'danger' },
+          { label: 'info', value: 'info' },
+        ],
+      },
+      { label: '朴素按钮', key: 'plain', component: 'switch' },
+      { label: '文字按钮', key: 'text', component: 'switch' },
+      { label: '圆角按钮', key: 'round', component: 'switch' },
+      { label: '前置icon', key: 'icon', component: 'select', option: store.iconListInSelect },
     ],
   },
-  { label: '朴素按钮', key: 'plain', component: 'switch' },
-  { label: '文字按钮', key: 'text', component: 'switch' },
-  { label: '圆角按钮', key: 'round', component: 'switch' },
-  { label: '前置icon', key: 'icon', component: 'select', option: store.iconListInSelect },
 ];
 //* 单选、输入、颜色 */
 const style = [];
@@ -87,6 +97,10 @@ const action = {
 const other = {};
 export default {
   init,
+  confIndex: [
+    { key: '属性', field: 'property' },
+    { key: '动作', field: 'action' },
+  ],
   property,
   style,
   action,

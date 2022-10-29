@@ -1,6 +1,6 @@
 <template>
   <h5> 默认监听事件 </h5>
-  <free-tag v-for="tag of conf.action.eventList" :key="tag">{{ tag.label }}</free-tag>
+  <free-tag v-for="tag of config.eventList" :key="tag">{{ tag.label }}</free-tag>
   <h5> 动作配置 <el-button @click="addAction">添加</el-button> </h5>
   <!-- 做动作配置 -->
   <div v-for="(action, i) of lowcode.select.actions" :key="i">
@@ -65,11 +65,11 @@ import { DownloadType, SkipType } from '@/shared/schema/data';
 import store from 'storejs';
 const lowcode = useLowcodeStore(); // lowcode.select.actions
 const props = defineProps({
-  conf: { type: Object, required: true },
+  config: { type: Object, required: true },
 });
 const requestRef = ref<{ openDialog: RequestRef }>();
-const actionTriggerList = computed(() => props.conf.action.triggerCondition);
-const actionTypeList = computed(() => props.conf.action.type);
+const actionTriggerList = computed(() => props.config.triggerCondition);
+const actionTypeList = computed(() => props.config.type);
 
 watch(
   () => lowcode.select,

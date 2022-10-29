@@ -67,25 +67,74 @@ export const request = cloneDeep({
   successCondition: '',
 });
 // 初始化页面
-export const initPage = cloneDeep({
+export const initPage: Comp = cloneDeep({
   name: '页面',
   model: 'page',
+  component: 'page',
   actions: [],
   options: {
-    // width: '100%',
-    // height: '100%',
-    // styles: {
-    //   backgroundColor: '#ffffff',
-    //   backgroundImage: '',
-    //   margin: '',
-    //   padding: '',
-    //   bgType: '1',
-    // },
-    // pageRegs: [],
+    col: 12,
+    'row-height': 30,
+    'card-margin': 2,
   },
   common: {
     // skip,
     // request,
   },
-  children: [] as AnyObj[],
+  style: {
+    'background-color': '#eee',
+  },
+  children: [] as Comp[],
+  i: '0',
 });
+//* 这里是关于配置项配置 列表 */
+const property = [
+  {
+    label: '页面设置',
+    group: 'options',
+    children: [
+      { label: '页面栅格', key: 'col', component: 'input-number', placeholder: '列' },
+      { label: '页面行高', key: 'row-height', component: 'input-number', placeholder: '像素' },
+      { label: '卡片间距', key: 'card-margin', component: 'input-number', placeholder: '像素' },
+    ],
+  },
+  {
+    label: '主题设置',
+    group: 'style',
+    children: [{ label: '背景色', key: 'background-color', component: 'color' }],
+  },
+];
+//* 动作配置 */
+const action = {
+  // 触发条件
+  triggerCondition: [
+    { label: '点击', value: 'click' },
+    { label: '等待触发', value: 'await' },
+  ],
+  // 动作类型
+  type: [
+    { label: '下载', value: 'download' },
+    { label: '跳转', value: 'skip' },
+    { label: '触发事件', value: 'event' },
+    { label: '触发动作', value: 'action' },
+    { label: '发送请求', value: 'request' },
+    { label: '更新数据', value: 'setModel' },
+  ],
+  // 默认监听事件
+  eventList: [
+    // { value: 'show', label: '显示' },
+    // { value: 'hide', label: '隐藏' },
+    { value: 'disabled', label: '禁用' },
+    { value: 'cancelDisabled', label: '取消禁用' },
+  ],
+};
+//* 单选、输入、颜色 */
+const style = [];
+export default {
+  init: initPage,
+  confIndex: [{ key: '页面', field: 'property' }],
+  property,
+  style,
+  action,
+  other: {},
+};
