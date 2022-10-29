@@ -42,7 +42,7 @@ const { SET_CUR_SELECT } = useLowcodeStore();
 const isSelectCur = computed(() => select.value.model == props.element.model);
 // 更新当前选中的组件
 const clickGrid = element => {
-  SET_CUR_SELECT(element);
+  SET_CUR_SELECT(element.i);
 };
 const copyComp = () => {
   // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
@@ -53,7 +53,7 @@ const copyComp = () => {
   clone.i = String(id);
   // 还有位置信息也要改变
   clone.x = clone.x;
-  clone.y = clone.y + clone.h;
+  clone.y = (clone.y as number) + (clone.h as number);
   parent.children.push(clone);
   // 保存id信息
   saveIdMap(clone.component, id);
@@ -61,7 +61,7 @@ const copyComp = () => {
 const deleteComp = () => {
   const parent = findParent(data.value, props.element);
   parent.children.splice(props.index, 1);
-  SET_CUR_SELECT({});
+  SET_CUR_SELECT('0');
 };
 </script>
 <style lang="less" scoped>

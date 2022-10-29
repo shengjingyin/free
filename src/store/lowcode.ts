@@ -3,12 +3,13 @@ import { initPage } from '@/config/lowcode';
 import conf from '@/component/config';
 import { cloneDeep } from 'lodash';
 import store from 'storejs';
+import { findEleByKY } from '@/shared/tree/index';
 
 function parseEvent(node) {
   const tree = {
     label: node.name + node.model,
     value: node.model,
-    children: [] as any[],
+    children: [] as Comp[],
     actions: [] as Action[],
   };
   _parseEvent(node, tree);
@@ -22,7 +23,7 @@ function _parseEvent(node, parent) {
       const info = {
         label: item.name + item.model,
         value: item.model,
-        children: [] as any[],
+        children: [] as Comp[],
         actions: [],
       };
       parent.children.push(info);
@@ -39,7 +40,7 @@ function parseAction(root) {
   const tree = {
     label: root.name + root.model,
     value: root.model,
-    children: [] as any[],
+    children: [] as Comp[],
   };
   _parseAction(root, tree);
   return [tree];
@@ -66,7 +67,7 @@ function parseModel(root) {
   const tree = {
     label: root.name + root.model,
     value: root.model,
-    children: [] as any[],
+    children: [] as Comp[],
   };
   _parseModel(root, tree);
   return [tree];
@@ -89,7 +90,8 @@ function _parseModel(root, tree) {
 export const useLowcodeStore = defineStore('lowcode', {
   state: () => ({
     data: store.get('data') ? JSON.parse(store.get('data')) : initPage, // 仪表盘内所有组件集合
-    select: {} as Comp, // 当前选中的组件
+    // select: {} as Comp, // 当前选中的组件
+    selectId: '', // 当前选中的组件的id （i）
     idMap: store.get('idMap') ? JSON.parse(store.get('idMap')) : {}, // 维护一个所有组件对应的id结合
   }),
   getters: {
@@ -105,12 +107,18 @@ export const useLowcodeStore = defineStore('lowcode', {
     modelMap(state) {
       return parseModel(state.data);
     },
-    // 可更新列表(过滤不可更新组件，设置disabled即可)
-    UpdatableList(state) {},
+    // 当前选中元素
+    select(state) {
+      // 优先查找目标元素，找不到就返回页面
+      const target =
+        findEleByKY(state.data, { key: 'i', value: state.selectId }) ||
+        findEleByKY(state.data, { key: 'i', value: '0' });
+      return target;
+    },
   },
   actions: {
-    SET_CUR_SELECT(val) {
-      this.select = val;
+    SET_CUR_SELECT(i: string) {
+      this.selectId = i;
     },
   },
 });

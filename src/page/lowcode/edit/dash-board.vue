@@ -4,18 +4,19 @@
     :class="{ active: select.component === 'page' }"
     class="page-container"
     @click.stop="handleSelectPage"
+    :style="styles"
   >
     <div id="content">
       <grid-layout
         ref="layoutRef"
         class="grid-layout"
-        :margin="[2, 2]"
+        :margin="[margin, margin]"
         v-model:layout="layout"
-        :col-num="12"
-        :row-height="30"
+        :col-num="colNum"
+        :row-height="rowHeight"
         :is-draggable="true"
         :is-resizable="true"
-        :vertical-compact="true"
+        :vertical-compact="false"
         :use-css-transforms="true"
       >
         <grid-item
@@ -51,9 +52,18 @@ defineProps({
     default: false,
   },
 });
-const { select } = useLowcodeStore();
+const { select, SET_CUR_SELECT } = useLowcodeStore();
 const { data } = storeToRefs(useLowcodeStore());
-// const layout = ref<Comp[]>([]);
+SET_CUR_SELECT(data.value.i);
+// 列、数量
+const colNum = computed(() => data.value.options.col);
+// 行高
+const rowHeight = computed(() => data.value.options['row-height']);
+// 卡片间距
+const margin = computed(() => data.value.options['card-margin']);
+// 样式
+const styles = computed(() => data.value.style);
+
 const layout = computed<Comp[]>({
   get() {
     return data.value.children;
@@ -129,12 +139,8 @@ const dragComponent = async element => {
           /* (eventName, id, x, y, h, w) */
           layoutRef.value.dragEvent('dragstart', _element.i, new_pos.x, new_pos.y, 1, 1);
           DragPos.i = _element.i;
-          DragPos.x = layout.value[index].x;
-          DragPos.y = layout.value[index].y;
-        } else {
-          layoutRef.value.dragEvent('dragend', _element.i, new_pos.x, new_pos.y, 1, 1);
-          // 去除 当前添加的元素
-          layout.value = layout.value.filter(obj => obj.i !== _element.i);
+          DragPos.x = layout.value[index].x as number;
+          DragPos.y = layout.value[index].y as number;
         }
       } catch {}
     }
@@ -146,13 +152,16 @@ let key;
 const dragEnd = () => {
   // key = generateKey(); // 每次结束拖拽 重新生成1个key
   const _mouseInGrid = mouseInGrid();
-  if (_mouseInGrid) {
-    try {
-      layoutRef.value.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 1, 1);
+  try {
+    layoutRef.value.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 1, 1);
+    if (_mouseInGrid) {
       // 保存id信息
       saveIdMap(_element.component, key);
-    } catch {}
-  }
+    } else {
+      // 去除 当前添加的元素
+      layout.value = layout.value.filter(obj => obj.i !== _element.i);
+    }
+  } catch {}
 };
 const genElementInfo = (target: Comp) => {
   key = generateKey(target.component);
@@ -183,9 +192,6 @@ const genElementInfo = (target: Comp) => {
   border: 1px solid black;
   margin: 10px 0;
   padding: 10px;
-}
-.vue-grid-layout {
-  background: #eee;
 }
 .vue-grid-item:not(.vue-grid-placeholder) {
   background: #ccc;
