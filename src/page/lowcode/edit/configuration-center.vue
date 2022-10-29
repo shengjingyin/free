@@ -1,6 +1,6 @@
 <template>
   <!-- 卡片配置、组件属性、样式、动作 -->
-  <div> 配置中心 </div>
+  <h5> 配置中心 </h5>
   <el-tabs v-model="activeTab">
     <template v-for="tab of tabList" :key="tab.key">
       <el-tab-pane :label="tab.key" :name="tab.key">

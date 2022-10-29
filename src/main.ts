@@ -7,7 +7,6 @@ import App from './App.vue';
 import { createPinia } from 'pinia';
 
 import install from './install';
-
 const app = createApp(App);
 
 if (process.env.NODE_ENV !== 'production') {
