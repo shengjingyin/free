@@ -54,7 +54,11 @@ defineProps({
 });
 const { select, SET_CUR_SELECT } = useLowcodeStore();
 const { data } = storeToRefs(useLowcodeStore());
-SET_CUR_SELECT(data.value.i);
+// 设置当前选中组件为页面
+SET_CUR_SELECT('0');
+const handleSelectPage = () => {
+  SET_CUR_SELECT('0');
+};
 // 列、数量
 const colNum = computed(() => data.value.options.col);
 // 行高
@@ -72,8 +76,6 @@ const layout = computed<Comp[]>({
     data.value.children = newData;
   },
 });
-
-const handleSelectPage = () => {};
 
 // 保存所有更新数据
 const _saveTreeData = debounce((...args) => {

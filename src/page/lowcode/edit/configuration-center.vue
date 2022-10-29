@@ -29,10 +29,7 @@ const getComp = tab => tabList.value.find(({ key }) => key === tab)?.component;
 const tabList = ref([
   { key: '卡片', component: shallowRef(Card) },
   { key: '属性', component: shallowRef(ConfigRender) },
-  {
-    key: '样式',
-    component: shallowRef(defineAsyncComponent(() => import('./config/style.vue'))),
-  },
+  { key: '样式', component: shallowRef(ConfigRender) },
   {
     key: '动作',
     component: shallowRef(defineAsyncComponent(() => import('./config/action.vue'))),

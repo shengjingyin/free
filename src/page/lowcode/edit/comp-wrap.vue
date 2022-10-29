@@ -1,5 +1,5 @@
 <template>
-  <div @click="clickGrid(element)" :class="['item-container', isSelectCur ? 'active' : '']">
+  <div @click.stop="clickGrid(element)" :class="['item-container', isSelectCur ? 'active' : '']">
     <!-- 根据配置项中定义的 -->
     <component :is="element.component" :element="element"></component>
 

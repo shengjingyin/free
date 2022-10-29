@@ -42,7 +42,7 @@ const props = defineProps({
     default: () => {},
   },
 });
-const activeCollapse = ref(props.config[0].label);
+const activeCollapse = ref(props.config.map(({ label }) => label));
 </script>
 <style lang="less" scoped>
 :deep(.el-form-item) {
