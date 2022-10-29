@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
+    "build-copy": "vite build && esno ./build/script/postBuild.ts",
+    "build:no-cache": "yarn clean:cache && npm run build",
     "eslint-fix": "eslint src/**/*.* --fix",
     "test": "jest"
   },

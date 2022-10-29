@@ -29,7 +29,7 @@
     /* Modules */
     "module": "commonjs" /* Specify what module code is generated. */,
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */
-    // "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */
+    "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     // 解决无法识别路径别名问题
     "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
