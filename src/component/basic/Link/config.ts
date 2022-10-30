@@ -1,4 +1,6 @@
 import { SkipType } from '@/shared/schema/data';
+import { useSystemStore } from '@/store/index';
+const store = useSystemStore();
 //* 这里是关于初始化时，按钮的配置 */
 const init: Comp = {
   name: '链接',
@@ -16,6 +18,7 @@ const init: Comp = {
     target: '_blank',
     type: 'primary',
     underline: false,
+    icon: '',
   },
   // 样式配置
   style: {},
@@ -70,6 +73,7 @@ const property = [
         component: 'select',
         option: SkipType,
       },
+      { label: '前置icon', key: 'icon', component: 'select', option: store.iconListInSelect },
     ],
   },
 ];

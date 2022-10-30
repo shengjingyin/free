@@ -23,3 +23,47 @@
   width: 100% !important;
   height: 100% !important;
 }
+
+.set_scrollbar {
+  // https://developer.mozilla.org/zh-CN/docs/Web/CSS/::-webkit-scrollbar
+  // 整个滚动条.
+  &::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    @media (max-width: 550px) {
+      width: 7px;
+      height: 7px;
+    }
+  }
+  // 滚动条上的按钮 (上下箭头).
+  &::-webkit-scrollbar-button {
+    display: block;
+    width: 0;
+    height: 0;
+  }
+  // 滚动条上的滚动滑块.
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: rgba(128, 133, 144, 0.3);
+  }
+  // 滚动条轨道.
+  &::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background: rgba(128, 133, 144, 0.1);
+  }
+  // 当同时有垂直滚动条和水平滚动条时交汇的部分.
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+/* @w 滚动条宽， @c 滚动条颜色 */
+.set_scrollbar(@w, @c) {
+  .set_scrollbar();
+  &::-webkit-scrollbar {
+    width: @w;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: @c;
+  }
+}

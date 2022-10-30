@@ -4,31 +4,21 @@
 @import './codemirror/codemirror.css';
 @import './codemirror/merge.css';
 @import './codemirror/lint.css';
+@import './mixin.less';
 
 .freedom-main {
   background: #fff;
   height: 100vh;
 
   .module-container {
-    height: 100%;
+    height: 100vh;
     width: 250px;
     min-width: 250px;
     overflow-y: auto;
     padding: 10px;
     box-sizing: border-box;
     width: 100%;
-    &::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      background-color: #f5f5f5;
-    }
-    &::-webkit-scrollbar {
-      width: 4px;
-      background-color: #f5f5f5;
-    }
-    &::-webkit-scrollbar-thumb {
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      background-color: #ccc;
-    }
+    .set_scrollbar(8px, pink);
     .widget-list-title {
       font-size: 18px;
       font-weight: 600;
