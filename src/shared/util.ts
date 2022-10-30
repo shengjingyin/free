@@ -88,13 +88,15 @@ export function once(fn: Function): Function {
 export const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time));
 
 // 获取当前组件的最新id
-export function generateKey(type: string): number {
-  const id = lowcode.idMap.hasOwnProperty(type) ? lowcode.idMap[type] + 1 : 1;
-  return id;
+export function generateKey(type: string) {
+  const index = lowcode.idMap.hasOwnProperty(type) ? lowcode.idMap[type] + 1 : 1;
+  return index;
 }
 // 保存id信息
 export function saveIdMap(type: string, id: number) {
   lowcode.idMap[type] = id;
+  // id 从1 开始
+  ++lowcode.idMap.total;
   store.set('idMap', JSON.stringify(lowcode.idMap));
 }
 

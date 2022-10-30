@@ -2,7 +2,6 @@
   <el-image class="size-100" fit="cover" v-bind="options" hide-on-click-modal preview-teleported>
     <template #error>
       <div class="image-slot">
-        <!-- <el-icon :size="30"><icon-picture /></el-icon> -->
         <el-icon :size="30"> <PictureFilled /></el-icon>
         <p>图片加载失败</p>
       </div>

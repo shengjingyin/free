@@ -37,7 +37,7 @@ const props = defineProps({
     required: true,
   },
 });
-const { select, data } = storeToRefs(useLowcodeStore());
+const { select, data, idMap } = storeToRefs(useLowcodeStore());
 const { SET_CUR_SELECT } = useLowcodeStore();
 const isSelectCur = computed(() => select.value.model == props.element.model);
 // 更新当前选中的组件
@@ -48,15 +48,15 @@ const copyComp = () => {
   // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
   const parent = findParent(data.value, props.element);
   const clone = cloneDeep(props.element);
-  const id = generateKey(clone.component);
-  clone.model = clone.component + `_${id}`;
-  clone.i = String(id);
+  const index = generateKey(clone.component);
+  clone.model = clone.component + `_${index}`;
+  clone.i = String(idMap.value.total);
   // 还有位置信息也要改变
   clone.x = clone.x;
   clone.y = (clone.y as number) + (clone.h as number);
   parent.children.push(clone);
   // 保存id信息
-  saveIdMap(clone.component, id);
+  saveIdMap(clone.component, index);
 };
 const deleteComp = () => {
   const parent = findParent(data.value, props.element);

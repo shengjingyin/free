@@ -92,7 +92,7 @@ export const useLowcodeStore = defineStore('lowcode', {
     data: store.get('data') ? JSON.parse(store.get('data')) : initPage, // 仪表盘内所有组件集合
     // select: {} as Comp, // 当前选中的组件
     selectId: '', // 当前选中的组件的id （i）
-    idMap: store.get('idMap') ? JSON.parse(store.get('idMap')) : {}, // 维护一个所有组件对应的id结合
+    idMap: store.get('idMap') ? JSON.parse(store.get('idMap')) : { total: 0 }, // 维护一个所有组件对应的id结合
   }),
   getters: {
     // 解析事件树

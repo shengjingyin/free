@@ -53,7 +53,7 @@ defineProps({
   },
 });
 const { select, SET_CUR_SELECT } = useLowcodeStore();
-const { data } = storeToRefs(useLowcodeStore());
+const { data, idMap } = storeToRefs(useLowcodeStore());
 // 设置当前选中组件为页面
 SET_CUR_SELECT('0');
 const handleSelectPage = () => {
@@ -152,7 +152,6 @@ const dragComponent = async element => {
 };
 let key;
 const dragEnd = () => {
-  // key = generateKey(); // 每次结束拖拽 重新生成1个key
   const _mouseInGrid = mouseInGrid();
   try {
     layoutRef.value.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 1, 1);
@@ -172,7 +171,7 @@ const genElementInfo = (target: Comp) => {
     options: {
       ...target.options,
     },
-    i: String(key),
+    i: String(idMap.value.total), // 不能重复
     // 绑定键值
     model: target.component + '_' + key,
   };
