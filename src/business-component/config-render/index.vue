@@ -9,16 +9,18 @@
             <el-icon class="header-icon"> <info-filled /> </el-icon>
           </h5>
         </template>
-        <template v-for="conf of item.children" :key="conf.key">
-          <el-form-item :label="conf.label" :show-message="false">
-            <component
-              :is="configurator[conf.component]"
-              :config="conf"
-              :select="lowcode.select"
-              :group="item.group"
-            ></component>
-          </el-form-item>
-        </template>
+        <el-form v-bind="item.conf">
+          <template v-for="conf of item.children" :key="conf.key">
+            <el-form-item v-bind="conf" :label="conf.label" :show-message="false">
+              <component
+                :is="configurator[conf.component]"
+                :config="conf"
+                :select="lowcode.select"
+                :group="item.group"
+              ></component>
+            </el-form-item>
+          </template>
+        </el-form>
       </el-collapse-item>
     </template>
   </el-collapse>
@@ -28,6 +30,7 @@
 import { ref, defineAsyncComponent, shallowRef } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 const lowcode = useLowcodeStore();
+// 配置项组件列表
 const configurator = ref({
   switch: shallowRef(defineAsyncComponent(() => import('./comp/switch.vue'))),
   radio: shallowRef(defineAsyncComponent(() => import('./comp/radio.vue'))),
@@ -35,6 +38,7 @@ const configurator = ref({
   input: shallowRef(defineAsyncComponent(() => import('./comp/input.vue'))),
   'input-number': shallowRef(defineAsyncComponent(() => import('./comp/input-number.vue'))),
   color: shallowRef(defineAsyncComponent(() => import('./comp/color.vue'))),
+  'dynamic-input': shallowRef(defineAsyncComponent(() => import('./comp/dynamic-input.vue'))),
 });
 const props = defineProps({
   config: {

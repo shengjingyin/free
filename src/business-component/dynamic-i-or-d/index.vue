@@ -1,26 +1,27 @@
 <template>
-  <el-row :gutter="24" align="middle" v-for="(child, index) in list" :key="child.key">
-    <slot name="item" :data="child" :index="index"></slot>
-    <slot name="tool"> </slot>
-    <el-button circle plain @click="increase(index)">+</el-button>
-    <el-button circle plain :disabled="index === 0" @click="decrease(index)"> - </el-button>
-  </el-row>
+  <template v-if="Array.isArray(list)">
+    <el-row class="row" :gutter="24" align="middle" v-for="(child, index) in list" :key="child">
+      <slot name="item" :data="child" :index="index"></slot>
+
+      <el-button type="primary" circle plain @click="increase(index)">+</el-button>
+      <el-button type="danger" circle plain :disabled="list.length === 1" @click="decrease(index)">
+        -
+      </el-button>
+    </el-row>
+  </template>
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed } from 'vue';
+import { PropType, computed, ref } from 'vue';
 import { cloneDeep } from 'lodash';
 const props = defineProps({
   list: {
-    type: Array as PropType<AnyObj[]>,
-    required: true,
-  },
-  item: {
-    type: Object,
+    type: Array as PropType<unknown[]> | null,
     required: true,
   },
 });
 const emit = defineEmits(['update:list']);
+const item = ref(props.list ? props.list[0] : null);
 const formList = computed({
   get() {
     return props.list;
@@ -31,7 +32,7 @@ const formList = computed({
 });
 
 const increase = (index: number) => {
-  formList.value.splice(index + 1, 0, cloneDeep(props.item));
+  formList.value.splice(index + 1, 0, cloneDeep(item.value));
   //   emits("update:list", props.list);
 };
 const decrease = (index: number) => {
@@ -39,4 +40,16 @@ const decrease = (index: number) => {
   //   emits("update:list", props.list);
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.row {
+  flex-wrap: nowrap !important;
+  margin-left: unset !important;
+  width: 100%;
+}
+
+:deep(.el-button) {
+  width: 25px;
+  margin-left: 5px;
+  height: 25px;
+}
+</style>

@@ -1,9 +1,15 @@
 <template>
-  <free-radio v-model="value" :option="config!.option"> </free-radio>
+  <DynamicIorD :list="value">
+    <template #item="{ index }">
+      <!-- {{ String(data) + index }} -->
+      <free-input v-model="value[index]" size="small"></free-input>
+    </template>
+  </DynamicIorD>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
+import DynamicIorD from '../../dynamic-i-or-d/index.vue';
 const props = defineProps({
   select: {
     type: Object,
