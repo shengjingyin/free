@@ -11,8 +11,9 @@ const init: Comp = {
   // 组件配置
   options: {
     type: 'primary', // 样式类型
-    size: 'small',
-    icon: 'Search',
+    size: 'default',
+    icon: '',
+    color: '',
     plain: false,
     text: false,
     round: false,
@@ -38,7 +39,7 @@ const property = [
     children: [
       { label: '文本内容', key: 'textDetail', component: 'input' },
       {
-        label: '尺寸',
+        label: '文字尺寸',
         key: 'size',
         component: 'radio',
         option: [
@@ -48,17 +49,18 @@ const property = [
         ],
       },
       {
-        label: '类型',
+        label: '预设样式',
         key: 'type',
         component: 'radio',
         option: [
-          { label: 'primary', value: 'primary' },
-          { label: 'success', value: 'success' },
-          { label: 'warning', value: 'warning' },
-          { label: 'danger', value: 'danger' },
-          { label: 'info', value: 'info' },
+          { label: '主要', value: 'primary' },
+          { label: '成功', value: 'success' },
+          { label: '警告', value: 'warning' },
+          { label: '危险', value: 'danger' },
+          { label: '信息', value: 'info' },
         ],
       },
+      { label: '自定义颜色', key: 'color', component: 'color' },
       { label: '朴素按钮', key: 'plain', component: 'switch' },
       { label: '文字按钮', key: 'text', component: 'switch' },
       { label: '圆角按钮', key: 'round', component: 'switch' },

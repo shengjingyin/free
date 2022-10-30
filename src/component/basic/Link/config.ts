@@ -14,6 +14,8 @@ const init: Comp = {
     textDetail: '文字链接（有链接时，可跳转）', // 展示label
     href: '',
     target: '_blank',
+    type: 'primary',
+    underline: false,
   },
   // 样式配置
   style: {},
@@ -28,6 +30,33 @@ const property = [
     label: '基本信息',
     group: '',
     children: [{ label: '绑定字段', key: 'model', component: 'input' }],
+  },
+  {
+    label: '样式信息',
+    group: 'options',
+    children: [
+      {
+        label: '预设样式',
+        key: 'type',
+        component: 'radio',
+        option: [
+          { label: '主要', value: 'primary' },
+          { label: '成功', value: 'success' },
+          { label: '警告', value: 'warning' },
+          { label: '危险', value: 'danger' },
+          { label: '信息', value: 'info' },
+        ],
+      },
+      {
+        label: '下划线',
+        key: 'underline',
+        component: 'radio',
+        option: [
+          { label: '有', value: true },
+          { label: '无', value: false },
+        ],
+      },
+    ],
   },
   {
     label: '属性配置',
@@ -60,8 +89,8 @@ const action = {
   eventList: [
     // { value: 'show', label: '显示' },
     // { value: 'hide', label: '隐藏' },
-    // { value: 'disabled', label: '禁用' },
-    // { value: 'cancelDisabled', label: '取消禁用' },
+    { value: 'disabled', label: '禁用' },
+    { value: 'cancelDisabled', label: '取消禁用' },
   ],
 };
 //* 请求+通用+跳转配置 */

@@ -195,11 +195,14 @@ const genElementInfo = (target: Comp) => {
   margin: 10px 0;
   padding: 10px;
 }
+.vue-grid-item {
+  box-sizing: border-box;
+}
 .vue-grid-item:not(.vue-grid-placeholder) {
-  background: #ccc;
+  background: transparent;
   border: 1px solid black;
 }
-/deep/.vue-grid-item.vue-grid-placeholder {
+:deep(.vue-grid-item.vue-grid-placeholder) {
   background-color: skyblue;
   opacity: 0.4;
 }

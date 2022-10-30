@@ -14,7 +14,6 @@
 
 <script lang="ts" setup>
 import { ref, defineAsyncComponent, shallowRef, computed } from 'vue';
-import Card from './config/card.vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
 import config from '@/component/config';
@@ -27,7 +26,6 @@ const confIndex = computed(() => conf.value.confIndex);
 const getComp = tab => tabList.value.find(({ key }) => key === tab)?.component;
 
 const tabList = ref([
-  { key: '卡片', component: shallowRef(Card) },
   { key: '属性', component: shallowRef(ConfigRender) },
   { key: '样式', component: shallowRef(ConfigRender) },
   {
