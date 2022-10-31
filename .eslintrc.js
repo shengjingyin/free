@@ -61,6 +61,7 @@ module.exports = defineConfig({
     'vue/require-default-prop': 'off', // props是否需要默认值
     'vue/custom-event-name-casing': 'off', // 应用小驼峰、短横线
     'vue/html-self-closing': 'off', // 闭合标签关闭
+    'no-mutating-props': 'off', // 能否修改props
   },
   overrides: [
     {

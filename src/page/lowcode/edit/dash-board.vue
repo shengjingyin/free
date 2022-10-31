@@ -1,44 +1,37 @@
 <template>
   <!-- 仪表盘 -->
-  <section
-    :class="{ active: select.component === 'page' }"
-    class="page-container"
-    @click.stop="handleSelectPage"
-    :style="styles"
-  >
-    <div id="content">
-      <grid-layout
-        ref="layoutRef"
-        class="grid-layout"
-        :margin="[margin, margin]"
-        v-model:layout="layout"
-        :col-num="colNum"
-        :row-height="rowHeight"
-        :is-draggable="true"
-        :is-resizable="true"
-        :vertical-compact="false"
-        :use-css-transforms="true"
+  <section ref="dashBoardRef" class="size-100" :style="styles" @click.stop="handleSelectPage">
+    <grid-layout
+      ref="layoutRef"
+      class="grid-layout"
+      :margin="[margin, margin]"
+      v-model:layout="layout"
+      :col-num="colNum"
+      :row-height="rowHeight"
+      :is-draggable="true"
+      :is-resizable="true"
+      :vertical-compact="false"
+      :use-css-transforms="true"
+    >
+      <grid-item
+        ref="gridItemRef"
+        dragAllowFrom=".drag-able"
+        :key="item.i"
+        v-for="(item, index) of layout"
+        :x="item.x"
+        :y="item.y"
+        :w="item.w"
+        :h="item.h"
+        :i="item.i"
       >
-        <grid-item
-          ref="gridItemRef"
-          dragAllowFrom=".drag-able"
-          :key="item.i"
-          v-for="(item, index) of layout"
-          :x="item.x"
-          :y="item.y"
-          :w="item.w"
-          :h="item.h"
-          :i="item.i"
-        >
-          <CompWrap :element="item" :index="index"></CompWrap>
-        </grid-item>
-      </grid-layout>
-    </div>
+        <CompWrap :element="item" :parent="parent" :index="index"></CompWrap>
+      </grid-item>
+    </grid-layout>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, nextTick, onUnmounted, watch, PropType } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import CompWrap from './comp-wrap.vue';
 import { generateKey, saveIdMap } from '@/shared/util';
@@ -46,34 +39,39 @@ import emitter from '@/plugin/mitt';
 import { storeToRefs } from 'pinia';
 import { saveTreeData } from '@/shared/app';
 import { debounce } from 'lodash';
-defineProps({
-  disabled: {
-    type: Boolean,
-    default: false,
+import { slow } from '@/shared/util';
+const props = defineProps({
+  layoutData: {
+    type: Array as PropType<Comp[]>,
+    required: true,
+  },
+  parent: {
+    type: Object as PropType<Container>,
+    required: true,
   },
 });
-const { select, SET_CUR_SELECT } = useLowcodeStore();
-const { data, idMap } = storeToRefs(useLowcodeStore());
+const { SET_CUR_SELECT } = useLowcodeStore();
+const { data, idMap, selectId } = storeToRefs(useLowcodeStore());
 // 设置当前选中组件为页面
-SET_CUR_SELECT('0');
 const handleSelectPage = () => {
   SET_CUR_SELECT('0');
 };
 // 列、数量
-const colNum = computed(() => data.value.options.col);
+const colNum = computed(() => props.parent.options.col);
 // 行高
-const rowHeight = computed(() => data.value.options['row-height']);
+const rowHeight = computed(() => props.parent.options['row-height']);
 // 卡片间距
-const margin = computed(() => data.value.options['card-margin']);
+const margin = computed(() => props.parent.options['card-margin']);
 // 样式
-const styles = computed(() => data.value.style);
+const styles = computed(() => props.parent.style);
 
 const layout = computed<Comp[]>({
   get() {
-    return data.value.children;
+    return props.layoutData;
   },
   set(newData) {
-    data.value.children = newData;
+    // console.log('🚀 ~ file: dash-board.vue ~ line 69 ~ set ~ newData', newData);
+    // data.value.children = newData;
   },
 });
 
@@ -108,21 +106,36 @@ const updateMousePoint = function (e) {
 onUnmounted(() => {
   document.removeEventListener('dragover', updateMousePoint);
 });
+const dashBoardRef = ref<HTMLElement>();
 const mouseInGrid = () => {
-  parentRect = document.getElementById('content')!.getBoundingClientRect();
+  if (!dashBoardRef.value) return false;
+  parentRect = dashBoardRef.value.getBoundingClientRect();
   return (
     mouseXY.x > parentRect.left &&
     mouseXY.x < parentRect.right &&
     mouseXY.y > parentRect.top &&
-    mouseXY.y < parentRect.bottom
+    mouseXY.y < parentRect.bottom &&
+    // 除了满足在仪表盘内，还需要满足不在嵌套外面，如果我想去嵌套A内，经过全局时，需要在进入嵌套A内，把全局内的元素删除掉
+    // 如果在内层任意嵌套内，发现了当前元素，那么要删除外层该元素
+    // 通过选中容器与当前容器id做对比，看看哪个容器可以添加元素，有children属性的是容器
+    props.parent.hasOwnProperty('children') &&
+    selectId.value === props.parent.i
   );
 };
 let _element;
+const log = slow(() => {
+  console.log(
+    '布局属性',
+    `容器：${props.parent.i} 当前选中：${selectId.value}` + '----' + JSON.stringify(layout.value)
+  );
+});
 const dragComponent = async element => {
   const _mouseInGrid = mouseInGrid();
   _element = genElementInfo(element);
+  // 判断添加进来的组件是不是已经在列表中
   let index = layout.value.findIndex(item => item.i === _element.i);
   if (_mouseInGrid) {
+    debugger;
     if (index === -1) {
       layout.value.push({
         ..._element,
@@ -135,6 +148,7 @@ const dragComponent = async element => {
       await nextTick();
       try {
         const newGrid = gridItemRef.value[index];
+        log();
         // 根据坐标 计算 位置
         let new_pos = newGrid.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
         if (_mouseInGrid) {
@@ -147,12 +161,12 @@ const dragComponent = async element => {
       } catch {}
     }
   }
-  if (index != -1) {
-  }
 };
 let key;
 const dragEnd = () => {
   const _mouseInGrid = mouseInGrid();
+  // 除了满足在仪表盘内，还需要满足不在嵌套外面，如果我想去嵌套A内，经过全局时，需要在进入嵌套A内，把全局内的元素删除掉
+  // 如果在内层任意嵌套内，发现了当前元素，那么要删除外层该元素
   try {
     layoutRef.value.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 1, 1);
     if (_mouseInGrid) {
@@ -171,7 +185,7 @@ const genElementInfo = (target: Comp) => {
     options: {
       ...target.options,
     },
-    i: String(idMap.value.total), // 不能重复
+    i: String(idMap.value.total + 1), // + 1 ，从1开始计数
     // 绑定键值
     model: target.component + '_' + key,
   };
@@ -179,10 +193,6 @@ const genElementInfo = (target: Comp) => {
 </script>
 
 <style scoped lang="less">
-#content {
-  height: 100%;
-}
-
 .grid-layout {
   height: 100% !important;
 }

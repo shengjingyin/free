@@ -1,6 +1,7 @@
 // 菜单信息
 import type { Route } from './type';
 import { addUniqueId } from '@/shared/lodash';
+import { defineAsyncComponent } from 'vue';
 
 // 基础路由信息
 const arr: Route[] = [
@@ -16,7 +17,8 @@ const arr: Route[] = [
     children: [
       {
         path: '/lowcode',
-        component: () => import('@/page/lowcode/index.vue'),
+        // component: LowcodePage,
+        component: defineAsyncComponent(() => import('@/page/lowcode/index.vue')),
       },
     ],
   },
@@ -32,11 +34,13 @@ const arr: Route[] = [
     children: [
       {
         path: 'draggable/:type',
-        component: () => import('@/page/test/draggable/index.vue'),
+        // component: DraggablePage,
+        component: defineAsyncComponent(() => import('@/page/test/draggable/index.vue')),
       },
       {
         path: 'vue-gird-layout/:type',
-        component: () => import('@/page/test/vue-gird-layout/index.vue'),
+        component: defineAsyncComponent(() => import('@/page/test/vue-gird-layout/index.vue')),
+        // component: VueGridLayoutPage,
       },
     ],
   },

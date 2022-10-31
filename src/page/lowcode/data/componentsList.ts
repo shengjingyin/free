@@ -2,6 +2,7 @@ import config from '@/component/config';
 // 基础组件列表
 export const BASIC_LIST = config.basic.map(key => config[key].init);
 export const DATA_LIST = config.data.map(key => config[key].init);
+export const CONTAINER_LIST = config.container.map(key => config[key].init);
 
 // 表单组件列表
 export const FORM_LIST = [];
@@ -12,7 +13,7 @@ export const COMPONENT_LIST = [
     title: '基础组件',
   },
   {
-    list: [],
+    list: CONTAINER_LIST,
     title: '容器类',
   },
   {

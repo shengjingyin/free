@@ -34,10 +34,15 @@ declare type Comp = Partial<GridItem> & {
   options: AnyObj; // 组件配置
   actions: Action[]; // 动作配置
   children?: Comp[]; // 子组件
-  style: AnyObj; // 样式配置
+  style: StyleValue; // 样式配置
 };
 
-declare type AnyObj = Record<string, unknown>;
+// 怎么把指定的属性改成必填/可选
+declare type Container = Omit<Comp, 'children'> & {
+  children: Comp[];
+};
+
+declare type AnyObj = Record<string, any>;
 declare type HttpParam = {
   key: string;
   type: 'custom' | 'fromDataTree';

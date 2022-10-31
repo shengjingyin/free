@@ -2,28 +2,26 @@ import { useSystemStore } from '@/store/index';
 const store = useSystemStore();
 //* 这里是关于初始化时，按钮的配置 */
 const init: Comp = {
-  name: '按钮',
-  component: 'free-button', //对应组件名称，一定要和注册的全局组件对应上
+  name: '布局',
+  component: 'free-layout', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定的key
   // 动作配置
   actions: [],
   // 组件配置
   options: {
-    type: 'primary', // 样式类型
-    size: 'default',
-    icon: '',
-    color: '',
-    plain: false,
-    text: false,
-    round: false,
-    textDetail: '按钮文本',
+    col: 12,
+    'row-height': 30,
+    'card-margin': 2,
   },
   // 样式配置
-  style: {},
+  style: {
+    'background-color': '#eee',
+  },
+  children: [], // 子元素列表
   x: 0,
   y: 0,
-  w: 1,
-  h: 1,
+  w: 10,
+  h: 6,
 };
 //* 这里是关于配置项配置 列表 */
 const property = [
@@ -33,38 +31,18 @@ const property = [
     children: [{ label: '绑定字段', key: 'model', component: 'input' }],
   },
   {
-    label: '属性配置',
+    label: '容器设置',
     group: 'options',
     children: [
-      { label: '文本内容', key: 'textDetail', component: 'input' },
-      {
-        label: '文字尺寸',
-        key: 'size',
-        component: 'radio',
-        option: [
-          { label: '大尺寸', value: 'large' },
-          { label: '中等尺寸', value: 'default' },
-          { label: '小尺寸', value: 'small' },
-        ],
-      },
-      {
-        label: '预设样式',
-        key: 'type',
-        component: 'radio',
-        option: [
-          { label: '主要', value: 'primary' },
-          { label: '成功', value: 'success' },
-          { label: '警告', value: 'warning' },
-          { label: '危险', value: 'danger' },
-          { label: '信息', value: 'info' },
-        ],
-      },
-      { label: '自定义颜色', key: 'color', component: 'color' },
-      { label: '朴素按钮', key: 'plain', component: 'switch' },
-      { label: '文字按钮', key: 'text', component: 'switch' },
-      { label: '圆角按钮', key: 'round', component: 'switch' },
-      { label: '前置icon', key: 'icon', component: 'select', option: store.iconListInSelect },
+      { label: '栅格（列）', key: 'col', component: 'input-number' },
+      { label: '行高（px）', key: 'row-height', component: 'input-number' },
+      { label: '卡片间距（px）', key: 'card-margin', component: 'input-number' },
     ],
+  },
+  {
+    label: '主题设置',
+    group: 'style',
+    children: [{ label: '背景色', key: 'background-color', component: 'color' }],
   },
 ];
 //* 单选、输入、颜色 */
@@ -100,7 +78,7 @@ export default {
   init,
   confIndex: [
     { key: '属性', field: 'property' },
-    { key: '动作', field: 'action' },
+    // { key: '动作', field: 'action' },
   ],
   property,
   style,

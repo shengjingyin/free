@@ -70,6 +70,7 @@ export const request = cloneDeep({
 export const initPage: Comp = cloneDeep({
   name: '页面',
   model: 'page',
+  mode: 'edit',
   component: 'page',
   actions: [],
   options: {

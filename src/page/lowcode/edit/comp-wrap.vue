@@ -28,6 +28,10 @@ import { cloneDeep } from 'lodash';
 import { findParent } from '@/shared/tree/index';
 import { generateKey, saveIdMap } from '@/shared/util';
 const props = defineProps({
+  parent: {
+    type: Object as PropType<Container>,
+    required: true,
+  },
   element: {
     type: Object as PropType<Comp>,
     required: true,
@@ -37,7 +41,7 @@ const props = defineProps({
     required: true,
   },
 });
-const { select, data, idMap } = storeToRefs(useLowcodeStore());
+const { select, idMap } = storeToRefs(useLowcodeStore());
 const { SET_CUR_SELECT } = useLowcodeStore();
 const isSelectCur = computed(() => select.value.model == props.element.model);
 // 更新当前选中的组件
@@ -46,21 +50,20 @@ const clickGrid = element => {
 };
 const copyComp = () => {
   // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
-  const parent = findParent(data.value, props.element);
+  // const parent = findParent(props.parent, props.element);
   const clone = cloneDeep(props.element);
   const index = generateKey(clone.component);
   clone.model = clone.component + `_${index}`;
-  clone.i = String(idMap.value.total);
+  clone.i = String(idMap.value.total + 1);
   // 还有位置信息也要改变
   clone.x = clone.x;
   clone.y = (clone.y as number) + (clone.h as number);
-  parent.children.push(clone);
+  props.parent.children.push(clone);
   // 保存id信息
   saveIdMap(clone.component, index);
 };
 const deleteComp = () => {
-  const parent = findParent(data.value, props.element);
-  parent.children.splice(props.index, 1);
+  props.parent.children.splice(props.index, 1);
   SET_CUR_SELECT('0');
 };
 </script>
