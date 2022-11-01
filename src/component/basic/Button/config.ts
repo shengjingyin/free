@@ -31,6 +31,7 @@ const property = [
   {
     label: '基本信息',
     group: '',
+    popover: '确保唯一',
     children: [{ label: '绑定字段', key: 'model', component: 'input' }],
   },
   {

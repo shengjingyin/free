@@ -4,9 +4,16 @@
     <template v-for="item of config" :key="item.key">
       <el-collapse-item :name="item.label" :title="item.label">
         <template #title>
-          <h5>
+          <h5 style="display: flex; align-items: center">
             {{ item.label }}
-            <el-icon><Warning /></el-icon>
+            <free-tip-icon
+              v-if="item.popover"
+              style="margin-left: 2px"
+              :element="{
+                iconOptions: { size: 18, icon: 'InfoFilled' },
+                popoverOptions: { textDetail: item.popover, effect: 'dark', placement: 'top' },
+              }"
+            ></free-tip-icon>
           </h5>
         </template>
         <el-form v-bind="item.conf">

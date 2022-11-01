@@ -2,6 +2,7 @@
 const init: Comp = {
   name: '图片',
   icon: 'Picture',
+  popover: '支持图片预览',
   component: 'free-image', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定的key
   // 动作配置

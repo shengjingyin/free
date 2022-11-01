@@ -3,6 +3,7 @@ const store = useSystemStore();
 const init: Comp = {
   name: 'Tips',
   icon: 'ChatDotRound',
+  popover: 'icon提示',
   component: 'free-tip-icon', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定的key
   // 动作配置

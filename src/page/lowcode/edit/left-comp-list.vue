@@ -13,7 +13,15 @@
           draggable="true"
           unselectable="on"
         >
-          <el-icon v-if="element.icon" :size="16">
+          <free-tip-icon
+            v-if="element.popover && element.icon"
+            style="margin-left: 2px"
+            :element="{
+              iconOptions: { size: 18, icon: element.icon },
+              popoverOptions: { textDetail: element.popover, effect: 'dark', placement: 'top' },
+            }"
+          ></free-tip-icon>
+          <el-icon v-else-if="element.icon" :size="16">
             <component :is="element.icon"></component>
           </el-icon>
           <span>{{ element.name }}</span>
