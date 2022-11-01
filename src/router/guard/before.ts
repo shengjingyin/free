@@ -1,8 +1,9 @@
 // import store from '@/store/index';
 // import { isGloballyWhitelisted } from '@vue/shared';
 import { useUserStore } from '@/store/user';
+import { RouteLocationNormalized } from 'vue-router';
 
-import { setAsyncRouter } from '../asyncRouter';
+// import { setAsyncRouter } from '../asyncRouter';
 import { routeConfig } from '@/config';
 
 const { whiteList } = routeConfig;
@@ -14,7 +15,11 @@ const { whiteList } = routeConfig;
         2.2、权限页面，需要请求用户信息后，再跳转，这里存储用户信息后，就不会再走这里了，所以只会注册一次路由
 */
 // 鉴权
-const guard = async (to: any, from: any, next: Function) => {
+const guard = async (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: Function
+) => {
   const user = useUserStore();
   const hasUserInfo = user.info;
   if (hasUserInfo) {
