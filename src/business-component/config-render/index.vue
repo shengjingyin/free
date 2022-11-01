@@ -6,7 +6,7 @@
         <template #title>
           <h5>
             {{ item.label }}
-            <el-icon class="header-icon"> <info-filled /> </el-icon>
+            <el-icon><Warning /></el-icon>
           </h5>
         </template>
         <el-form v-bind="item.conf">

@@ -42,8 +42,3 @@ const dragend = element => {
   emitter.emit('end-add-component', cloneDeep(element));
 };
 </script>
-<style lang="less" scoped>
-.a {
-  color: #000;
-}
-</style>

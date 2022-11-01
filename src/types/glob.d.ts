@@ -32,7 +32,7 @@ type _BaseComp = Partial<GridItem> & {
   model: string; // 组件绑定的key，唯一
   mode?: 'edit' | 'show'; // 模式(编辑/展示)
   value?: string; // 指向可以更新当前组件值的路径, options.textDetail
-  options: AnyObj; // 组件配置
+  options?: AnyObj; // 组件配置(可以自定义选项名，同步到group中即可)
   actions: Action[]; // 动作配置
   style: StyleValue; // 样式配置
 };

@@ -135,7 +135,6 @@ const dragComponent = async element => {
   // 判断添加进来的组件是不是已经在列表中
   let index = layout.value.findIndex(item => item.i === _element.i);
   if (_mouseInGrid) {
-    debugger;
     if (index === -1) {
       layout.value.push({
         ..._element,
