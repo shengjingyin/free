@@ -3,7 +3,7 @@
   <!-- 解析之后再传递给基础组件 -->
   <!-- 这样子，将来如果别的系统想要用这个基础组件，也不会因为平台不同而不能够使用 -->
   <!-- <div> 中间层 </div> -->
-  <div class="drop" @dragleave="dragleave" @drop="drop">
+  <div class="drop" @dragleave="dragleave" @drop="drop" @dragover="dragover">
     <BaseComp> </BaseComp>
   </div>
 </template>
@@ -43,7 +43,11 @@ const dragEnd = element => {
 };
 const dragleave = () => {};
 const drop = (event, ...args) => {
-  console.log('event, args', event, args);
+  console.log('🚀 ~ 容器：放置');
+};
+const dragover = (event, ...args) => {
+  // console.log('event, args', event, args);
+  event.preventDefault();
 };
 // emitter.on('add-component', dragComponent);
 // emitter.on('end-add-component', dragEnd);
@@ -51,5 +55,6 @@ const drop = (event, ...args) => {
 <style lang="less" scoped>
 .drop {
   height: 100%;
+  z-index: 999999;
 }
 </style>
