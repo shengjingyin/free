@@ -1,0 +1,86 @@
+.set_scrollbar() {
+    // https://developer.mozilla.org/zh-CN/docs/Web/CSS/::-webkit-scrollbar
+    // 整个滚动条.
+    &::-webkit-scrollbar {
+        width: 14px;
+        height: 14px;
+        padding: 0;
+        @media (max-width: 550px) {
+            width: 7px;
+            height: 7px;
+        }
+    }
+    // 滚动条上的按钮 (上下箭头).
+    &::-webkit-scrollbar-button {
+        display: block;
+        width: 0;
+        height: 0;
+    }
+    // 滚动条上的滚动滑块.
+    &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background: rgba(128, 133, 144, 0.3);
+    }
+    // 滚动条轨道.
+    &::-webkit-scrollbar-track {
+        border-radius: 2px;
+        background: rgba(128, 133, 144, 0.1);
+    }
+    // 当同时有垂直滚动条和水平滚动条时交汇的部分.
+    &::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+}
+/* @w 滚动条宽， @c 滚动条颜色 */
+.set_scrollbar(@w, @c) {
+    .set_scrollbar();
+    &::-webkit-scrollbar {
+        width: @w;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: @c;
+    }
+}
+
+// 文字不可选中
+.unselect() {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+// 清除浮动
+.clearfix() {
+    display: block;
+    zoom: 1;
+
+    &:after {
+        content: " ";
+        display: block;
+        font-size: 0;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+}
+
+.row-bg(@c1, @c2) {
+    .row-odd(@c1);
+    .row-even(@c2);
+}
+
+// 列表隔行换色 奇数行
+.row-odd(@c) {
+    &:nth-child(odd) {
+        background: @c;
+        .bg-normal();
+    }
+}
+// 偶数行
+.row-even(@c) {
+    &:nth-child(even) {
+        background: @c;
+        .bg-normal();
+    }
+}

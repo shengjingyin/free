@@ -1,0 +1,32 @@
+/*-------------------------------------
+├   图片、背景图                       ┆
+└------------------------------------*/
+
+.bg-c(@color) {
+    background-color: @color;
+}
+.bg-img(@u) {
+    background-image: url(@u);
+    .bg-normal();
+}
+.bg-img(@u1, @u2) {
+    background-image: url(@u1);
+    .bg-normal();
+    &:hover {
+        background-image: url(@u2);
+    }
+}
+.bg-normal() {
+    .bg-size(100%, 100%);
+    .bg-repeat(no-repeat);
+    .bg-p(center, center);
+}
+.bg-size(@w, @h: @w) {
+    background-size: @w @h;
+}
+.bg-repeat(@v) {
+    background-repeat: @v;
+}
+.bg-p(@x, @y) {
+    background-position: @x, @y;
+}

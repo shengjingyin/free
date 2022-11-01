@@ -1,5 +1,3 @@
-import { useSystemStore } from '@/store/index';
-const store = useSystemStore();
 //* 这里是关于初始化时，按钮的配置 */
 const init: Comp = {
   name: '布局',

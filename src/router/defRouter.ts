@@ -44,6 +44,14 @@ const arr: Route[] = [
       },
     ],
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    meta: {
+      title: '404',
+    },
+    component: () => import('@/page/404/index.vue'),
+  },
 ];
 
 export const defRoutes = addUniqueId(arr, 'id_');
