@@ -1,25 +1,25 @@
 <template>
   <section class="container-bg">
     <div :class="['container', { 'right-panel-active': mode === 'signIn' }]">
-      <!-- Sign Up -->
+      <!-- 注册 -->
       <div class="container__form container--signup">
-        <form action="#" class="form" id="form1">
-          <h2 class="form__title">Sign Up</h2>
-          <input type="text" placeholder="User" class="input" />
-          <input type="email" placeholder="Email" class="input" />
-          <input type="password" placeholder="Password" class="input" />
-          <button class="btn">Sign Up</button>
+        <form action="javascript:;" class="form" id="form1">
+          <h2 class="form__title">注册</h2>
+          <input type="text" placeholder="账号" focus class="input" />
+          <input type="email" placeholder="邮箱" class="input" />
+          <input type="password" placeholder="密码" class="input" />
+          <button class="btn" @click="signUp">注册</button>
         </form>
       </div>
 
-      <!-- Sign In -->
+      <!-- 登录 -->
       <div class="container__form container--signin">
-        <form action="#" class="form" id="form2">
-          <h2 class="form__title">Sign In</h2>
-          <input type="email" placeholder="Email" class="input" />
-          <input type="password" placeholder="Password" class="input" />
-          <a href="#" class="link">Forgot your password?</a>
-          <button class="btn">Sign In</button>
+        <form action="javascript:;" class="form" id="form2">
+          <h2 class="form__title">登录</h2>
+          <input v-model="user.account" type="text" placeholder="账号" class="input" />
+          <input v-model="user.password" type="password" placeholder="密码" class="input" />
+          <a href="#" class="link">忘记密码?</a>
+          <button class="btn" @click="signIn">登录</button>
         </form>
       </div>
 
@@ -27,10 +27,10 @@
       <div class="container__overlay">
         <div class="overlay">
           <div class="overlay__panel overlay--left">
-            <button class="btn" id="signIn" @click="signIn">Sign In</button>
+            <button class="btn" id="signIn" @click="mode = 'login'">登录</button>
           </div>
           <div class="overlay__panel overlay--right">
-            <button class="btn" id="signUp" @click="signUp">Sign Up</button>
+            <button class="btn" id="signUp" @click="mode = 'signIn'">注册</button>
           </div>
         </div>
       </div>
@@ -39,13 +39,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/user';
+import { uniqueId } from 'lodash';
+const router = useRouter();
+const { SAVE_USER_INFO } = useUserStore();
+const user = reactive({
+  account: 'admin',
+  password: 123456,
+});
 const mode = ref<'login' | 'signIn'>('login');
 const signIn = () => {
-  mode.value = 'login';
+  const token = uniqueId();
+  SAVE_USER_INFO(token);
+  router.push('/lowcode');
 };
 const signUp = () => {
-  mode.value = 'signIn';
+  mode.value = 'login';
 };
 </script>
 <style lang="less" scoped>

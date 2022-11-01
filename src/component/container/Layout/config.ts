@@ -2,7 +2,7 @@
 const init: Comp = {
   name: '布局',
   icon: 'Folder',
-  popover: '选中当前组件，才能往该容器内添加组件',
+  popover: '选中当前组件，才能往该容器内添加其它组件/自身(支持嵌套)',
   component: 'free-layout', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定的key
   // 动作配置
