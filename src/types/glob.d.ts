@@ -25,23 +25,26 @@ declare type GridItem = Point &
     [key: string]: unknown;
   };
 
-declare type Comp = Partial<GridItem> & {
+type _BaseComp = Partial<GridItem> & {
   name: string; // 中文别名
+  icon?: string; // icon
   component: `free-${string}` | 'page'; //对应组件名称，一定要和注册的全局组件对应上
   model: string; // 组件绑定的key，唯一
   mode?: 'edit' | 'show'; // 模式(编辑/展示)
   value?: string; // 指向可以更新当前组件值的路径, options.textDetail
   options: AnyObj; // 组件配置
   actions: Action[]; // 动作配置
-  children?: Comp[]; // 子组件
   style: StyleValue; // 样式配置
 };
 
-// 怎么把指定的属性改成必填/可选
-declare type Container = Omit<Comp, 'children'> & {
-  children: Comp[];
+declare type Comp = _BaseComp & {
+  children?: Comp[]; // 子组件
 };
 
+// 怎么把指定的属性改成必填/可选
+declare type Container = _BaseComp & {
+  children: Comp[]; // 子组件
+};
 declare type AnyObj = Record<string, any>;
 declare type HttpParam = {
   key: string;

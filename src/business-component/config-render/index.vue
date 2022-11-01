@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineAsyncComponent, shallowRef } from 'vue';
+import { ref, defineAsyncComponent, shallowRef, computed } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 const lowcode = useLowcodeStore();
 // 配置项组件列表
@@ -46,7 +46,7 @@ const props = defineProps({
     default: () => {},
   },
 });
-const activeCollapse = ref(props.config.map(({ label }) => label));
+const activeCollapse = computed(() => props.config.map(({ label }) => label));
 </script>
 <style lang="less" scoped>
 :deep(.el-form-item) {

@@ -1,6 +1,7 @@
 //* 这里是关于初始化时，按钮的配置 */
 const init: Comp = {
   name: '图片',
+  icon: 'Picture',
   component: 'free-image', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定的key
   // 动作配置

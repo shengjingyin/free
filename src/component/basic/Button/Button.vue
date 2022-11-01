@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup name="BaseButton">
-import { ref, defineExpose } from 'vue';
+import { ref } from 'vue';
 defineProps({
   // ! 支持所有element原生配置
   options: {

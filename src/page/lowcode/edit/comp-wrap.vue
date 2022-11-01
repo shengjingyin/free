@@ -25,7 +25,6 @@ import { PropType, computed } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
 import { cloneDeep } from 'lodash';
-import { findParent } from '@/shared/tree/index';
 import { generateKey, saveIdMap } from '@/shared/util';
 const props = defineProps({
   parent: {
@@ -50,7 +49,6 @@ const clickGrid = element => {
 };
 const copyComp = () => {
   // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
-  // const parent = findParent(props.parent, props.element);
   const clone = cloneDeep(props.element);
   const index = generateKey(clone.component);
   clone.model = clone.component + `_${index}`;
@@ -74,7 +72,7 @@ const deleteComp = () => {
   height: 100%;
   &:hover {
     .drag-able {
-      background-color: rgba(101, 142, 175, 0.1);
+      // background-color: rgba(101, 142, 175, 0.1);
     }
   }
 }
@@ -88,7 +86,7 @@ const deleteComp = () => {
   z-index: -1;
   cursor: move;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(101, 142, 175, 0.1);
   }
   &.active {
     background-color: rgba(101, 142, 175, 0.2);
@@ -110,7 +108,7 @@ const deleteComp = () => {
 }
 .delete {
   position: absolute;
-  top: 25px;
+  top: 20px;
   right: 0;
   transform: translateX(120%);
   cursor: pointer;
@@ -123,8 +121,8 @@ const deleteComp = () => {
   transform: translateY(120%);
 }
 .tool {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   // background-color: #c6c0c0;
   border-radius: 50%;
   transition: all 0.3s;

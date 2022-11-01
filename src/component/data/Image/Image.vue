@@ -10,7 +10,6 @@
 </template>
 
 <script lang="ts" setup name="BaseImage">
-import { defineExpose } from 'vue';
 defineProps({
   // ! 支持所有element原生配置
   options: {

@@ -24,7 +24,22 @@
   height: 100% !important;
 }
 
-.set_scrollbar {
+.scrollbar {
+  .set_scrollbar(8px, #999);
+}
+
+/* @w 滚动条宽， @c 滚动条颜色 */
+.set_scrollbar(@w, @c) {
+  .set_scrollbar();
+  &::-webkit-scrollbar {
+    width: @w;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: @c;
+  }
+}
+
+.set_scrollbar() {
   // https://developer.mozilla.org/zh-CN/docs/Web/CSS/::-webkit-scrollbar
   // 整个滚动条.
   &::-webkit-scrollbar {
@@ -55,15 +70,5 @@
   // 当同时有垂直滚动条和水平滚动条时交汇的部分.
   &::-webkit-scrollbar-corner {
     background-color: transparent;
-  }
-}
-/* @w 滚动条宽， @c 滚动条颜色 */
-.set_scrollbar(@w, @c) {
-  .set_scrollbar();
-  &::-webkit-scrollbar {
-    width: @w;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: @c;
   }
 }

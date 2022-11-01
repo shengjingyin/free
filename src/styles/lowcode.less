@@ -12,10 +12,8 @@
 
   .module-container {
     height: 100vh;
-    width: 250px;
-    min-width: 250px;
     overflow-y: auto;
-    padding: 10px;
+    padding: 20px;
     box-sizing: border-box;
     width: 100%;
     .set_scrollbar(8px, pink);
@@ -30,9 +28,8 @@
     }
 
     ul {
-      position: relative;
-      overflow: hidden;
-      margin: 0;
+      display: flex;
+      justify-content: space-between;
     }
 
     .widget-edit-label {
@@ -40,33 +37,15 @@
         width: 100%;
       }
       font-size: 12px;
-      display: block;
       width: 48%;
       line-height: 26px;
-      position: relative;
-      float: left;
-      left: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      margin: 1%;
       color: #333;
       border: 1px solid #f4f6fc;
       box-sizing: border-box;
-
-      a {
-        color: #333;
-      }
-
-      .widget-pick-item {
-        display: flex;
-        align-items: center;
-      }
-
-      .widget-pick-demo {
-        flex: 1;
-        text-align: right;
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: move;
 
       &:hover {
         color: @primary-color;
@@ -76,20 +55,8 @@
           color: @primary-color;
         }
       }
-
-      & > a {
-        display: flex;
-        align-items: center;
-        cursor: move;
-        background: rgba(233, 233, 233, 0.1);
-        border: 1px solid #f4f6fc;
-        .el-icon {
-          margin: 0 4px;
-        }
-        span {
-          display: inline-block;
-          vertical-align: middle;
-        }
+      span {
+        margin-left: 3px;
       }
     }
   }

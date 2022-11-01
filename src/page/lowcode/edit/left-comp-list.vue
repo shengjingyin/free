@@ -7,19 +7,16 @@
         <li
           v-for="element of component.list"
           :key="element.type"
-          :class="{ [`is-${element.component}`]: element.component }"
           class="widget-edit-label no-put"
           @drag="drag(element)"
           @dragend="dragend(element)"
           draggable="true"
           unselectable="on"
         >
-          <a class="widget-pick-element">
-            <el-icon v-if="element.icon" :size="16">
-              <component :is="element.icon"></component>
-            </el-icon>
-            <span>{{ element.name }}</span>
-          </a>
+          <el-icon v-if="element.icon" :size="16">
+            <component :is="element.icon"></component>
+          </el-icon>
+          <span>{{ element.name }}</span>
         </li>
       </ul>
     </template>

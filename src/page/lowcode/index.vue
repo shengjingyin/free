@@ -7,7 +7,7 @@
       </el-button>
     </el-col>
     <el-col :span="17">
-      <DashBoard :layout-data="layout" :parent="data"></DashBoard>
+      <DashBoard :layout-data="layout" :parent="data" class="base-dashboard scrollbar"></DashBoard>
     </el-col>
     <el-col :span="4"><ConfigurationCenter></ConfigurationCenter></el-col>
   </el-row>
@@ -41,6 +41,10 @@ const openDebugger = () => {
 </script>
 <style lang="less" scoped>
 @debugger-height: 600px;
+.base-dashboard {
+  height: 100vh;
+  overflow: auto;
+}
 .debugger-title {
   width: 100%;
 }

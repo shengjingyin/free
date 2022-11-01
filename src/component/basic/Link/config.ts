@@ -4,6 +4,7 @@ const store = useSystemStore();
 //* 这里是关于初始化时，按钮的配置 */
 const init: Comp = {
   name: '链接',
+  icon: 'Eleme',
   component: 'free-link', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定值
   value: 'options.textDetail', // 指向可以更新当前组件值的路径
