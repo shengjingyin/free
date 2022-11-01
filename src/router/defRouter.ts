@@ -45,6 +45,14 @@ const arr: Route[] = [
     ],
   },
   {
+    path: '/login',
+    name: '登录',
+    meta: {
+      title: '登录',
+    },
+    component: () => import('@/page/login/index.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     meta: {
