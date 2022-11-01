@@ -3,9 +3,7 @@ import config from '@/component/config';
 export const BASIC_LIST = config.basic.map(key => config[key].init);
 export const DATA_LIST = config.data.map(key => config[key].init);
 export const CONTAINER_LIST = config.container.map(key => config[key].init);
-
-// 表单组件列表
-export const FORM_LIST = [];
+export const FORM_LIST = config.form.map(key => config[key].init);
 
 export const COMPONENT_LIST = [
   {

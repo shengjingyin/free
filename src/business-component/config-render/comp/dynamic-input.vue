@@ -2,7 +2,7 @@
   <DynamicIorD :list="value">
     <template #item="{ index }">
       <!-- {{ String(data) + index }} -->
-      <free-input v-model="value[index]" size="small"></free-input>
+      <el-input v-model="value[index]" size="small"></el-input>
     </template>
   </DynamicIorD>
 </template>

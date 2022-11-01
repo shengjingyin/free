@@ -57,11 +57,11 @@ const handleSelectPage = () => {
   SET_CUR_SELECT('0');
 };
 // 列、数量
-const colNum = computed(() => props.parent.options.col);
+const colNum = computed(() => props.parent.options?.col);
 // 行高
-const rowHeight = computed(() => props.parent.options['row-height']);
+const rowHeight = computed(() => props.parent.options && props.parent.options['row-height']); // 这里怎么写?
 // 卡片间距
-const margin = computed(() => props.parent.options['card-margin']);
+const margin = computed(() => props.parent.options && props.parent.options['card-margin']);
 // 样式
 const styles = computed(() => props.parent.style);
 
@@ -125,10 +125,10 @@ const mouseInGrid = () => {
 let _element;
 const log = slow(() => {
   console.log(
-    '布局属性',
-    `容器：${props.parent.i} 当前选中：${selectId.value}` + '----' + JSON.stringify(layout.value)
+    `布局属性 容器：${props.parent.i} 当前选中：${selectId.value}----` +
+      JSON.stringify(layout.value)
   );
-});
+}, 200);
 const dragComponent = async element => {
   const _mouseInGrid = mouseInGrid();
   _element = genElementInfo(element);

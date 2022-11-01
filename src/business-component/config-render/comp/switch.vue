@@ -1,5 +1,5 @@
 <template>
-  <free-switch v-model="value"> </free-switch>
+  <el-switch v-model="value"> </el-switch>
 </template>
 
 <script lang="ts" setup>

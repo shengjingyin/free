@@ -41,7 +41,6 @@ watch(
   },
   { immediate: true }
 );
-console.log('🚀 ~ file: index.vue ~ line 28 ~ preview', preview);
 </script>
 <style lang="less" scoped>
 .el-button {

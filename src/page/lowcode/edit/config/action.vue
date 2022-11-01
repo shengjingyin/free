@@ -1,6 +1,6 @@
 <template>
   <h5> 默认监听事件 </h5>
-  <free-tag v-for="tag of config.eventList" :key="tag">{{ tag.label }}</free-tag>
+  <el-tag v-for="tag of config.eventList" :key="tag">{{ tag.label }}</el-tag>
   <h5> 动作配置 <el-button @click="addAction">添加</el-button> </h5>
   <!-- 做动作配置 -->
   <div v-for="(action, i) of lowcode.select.actions" :key="i">
@@ -9,10 +9,10 @@
     <br />
     <!-- 触发条件 -->
     <el-form-item label="触发条件">
-      <free-select :option="actionTriggerList" v-model="action.trigger"></free-select>
+      <el-select :option="actionTriggerList" v-model="action.trigger"></el-select>
     </el-form-item>
     <el-form-item label="触发类型">
-      <free-select :option="actionTypeList" v-model="action.type"></free-select>
+      <el-select :option="actionTypeList" v-model="action.type"></el-select>
     </el-form-item>
 
     <!-- 跳转 -->
@@ -22,7 +22,7 @@
       </el-form-item>
       <el-form-item label="在何处打开文档">
         <!-- 下载的资源类型可选择 -->
-        <free-select :option="SkipType" v-model="action.skip.type"></free-select>
+        <el-select :option="SkipType" v-model="action.skip.type"></el-select>
       </el-form-item>
     </template>
     <!-- 触发下载 -->
@@ -32,7 +32,7 @@
       </el-form-item>
       <el-form-item label="资源类型">
         <!-- 下载的资源类型可选择 -->
-        <free-select :option="DownloadType" v-model="action.download.type"></free-select>
+        <el-select :option="DownloadType" v-model="action.download.type"></el-select>
       </el-form-item>
     </template>
     <!-- 触发事件 -->

@@ -42,6 +42,11 @@ const arr: Route[] = [
         component: defineAsyncComponent(() => import('@/page/test/vue-gird-layout/index.vue')),
         // component: VueGridLayoutPage,
       },
+      {
+        path: 'drag',
+        component: defineAsyncComponent(() => import('@/page/test/drag/index.vue')),
+        // component: VueGridLayoutPage,
+      },
     ],
   },
   {

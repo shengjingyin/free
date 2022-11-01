@@ -1,5 +1,5 @@
 <template>
-  <el-row class="freedom-main">
+  <el-row class="freedom-main" v-loading="loading">
     <el-col :span="3">
       <LeftCompList></LeftCompList>
       <el-button @click="openDebugger" type="primary" plain class="debugger-btn">
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
 import LeftCompList from './edit/left-comp-list.vue';
@@ -29,11 +29,13 @@ const layout = computed<Comp[]>({
     return data.value.children;
   },
   set(newData) {
-    console.log('🚀 ~ file: index.vue ~ line 32 ~ set ~ newData', newData);
     // data.value.children = newData;
   },
 });
-
+const loading = ref(true);
+onMounted(() => {
+  loading.value = false;
+});
 const debuggerRef = ref();
 const openDebugger = () => {
   debuggerRef.value.open();

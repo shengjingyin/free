@@ -12,11 +12,11 @@ const init: Comp = {
   iconOptions: {
     size: 26,
     icon: 'InfoFilled',
-    placement: 'top',
   },
   popoverOptions: {
     textDetail: '文本提示内容',
     effect: 'light',
+    placement: 'top',
   },
   // 样式配置
   style: {},

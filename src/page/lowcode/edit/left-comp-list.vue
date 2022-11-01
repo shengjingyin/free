@@ -8,7 +8,8 @@
           v-for="element of component.list"
           :key="element.type"
           class="widget-edit-label no-put"
-          @drag="drag(element)"
+          @dragstart="dragstart(element, $event)"
+          @drag="drag(element, $event)"
           @dragend="dragend(element)"
           draggable="true"
           unselectable="on"
@@ -34,16 +35,20 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { COMPONENT_LIST } from '../data/componentsList';
-import { useLowcodeStore } from '@/store/lowcode';
 import { cloneDeep } from 'lodash';
 import emitter from '@/plugin/mitt';
-const lowcode = useLowcodeStore();
-console.log('store', lowcode);
 const allComponents = computed(() => COMPONENT_LIST);
 // const listTitle = computed(() => (lowcode.select?.component === 'page' ? '页面组件' : '表单组件'));
 const listTitle = ref('Free');
 
-const drag = element => {
+const dragstart = (element, event: DragEvent) => {
+  console.log('🚀 ~ file: left-comp-list.vue ~ line 45 ~ dragstart ~ event', event);
+  // event.
+  event.dataTransfer?.setData('element', element);
+};
+const drag = (element, event) => {
+  // console.log('🚀 ~ file: left-comp-list.vue ~ line 44 ~ drag ~ event', event);
+  event.dataTransfer.dropEffect = 'move';
   emitter.emit('add-component', cloneDeep(element));
 };
 const dragend = element => {
