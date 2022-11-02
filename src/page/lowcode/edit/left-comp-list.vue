@@ -44,11 +44,11 @@ const listTitle = ref('Free');
 const dragstart = (element, event: DragEvent) => {
   console.log('🚀 ~ file: left-comp-list.vue ~ line 45 ~ dragstart ~ event', event);
   // event.
-  event.dataTransfer?.setData('element', element);
+  event.dataTransfer?.setData('element', JSON.stringify(element));
 };
 const drag = (element, event) => {
+  event.dataTransfer?.setData('element', JSON.stringify(element));
   // console.log('🚀 ~ file: left-comp-list.vue ~ line 44 ~ drag ~ event', event);
-  event.dataTransfer.dropEffect = 'move';
   emitter.emit('add-component', cloneDeep(element));
 };
 const dragend = element => {

@@ -6,25 +6,25 @@ export const emptyObj = Object.create({});
 
 // 类型判断
 // 是否未定义
-export function isUndef(v: any): boolean {
+export function isUndef<T extends unknown>(v: T): boolean {
   return v === undefined || v === null;
 }
 
 // 是否有意义
-export function isDef(v: any): boolean {
+export function isDef<T extends unknown>(v: T): boolean {
   return v !== undefined && v !== null;
 }
 
-export function isTrue(v: any): boolean {
+export function isTrue<T extends unknown>(v: T): boolean {
   return v === true;
 }
 
-export function isFalse(v: any): boolean {
+export function isFalse<T extends unknown>(v: T): boolean {
   return v === false;
 }
 
 // 判断是否为基础数据类型
-export function isPrimitive(v: any): boolean {
+export function isPrimitive<T extends unknown>(v: T): boolean {
   return (
     typeof v === 'string' ||
     typeof v === 'number' ||
@@ -33,8 +33,8 @@ export function isPrimitive(v: any): boolean {
   );
 }
 
-export function isPromise(val: any): boolean {
-  return isDef(val) && typeof val.then === 'function' && typeof val.catch === 'function';
+export function isPromise<T extends Promise<unknown>>(v: T): boolean {
+  return isDef(v) && typeof v.then === 'function' && typeof v.catch === 'function';
 }
 
 // 检查对象是否包含某个 key

@@ -1,17 +1,29 @@
 <template>
-  <BaseComp :options="options"></BaseComp>
+  <BaseComp :options="options" v-model="value"></BaseComp>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import BaseComp from './Input.vue';
 const props = defineProps({
   element: {
     type: Object,
     required: true,
   },
+  modelValue: {
+    type: String,
+  },
 });
 const options = computed(() => props.element.options);
-console.log('🚀 ~ file: index.vue ~ line 15 ~ options', options);
+const emit = defineEmits(['update:modelValue']);
+
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(newVal) {
+    emit('update:modelValue', newVal);
+  },
+});
 </script>
 <style lang="less" scoped></style>

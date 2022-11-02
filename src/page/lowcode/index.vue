@@ -24,14 +24,7 @@ import ConfigurationCenter from './edit/configuration-center.vue';
 import Debugger from '@/business-component/debugger/index.vue';
 const { data } = storeToRefs(useLowcodeStore());
 
-const layout = computed<Comp[]>({
-  get() {
-    return data.value.children;
-  },
-  set(newData) {
-    // data.value.children = newData;
-  },
-});
+const layout = computed<Comp[]>(() => data.value.children);
 const loading = ref(true);
 onMounted(() => {
   loading.value = false;

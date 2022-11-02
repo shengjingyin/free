@@ -11,7 +11,7 @@ import { setupBeforeGuard } from './guard/before';
 import { filterByKVN } from '@/shared/arr';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(), // history 与 hash 区别
   routes: defRoutes,
 });
 
@@ -33,14 +33,12 @@ const setupBeforeStore = (to: any) => {
 router.beforeEach((to, from, next) => {
   Nprogress.start();
   console.log('路由跳转开始');
-  if (to.matched.length === 0) {
-    // router.push(to.path);
-  }
-  // setupBeforeStore(to);
   setupBeforeGuard(to, from, next);
 });
 router.afterEach((to, from, failure) => {
-  Nprogress.done();
+  if (to.name !== 'lowcode') {
+    Nprogress.done();
+  }
 });
 
 // 保存路由信息

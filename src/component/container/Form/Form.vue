@@ -1,40 +1,95 @@
 <template>
-  <el-form ref="form" :model="form" v-bind="$attrs" @submit.prevent>
-    <!-- 前置插槽 -->
-    <slot name="prefix"></slot>
-    <template v-for="item of formItemList" :key="item.model">
-      <!-- v-model 是 value + input 以及 checked || selected + change -->
-      <el-form-item :label="item.label" :prop="item.model">
-        <component
-          v-if="item.component"
-          :ref="item.model"
-          :is="item.component"
-          v-bind="item"
-          v-model="form[item.model]"
-        >
-          <!-- 动态插槽，在free中应该用不到，但是在单独使用的场景可能会用到 -->
-          <template v-for="slotName of item.slotNames">
-            <slot :name="slotName"></slot>
-          </template>
-        </component>
-
-        <!-- 自定义组件插槽 -->
-        <slot v-else :name="item.model" :data="item"></slot>
-      </el-form-item>
-    </template>
+  <el-form class="form" ref="form" label-width="100px" v-bind="$attrs" @submit.prevent>
+    <draggable
+      :list="formItemList"
+      item-key="model"
+      ghost-class="ghost"
+      chosen-class="chosenClass"
+      animation="300"
+      @start="onStart"
+      @end="onEnd"
+    >
+      <template #item="{ element, index }">
+        <el-form-item class="item" :label="element.label" :prop="element.model">
+          <!--  <component
+            v-if="element.component"
+            :is="element.component"
+            :element="element"
+            v-model:modelValue="form[element.model]"
+          >
+          </component> -->
+          <CompWrapVue
+            :parent="parent"
+            :element="element"
+            :index="index"
+            v-model:modelValue="form[element.model]"
+          ></CompWrapVue>
+        </el-form-item>
+      </template>
+    </draggable>
+    <!-- </template> -->
     <!-- 后置插槽 -->
-    <slot name="suffix"></slot>
+    <slot name="suffix">
+      <el-form-item>
+        <el-button type="primary" @click="submitForm">Submit</el-button>
+        <el-button @click="resetForm">Reset</el-button>
+      </el-form-item>
+    </slot>
   </el-form>
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref } from 'vue';
-defineProps({
+import { PropType, computed } from 'vue';
+import draggable from 'vuedraggable';
+import CompWrapVue from '@/page/lowcode/edit/comp-wrap.vue';
+const props = defineProps({
+  parent: {
+    type: Object as PropType<Container>,
+    required: true,
+  },
   formItemList: {
     type: Array as PropType<Comp[]>,
     default: () => [],
   },
+  modelValue: {
+    type: [String, Object, Number, Boolean],
+    required: true,
+  },
 });
-const form = ref([]);
+const emit = defineEmits(['update:modelValue']);
+const form = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(newVal) {
+    emit('update:modelValue', newVal);
+  },
+});
+const submitForm = () => {};
+const resetForm = () => {};
+
+//拖拽开始的事件
+const onStart = args => {
+  console.log('开始拖拽', args);
+};
+
+//拖拽结束的事件
+const onEnd = args => {
+  console.log('结束拖拽', args);
+};
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+.form {
+  padding: 10px;
+  overflow: auto;
+  flex: 1;
+}
+.item:hover,
+:deep(.el-form-item__label) {
+  cursor: move;
+}
+</style>

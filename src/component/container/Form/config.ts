@@ -11,7 +11,7 @@ const init: Comp = {
   options: {
     inline: false,
     'label-position': 'right',
-    'label-width': null,
+    'label-width': 80,
     'require-asterisk-position': 'left',
     'show-message': true,
     'inline-message': false,
@@ -54,7 +54,7 @@ const property = [
           { label: 'top', value: 'top' },
         ],
       },
-      { label: '标签长度', key: 'label-position', component: 'input-number' },
+      { label: '标签长度', key: 'label-width', component: 'input-number' },
     ],
   },
   {

@@ -1,6 +1,11 @@
 <template>
   <!-- 仪表盘 -->
-  <section ref="dashBoardRef" class="size-100" :style="styles" @click.stop="handleSelectPage">
+  <section
+    ref="dashBoardRef"
+    class="size-100 dash-board"
+    :style="styles"
+    @click.stop="handleSelectPage"
+  >
     <grid-layout
       ref="layoutRef"
       class="grid-layout"
@@ -69,10 +74,7 @@ const layout = computed<Comp[]>({
   get() {
     return props.layoutData;
   },
-  set(newData) {
-    // console.log('🚀 ~ file: dash-board.vue ~ line 69 ~ set ~ newData', newData);
-    // data.value.children = newData;
-  },
+  set() {},
 });
 
 // 保存所有更新数据
@@ -92,19 +94,16 @@ let DragPos: GridItem = { x: 0, y: 0, w: 1, h: 1, i: '' };
 const layoutRef = ref();
 const gridItemRef = ref();
 let parentRect: DOMRect;
-onMounted(() => {
-  emitter.on('add-component', dragComponent);
-  emitter.on('end-add-component', dragEnd);
-  document.addEventListener('dragover', updateMousePoint, false);
-});
 
 // 更新鼠标位置
 const updateMousePoint = function (e) {
   mouseXY.x = e.clientX;
   mouseXY.y = e.clientY;
 };
-onUnmounted(() => {
-  document.removeEventListener('dragover', updateMousePoint);
+onMounted(() => {
+  emitter.on('add-component', dragComponent);
+  emitter.on('end-add-component', dragEnd);
+  document.addEventListener('dragover', updateMousePoint, false);
 });
 const dashBoardRef = ref<HTMLElement>();
 const mouseInGrid = () => {
@@ -129,6 +128,11 @@ const log = slow(() => {
       JSON.stringify(layout.value)
   );
 }, 200);
+const computedPosition = index => {
+  const newGrid = gridItemRef.value[index];
+  const new_pos = newGrid.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
+  return new_pos;
+};
 const dragComponent = async element => {
   const _mouseInGrid = mouseInGrid();
   _element = genElementInfo(element);
@@ -136,20 +140,14 @@ const dragComponent = async element => {
   let index = layout.value.findIndex(item => item.i === _element.i);
   if (_mouseInGrid) {
     if (index === -1) {
-      layout.value.push({
-        ..._element,
-        // 这里可以根据相应规则变化
-        x: (layout.value.length * 2) % 12,
-        y: layout.value.length + 12, // puts it at the bottom
-      });
+      layout.value.push(_element);
     } else {
-      // 目标元素已经存在与布局中
+      // 目标元素已经存在与布局中，变化坐标
       await nextTick();
       try {
-        const newGrid = gridItemRef.value[index];
         log();
         // 根据坐标 计算 位置
-        let new_pos = newGrid.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
+        let new_pos = computedPosition(index);
         if (_mouseInGrid) {
           /* (eventName, id, x, y, h, w) */
           layoutRef.value.dragEvent('dragstart', _element.i, new_pos.x, new_pos.y, 1, 1);
@@ -179,6 +177,13 @@ const dragEnd = () => {
 };
 const genElementInfo = (target: Comp) => {
   key = generateKey(target.component);
+  let new_pos;
+  if (gridItemRef.value && gridItemRef.value.length > 0) {
+    new_pos = computedPosition(gridItemRef.value.length - 1);
+  } else {
+    new_pos = { x: 0, y: 0 };
+  }
+
   return {
     ...target,
     options: {
@@ -187,6 +192,9 @@ const genElementInfo = (target: Comp) => {
     i: String(idMap.value.total + 1), // + 1 ，从1开始计数
     // 绑定键值
     model: target.component + '_' + key,
+    // 这里可以根据相应规则变化
+    x: new_pos.x,
+    y: new_pos.y, // puts it at the bottom
   };
 };
 </script>

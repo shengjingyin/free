@@ -9,7 +9,7 @@ import { createPinia } from 'pinia';
 import install from './install';
 const app = createApp(App);
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'production') {
   window.onload = function () {
     setTimeout(function () {
       console.group(`%c 性能参数：`, 'background:#286fb9;color:white;');

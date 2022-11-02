@@ -1,22 +1,25 @@
 <template>
   <div @click.stop="clickGrid(element)" :class="['item-container', isSelectCur ? 'active' : '']">
     <!-- 根据配置项中定义的 -->
-    <component :is="element.component" :element="element"></component>
+    <component :is="element.component" :element="element" v-model:modelValue="value"></component>
 
     <!-- 移动 -->
-    <template v-if="isSelectCur">
-      <el-icon class="copy tool" title="复制" :size="16" @click.stop="copyComp"
-        ><CopyDocument
-      /></el-icon>
-      <el-icon class="delete tool" title="删除" :size="16" @click.stop="deleteComp"
-        ><Delete
-      /></el-icon>
-    </template>
+    <div class="node-list">
+      <template v-if="element.options?.dataBind || true">
+        <!-- 展示绑定的数据值 -->
+        <span class="bind-model">{{ element?.model }}</span>
+      </template>
+      <template v-if="isSelectCur">
+        <el-icon class="copy tool" title="复制" :size="16" @click.stop="copyComp">
+          <CopyDocument />
+        </el-icon>
+        <el-icon class="delete tool" title="删除" :size="16" @click.stop="deleteComp">
+          <Delete />
+        </el-icon>
+      </template>
+    </div>
+    <!-- 背景 -->
     <div :class="['drag-able', isSelectCur ? 'active' : '']"> </div>
-    <template v-if="element?.options.dataBind || true">
-      <!-- 展示绑定的数据值 -->
-      <span class="bind-model">{{ element?.model }}</span>
-    </template>
   </div>
 </template>
 
@@ -39,6 +42,9 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  modelValue: {
+    type: [String, Object, Number, Boolean],
+  },
 });
 const { select, idMap } = storeToRefs(useLowcodeStore());
 const { SET_CUR_SELECT } = useLowcodeStore();
@@ -47,6 +53,21 @@ const isSelectCur = computed(() => select.value.model == props.element.model);
 const clickGrid = element => {
   SET_CUR_SELECT(element.i);
 };
+const layout = computed<Comp[]>({
+  get() {
+    return props.parent.children;
+  },
+  set() {},
+});
+const emit = defineEmits(['update:modelValue']);
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(newVal) {
+    emit('update:modelValue', newVal);
+  },
+});
 const copyComp = () => {
   // 在当前位置复制，后续有容器的时候可能会更复杂（包含嵌套关系）
   const clone = cloneDeep(props.element);
@@ -56,12 +77,12 @@ const copyComp = () => {
   // 还有位置信息也要改变
   clone.x = clone.x;
   clone.y = (clone.y as number) + (clone.h as number);
-  props.parent.children.push(clone);
+  layout.value.push(clone);
   // 保存id信息
   saveIdMap(clone.component, index);
 };
 const deleteComp = () => {
-  props.parent.children.splice(props.index, 1);
+  layout.value.splice(props.index, 1);
   SET_CUR_SELECT('0');
 };
 </script>
@@ -79,8 +100,8 @@ const deleteComp = () => {
 
 .drag-able {
   position: absolute;
-  left: -20px;
-  right: -20px;
+  left: -5px;
+  right: -5px;
   top: -20px;
   bottom: -20px;
   z-index: -1;
@@ -92,40 +113,24 @@ const deleteComp = () => {
     background-color: rgba(101, 142, 175, 0.2);
   }
 }
-.drag-widget {
+
+.node-list {
   position: absolute;
-  top: 0;
+  bottom: -25px;
   left: 0;
-  transform: translateX(-120%);
-  z-index: 899999999999999999 !important;
-}
-.copy {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translateX(120%);
-  cursor: pointer;
-}
-.delete {
-  position: absolute;
-  top: 20px;
-  right: 0;
-  transform: translateX(120%);
-  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 .bind-model {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   white-space: nowrap;
-  transform: translateY(120%);
+  margin-right: 5px;
 }
 .tool {
   width: 20px;
   height: 20px;
-  // background-color: #c6c0c0;
   border-radius: 50%;
   transition: all 0.3s;
+  cursor: pointer;
   &:hover {
     background-color: skyblue;
     color: #fff;

@@ -69,6 +69,7 @@ const props = defineProps({
 });
 const requestRef = ref<{ openDialog: RequestRef }>();
 const actionTriggerList = computed(() => props.config.triggerCondition);
+console.log('🚀 ~ file: action.vue ~ line 72 ~ actionTriggerList', actionTriggerList);
 const actionTypeList = computed(() => props.config.type);
 
 watch(
