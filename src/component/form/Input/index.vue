@@ -1,29 +1,30 @@
 <template>
-  <BaseComp :options="options" v-model="value"></BaseComp>
+  <BaseComp class="size-100" :options="options" v-model:modelValue="value"></BaseComp>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref, watch, inject } from 'vue';
 import BaseComp from './Input.vue';
+const inForm = inject('inForm');
 const props = defineProps({
   element: {
     type: Object,
     required: true,
   },
-  modelValue: {
-    type: String,
-  },
 });
 const options = computed(() => props.element.options);
 const emit = defineEmits(['update:modelValue']);
 
-const value = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(newVal) {
+const value = ref('');
+
+watch(value, newVal => {
+  if (props.element.inForm) {
     emit('update:modelValue', newVal);
-  },
+  }
+});
+
+defineExpose({
+  value,
 });
 </script>
 <style lang="less" scoped></style>

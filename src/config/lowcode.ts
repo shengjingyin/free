@@ -83,7 +83,7 @@ export const initPage: Comp = cloneDeep({
     // request,
   },
   style: {
-    'background-color': '#eee',
+    'background-color': 'rgba(144, 240, 144, 0.22)',
   },
   children: [] as Comp[],
   i: '0',

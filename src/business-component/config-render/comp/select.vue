@@ -1,7 +1,7 @@
 <template>
   <free-select v-model="value" :option="config?.option" size="small">
     <!-- 定制 icon 列表渲染 -->
-    <template v-if="config?.key === 'icon'" #="{ item }">
+    <template v-if="config?.key.indexOf('icon') > -1" #="{ item }">
       <span style="float: left">{{ item.label }}</span>
       <el-icon :size="18" style="float: right; top: 50%; transform: translateY(-50%)">
         <component :is="item.value"></component>

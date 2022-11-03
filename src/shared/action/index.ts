@@ -40,10 +40,11 @@ function dealRequest(action, tree) {
       if (action?.request?.response?.updateModelList) {
         action.request.response.updateModelList.forEach(item => {
           const target = findEleByPath(tree, 'model', item.key);
+          // 更新值
           if (item.type === 'fromServe') {
-            set(target, target.value, get(data, item.value));
+            set(target, target.valuePath, get(data, item.value)); // value?: string; // 指向可以更新当前组件值的路径, options.textDetail
           } else {
-            set(target, target.value, item.value);
+            set(target, target.valuePath, item.value);
           }
         });
       }

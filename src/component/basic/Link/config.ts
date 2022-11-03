@@ -8,7 +8,7 @@ const init: Comp = {
   popover: '链接跳转',
   component: 'free-link', //对应组件名称，一定要和注册的全局组件对应上
   model: '', // 绑定值
-  value: 'options.textDetail', // 指向可以更新当前组件值的路径
+  valuePath: 'options.textDetail', // valuePath?: string; // 指向可以更新当前组件值的路径, options.textDetail
   // 组件配置
   // 动作配置
   actions: [],

@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick, onUnmounted, watch, PropType } from 'vue';
+import { ref, computed, onMounted, nextTick, provide, watch, PropType } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import CompWrap from './comp-wrap.vue';
 import { generateKey, saveIdMap } from '@/shared/util';
@@ -45,6 +45,7 @@ import { storeToRefs } from 'pinia';
 import { saveTreeData } from '@/shared/app';
 import { debounce } from 'lodash';
 import { slow } from '@/shared/util';
+provide('inForm', false); // 表单元素标识符，当包含form时，此值由form置为true
 const props = defineProps({
   layoutData: {
     type: Array as PropType<Comp[]>,

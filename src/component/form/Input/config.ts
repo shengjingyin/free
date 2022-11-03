@@ -11,7 +11,7 @@ const init: Comp = {
   options: {
     type: 'text',
     maxlength: null,
-    minlength: null,
+    minlength: 0,
     'show-word-limit': true,
     placeholder: '请输入',
     clearable: false,
@@ -34,7 +34,10 @@ const property = [
     label: '基本信息',
     group: '',
     popover: '确保唯一',
-    children: [{ label: '绑定字段', key: 'model', component: 'input' }],
+    children: [
+      { label: '绑定字段', key: 'model', component: 'input' },
+      { label: 'label', key: 'label', component: 'input' },
+    ],
   },
   {
     label: '属性配置',
@@ -71,7 +74,7 @@ const property = [
         ],
       },
       {
-        label: '展示切换按钮图表',
+        label: '切换密码图标',
         key: 'show-password',
         component: 'radio',
         option: [

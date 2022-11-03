@@ -9,10 +9,10 @@
     <br />
     <!-- 触发条件 -->
     <el-form-item label="触发条件">
-      <el-select :option="actionTriggerList" v-model="action.trigger"></el-select>
+      <free-select :option="actionTriggerList" v-model="action.trigger"></free-select>
     </el-form-item>
     <el-form-item label="触发类型">
-      <el-select :option="actionTypeList" v-model="action.type"></el-select>
+      <free-select :option="actionTypeList" v-model="action.type"></free-select>
     </el-form-item>
 
     <!-- 跳转 -->

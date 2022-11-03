@@ -1,7 +1,15 @@
 <template>
   <div @click.stop="clickGrid(element)" :class="['item-container', isSelectCur ? 'active' : '']">
     <!-- 根据配置项中定义的 -->
-    <component :is="element.component" :element="element" v-model:modelValue="value"></component>
+    <!-- 在form中 -->
+    <component
+      v-if="element.inForm"
+      :is="element.component"
+      :element="element"
+      v-model:modelValue="value"
+    ></component>
+    <!-- 在正常布局中 -->
+    <component v-else :is="element.component" :element="element"></component>
 
     <!-- 移动 -->
     <div class="node-list">
@@ -59,10 +67,11 @@ const layout = computed<Comp[]>({
   },
   set() {},
 });
+// 在form中时,需要把值传递给form, 当不在form中时,这段无效
 const emit = defineEmits(['update:modelValue']);
 const value = computed({
   get() {
-    return props.modelValue;
+    return props.modelValue || '';
   },
   set(newVal) {
     emit('update:modelValue', newVal);
@@ -102,8 +111,8 @@ const deleteComp = () => {
   position: absolute;
   left: -5px;
   right: -5px;
-  top: -20px;
-  bottom: -20px;
+  top: -5px;
+  bottom: -25px;
   z-index: -1;
   cursor: move;
   &:hover {
@@ -124,6 +133,7 @@ const deleteComp = () => {
 .bind-model {
   white-space: nowrap;
   margin-right: 5px;
+  color: #999;
 }
 .tool {
   width: 20px;

@@ -15,8 +15,7 @@
       ghost-class="ghost"
       chosen-class="chosenClass"
       animation="300"
-      @start="onStart"
-      @end="onEnd"
+      handle=".el-form-item__label"
     >
       <template #item="{ element: item, index }">
         <el-form-item class="item" :label="item.label" :prop="item.model">
@@ -30,30 +29,23 @@
       </template>
     </draggable>
     <!-- 后置插槽 -->
-    <slot name="suffix">
-      <el-form-item>
-        <el-button type="primary" @click="submitForm">Submit</el-button>
-        <el-button @click="resetForm">Reset</el-button>
-      </el-form-item>
-    </slot>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm">提交</el-button>
+      <el-button @click="resetForm">重置</el-button>
+    </el-form-item>
   </el-form>
 </template>
 
 <script lang="ts" setup name="FreeButton">
 import draggable from 'vuedraggable';
 import CompWrapVue from '@/page/lowcode/edit/comp-wrap.vue';
-import { formList } from '@/component/config';
 import { generateKey, saveIdMap } from '@/shared/util';
-/* emitter.on('add-component', dragComponent);
-  emitter.on('end-add-component', dragEnd); 
-*/
-// 接受emit事件，是不是也能接受组件
 import { computed, PropType, ref, watch } from 'vue';
 import emitter from '@/plugin/mitt';
 import { cloneDeep, extend } from 'lodash';
 import { storeToRefs } from 'pinia';
 import { useLowcodeStore } from '@/store/lowcode';
-const { data, idMap, selectId } = storeToRefs(useLowcodeStore());
+const { idMap } = storeToRefs(useLowcodeStore());
 
 const props = defineProps({
   element: {
@@ -76,38 +68,21 @@ const formData = computed<Comp[]>({
   set() {},
 });
 watch(
-  formData,
-  () => {
-    console.log('formData.value', formData.value);
-  },
-  { deep: true }
-);
-watch(
   formValue,
   () => {
     console.log('formValue', formValue.value);
   },
   { deep: true }
 );
-const dragComponent = element => {
-  if (formList.includes(element.component)) {
-    // console.log('🚀 ~ file: index.vue ~ line 32 ~ dragComponent ~ element', element);
-  }
-  // 只接收 表单组件
-};
-const dragEnd = element => {
-  // console.log('🚀 ~ file: index.vue ~ line 34 ~ dragComponent ~ element', element);
-};
 const additionalInformation = {
   'free-input': {
     label: '输入框',
   },
 };
-//
+
 let key;
 const genElementInfo = (target: Comp) => {
   key = generateKey(target.component);
-
   return {
     ...target,
     options: {
@@ -116,9 +91,7 @@ const genElementInfo = (target: Comp) => {
     i: String(idMap.value.total + 1), // + 1 ，从1开始计数
     // 绑定键值
     model: target.component + '_' + key,
-    // 这里可以根据相应规则变化
-    // x: new_pos.x,
-    // y: new_pos.y, // puts it at the bottom
+    inForm: true,
   };
 };
 const dragleave = () => {};
@@ -144,19 +117,14 @@ const drop = (event: DragEvent) => {
 const dragover = event => {
   event.preventDefault(); // 调用event.preventDefault才能触发drop事件
 };
-// emitter.on('add-component', dragComponent);
-// emitter.on('end-add-component', dragEnd);
-const submitForm = () => {};
-const resetForm = () => {};
 
-//拖拽开始的事件
-const onStart = args => {
-  console.log('开始拖拽', args);
+const submitForm = () => {
+  alert(JSON.stringify(formValue.value, null, 2));
 };
-
-//拖拽结束的事件
-const onEnd = args => {
-  console.log('结束拖拽', args);
+const resetForm = () => {
+  Object.keys(formValue.value).forEach(key => {
+    formValue.value[key] = null;
+  });
 };
 </script>
 <style lang="less" scoped>
@@ -174,7 +142,6 @@ const onEnd = args => {
   overflow: auto;
   flex: 1;
 }
-.item:hover,
 :deep(.el-form-item__label) {
   cursor: move;
 }

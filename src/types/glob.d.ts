@@ -31,7 +31,7 @@ type _BaseComp = Partial<GridItem> & {
   component: `free-${string}` | 'page'; //对应组件名称，一定要和注册的全局组件对应上
   model: string; // 组件绑定的key，唯一
   mode?: 'edit' | 'show'; // 模式(编辑/展示)
-  value?: string; // 指向可以更新当前组件值的路径, options.textDetail
+  valuePath?: string; // 指向可以更新当前组件值的路径, options.textDetail
   options?: AnyObj; // 组件配置(可以自定义选项名，同步到group中即可)
   actions: Action[]; // 动作配置
   style: StyleValue; // 样式配置
