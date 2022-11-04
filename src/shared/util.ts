@@ -1,6 +1,5 @@
 import store from 'storejs';
 import { useLowcodeStore } from '@/store/lowcode';
-import { throttle } from 'lodash';
 const lowcode = useLowcodeStore();
 export const emptyObj = Object.create({});
 
@@ -87,11 +86,6 @@ export function once(fn: Function): Function {
 }
 
 export const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time));
-
-export const slow = (fn, time = 50) => {
-  const _debounce = throttle(fn, time);
-  return _debounce;
-};
 
 // 获取当前组件的最新id
 export function generateKey(type: string) {

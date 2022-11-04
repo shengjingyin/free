@@ -15,7 +15,7 @@
     <div class="node-list">
       <template v-if="element.options?.dataBind || true">
         <!-- 展示绑定的数据值 -->
-        <span class="bind-model">{{ element?.model }}</span>
+        <span class="bind-model">{{ `${element?.model}` }}</span>
       </template>
       <template v-if="isSelectCur">
         <el-icon class="copy tool" title="复制" :size="16" @click.stop="copyComp">

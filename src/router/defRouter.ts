@@ -2,6 +2,24 @@
 import type { Route } from './type';
 import { addUniqueId } from '@/shared/lodash';
 
+// 自动注册page/test/下所有的测试页面
+const pages = import.meta.glob('../page/test/**/index.vue'); // 异步方式
+console.log('🚀 ~ file: defRouter.ts ~ line 71 ~ pages', pages);
+const setupTestPage = () => {
+  // 读取当前文件目录、遍历
+  const route = [] as Route[];
+  for (const [path, value] of Object.entries(pages)) {
+    const match = path.match(/.*\/(.*)\/index.vue$/);
+    if (match && match[1]) {
+      const path = `${match[1]}`; // 命名规则 文件夹名称
+      route.push({
+        path,
+        component: value,
+      });
+    }
+  }
+  return route;
+};
 // 基础路由信息
 const arr: Route[] = [
   {
@@ -30,23 +48,25 @@ const arr: Route[] = [
     },
     component: () => import('@/App.vue'),
     redirect: '/test/draggable/:type',
-    children: [
-      {
-        path: 'draggable/:type',
-        // component: DraggablePage,
-        component: () => import('@/page/test/draggable/index.vue'),
-      },
-      {
-        path: 'vue-gird-layout/:type',
-        component: () => import('@/page/test/vue-gird-layout/index.vue'),
-        // component: VueGridLayoutPage,
-      },
-      {
-        path: 'drag',
-        component: () => import('@/page/test/drag/index.vue'),
-        // component: VueGridLayoutPage,
-      },
-    ],
+    children: setupTestPage(),
+    // children: [
+    //   {
+    //     path: 'draggable/:type',
+    //     component: () => import('@/page/test/draggable/index.vue'),
+    //   },
+    //   {
+    //     path: 'vue-gird-layout/:type',
+    //     component: () => import('@/page/test/vue-gird-layout/index.vue'),
+    //   },
+    //   {
+    //     path: 'drag',
+    //     component: () => import('@/page/test/drag/index.vue'),
+    //   },
+    //   {
+    //     path: 'report',
+    //     component: () => import('@/page/test/report/index.vue'),
+    //   },
+    // ],
   },
   {
     path: '/login',

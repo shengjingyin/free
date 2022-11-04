@@ -43,8 +43,7 @@ import { generateKey, saveIdMap } from '@/shared/util';
 import emitter from '@/plugin/mitt';
 import { storeToRefs } from 'pinia';
 import { saveTreeData } from '@/shared/app';
-import { debounce } from 'lodash';
-import { slow } from '@/shared/util';
+import { debounce, throttle } from 'lodash';
 provide('inForm', false); // 表单元素标识符，当包含form时，此值由form置为true
 const props = defineProps({
   layoutData: {
@@ -123,7 +122,7 @@ const mouseInGrid = () => {
   );
 };
 let _element;
-const log = slow(() => {
+const log = throttle(() => {
   console.log(
     `布局属性 容器：${props.parent.i} 当前选中：${selectId.value}----` +
       JSON.stringify(layout.value)
