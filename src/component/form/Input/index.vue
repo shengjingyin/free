@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch, inject } from 'vue';
+import { computed, ref, watch } from 'vue';
 import BaseComp from './Input.vue';
-const inForm = inject('inForm');
+import emitter from '@/plugin/mitt';
 const props = defineProps({
   element: {
     type: Object,
@@ -21,6 +21,12 @@ watch(value, newVal => {
   if (props.element.inForm) {
     emit('update:modelValue', newVal);
   }
+});
+// 监听动作：change、blur
+
+// 监听事件：清空
+emitter.on(props.element.model + 'clear', () => {
+  value.value = '';
 });
 
 defineExpose({

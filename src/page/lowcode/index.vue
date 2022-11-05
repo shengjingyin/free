@@ -7,7 +7,11 @@
       </el-button>
     </el-col>
     <el-col :span="17">
-      <DashBoard :layout-data="layout" :parent="data" class="base-dashboard scrollbar"></DashBoard>
+      <DashBoard
+        v-model:layout-data="layout"
+        :parent="data"
+        class="base-dashboard scrollbar"
+      ></DashBoard>
     </el-col>
     <el-col :span="4"><ConfigurationCenter></ConfigurationCenter></el-col>
   </el-row>
@@ -15,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, provide } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import { storeToRefs } from 'pinia';
 import LeftCompList from './edit/left-comp-list.vue';
@@ -24,7 +28,20 @@ import ConfigurationCenter from './edit/configuration-center.vue';
 import Debugger from '@/business-component/debugger/index.vue';
 const { data } = storeToRefs(useLowcodeStore());
 
-const layout = computed<Comp[]>(() => data.value.children);
+const layout = computed<Comp[]>({
+  get() {
+    return data.value.children;
+  },
+  set(val) {
+    data.value.children = val;
+  },
+});
+// 修改当前元素值
+const updateItem = (element, { key, value }) => {
+  // 根据element 在layout中查找
+  element[key] = value;
+};
+provide('updateItem', updateItem);
 const loading = ref(true);
 onMounted(() => {
   loading.value = false;

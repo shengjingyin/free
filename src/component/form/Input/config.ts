@@ -33,7 +33,7 @@ const property = [
   {
     label: '基本信息',
     group: '',
-    popover: '确保唯一',
+    popover: '提示语',
     children: [
       { label: '绑定字段', key: 'model', component: 'input' },
       { label: 'label', key: 'label', component: 'input' },
@@ -123,13 +123,11 @@ const style = [];
 const action = {
   // 触发条件
   triggerCondition: [
-    { label: '点击', value: 'click' },
-    { label: '等待触发', value: 'await' },
+    { label: '数值变化', value: 'change' },
+    { label: '失去焦点', value: 'blur' },
   ],
   // 动作类型
   type: [
-    { label: '下载', value: 'download' },
-    { label: '跳转', value: 'skip' },
     { label: '触发事件', value: 'event' },
     { label: '触发动作', value: 'action' },
     { label: '发送请求', value: 'request' },
@@ -137,9 +135,7 @@ const action = {
   ],
   // 默认监听事件
   eventList: [
-    // { value: 'show', label: '显示' },
-    // { value: 'hide', label: '隐藏' },
-    { value: 'disabled', label: '禁用' },
+    { value: 'clear', label: '清空' },
     { value: 'cancelDisabled', label: '取消禁用' },
   ],
 };

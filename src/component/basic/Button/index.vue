@@ -25,7 +25,7 @@ const lowcode = useLowcodeStore();
 
 const options = computed(() => props.element.options);
 
-// 按钮中触发时机只有点击、双击、等待
+// 按钮中触发时机只有点击、双击、等待，按钮默认事件
 emitter.on(props.element.model + 'disabled', () => {
   buttonRef.value.disabled = true;
 });

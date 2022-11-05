@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick, provide, watch, PropType } from 'vue';
+import { ref, computed, onMounted, nextTick, watch, PropType } from 'vue';
 import { useLowcodeStore } from '@/store/lowcode';
 import CompWrap from './comp-wrap.vue';
 import { generateKey, saveIdMap } from '@/shared/util';
@@ -44,7 +44,7 @@ import emitter from '@/plugin/mitt';
 import { storeToRefs } from 'pinia';
 import { saveTreeData } from '@/shared/app';
 import { debounce, throttle } from 'lodash';
-provide('inForm', false); // 表单元素标识符，当包含form时，此值由form置为true
+const emit = defineEmits(['update:layout-data']);
 const props = defineProps({
   layoutData: {
     type: Array as PropType<Comp[]>,
@@ -56,7 +56,7 @@ const props = defineProps({
   },
 });
 const { SET_CUR_SELECT } = useLowcodeStore();
-const { data, idMap, selectId } = storeToRefs(useLowcodeStore());
+const { data, idMap, selectId, select } = storeToRefs(useLowcodeStore());
 // 设置当前选中组件为页面
 const handleSelectPage = () => {
   SET_CUR_SELECT('0');
@@ -74,7 +74,9 @@ const layout = computed<Comp[]>({
   get() {
     return props.layoutData;
   },
-  set() {},
+  set(val) {
+    emit('update:layout-data', val);
+  },
 });
 
 // 保存所有更新数据
@@ -125,7 +127,7 @@ let _element;
 const log = throttle(() => {
   console.log(
     `布局属性 容器：${props.parent.i} 当前选中：${selectId.value}----` +
-      JSON.stringify(layout.value)
+      JSON.stringify(layout.value, null, 2)
   );
 }, 200);
 const computedPosition = index => {
@@ -134,9 +136,14 @@ const computedPosition = index => {
   return new_pos;
 };
 const dragComponent = async element => {
+  // 如果当前选中的组件不是容器组件，那么重置当前选中为page
+  if (!select.value.hasOwnProperty('children')) {
+    SET_CUR_SELECT('0');
+  }
   const _mouseInGrid = mouseInGrid();
   _element = genElementInfo(element);
   // 判断添加进来的组件是不是已经在列表中
+  // 查找元素需要支持嵌套关系【对于每一层的布局来说，只是一个一维数组】
   let index = layout.value.findIndex(item => item.i === _element.i);
   if (_mouseInGrid) {
     if (index === -1) {
@@ -145,16 +152,13 @@ const dragComponent = async element => {
       // 目标元素已经存在与布局中，变化坐标
       await nextTick();
       try {
-        log();
         // 根据坐标 计算 位置
         let new_pos = computedPosition(index);
-        if (_mouseInGrid) {
-          /* (eventName, id, x, y, h, w) */
-          layoutRef.value.dragEvent('dragstart', _element.i, new_pos.x, new_pos.y, 1, 1);
-          DragPos.i = _element.i;
-          DragPos.x = layout.value[index].x as number;
-          DragPos.y = layout.value[index].y as number;
-        }
+        /* (eventName, id, x, y, h, w) */
+        layoutRef.value.dragEvent('dragstart', _element.i, new_pos.x, new_pos.y, 1, 1);
+        DragPos.i = _element.i;
+        DragPos.x = layout.value[index].x as number;
+        DragPos.y = layout.value[index].y as number;
       } catch {}
     }
   }
@@ -171,7 +175,8 @@ const dragEnd = () => {
       saveIdMap(_element.component, key);
     } else {
       // 去除 当前添加的元素
-      layout.value = layout.value.filter(obj => obj.i !== _element.i);
+      layout.value = layout.value.filter(obj => obj.i != _element.i);
+      // layout.value = [];
     }
   } catch {}
 };
