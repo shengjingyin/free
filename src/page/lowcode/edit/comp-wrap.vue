@@ -8,7 +8,7 @@
       :element="element"
       v-model:modelValue="value"
     ></component>
-    <!-- 在正常布局中 -->
+    <!-- 在正常布局中6 -->
     <component v-else :is="element.component" :element="element"></component>
 
     <!-- 移动 -->
