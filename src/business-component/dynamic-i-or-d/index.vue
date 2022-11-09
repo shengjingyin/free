@@ -12,14 +12,18 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { cloneDeep } from 'lodash';
-const props = defineProps({
-  list: {
-    type: Array as PropType<unknown[]> | null,
-    required: true,
-  },
-});
+// const props = defineProps({
+//   list: {
+//     type: Array as PropType<unknown[]> | null,
+//     required: true,
+//   },
+// });
+// 类型标注
+const props = defineProps<{
+  list: unknown[] | null;
+}>();
 const emit = defineEmits(['update:list']);
 const item = ref(props.list ? props.list[0] : null);
 const formList = computed({

@@ -44,7 +44,9 @@ import emitter from '@/plugin/mitt';
 import { storeToRefs } from 'pinia';
 import { saveTreeData } from '@/shared/app';
 import { debounce, throttle } from 'lodash';
+import { useMouse } from '@/composables/mouse';
 const emit = defineEmits(['update:layout-data']);
+const { x, y } = useMouse();
 const props = defineProps({
   layoutData: {
     type: Array as PropType<Comp[]>,
@@ -91,31 +93,24 @@ watch(
   },
   { deep: true }
 );
-const mouseXY: Point = { x: 0, y: 0 };
 let DragPos: GridItem = { x: 0, y: 0, w: 1, h: 1, i: '' };
 const layoutRef = ref();
 const gridItemRef = ref();
 let parentRect: DOMRect;
 
-// 更新鼠标位置
-const updateMousePoint = function (e) {
-  mouseXY.x = e.clientX;
-  mouseXY.y = e.clientY;
-};
 onMounted(() => {
   emitter.on('add-component', dragComponent);
   emitter.on('end-add-component', dragEnd);
-  document.addEventListener('dragover', updateMousePoint, false);
 });
 const dashBoardRef = ref<HTMLElement>();
 const mouseInGrid = () => {
   if (!dashBoardRef.value) return false;
   parentRect = dashBoardRef.value.getBoundingClientRect();
   return (
-    mouseXY.x > parentRect.left &&
-    mouseXY.x < parentRect.right &&
-    mouseXY.y > parentRect.top &&
-    mouseXY.y < parentRect.bottom &&
+    x.value > parentRect.left &&
+    x.value < parentRect.right &&
+    y.value > parentRect.top &&
+    y.value < parentRect.bottom &&
     // 除了满足在仪表盘内，还需要满足不在嵌套外面，如果我想去嵌套A内，经过全局时，需要在进入嵌套A内，把全局内的元素删除掉
     // 如果在内层任意嵌套内，发现了当前元素，那么要删除外层该元素
     // 通过选中容器与当前容器id做对比，看看哪个容器可以添加元素，有children属性的是容器
@@ -132,7 +127,7 @@ const log = throttle(() => {
 }, 200);
 const computedPosition = index => {
   const newGrid = gridItemRef.value[index];
-  const new_pos = newGrid.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
+  const new_pos = newGrid.calcXY(y.value - parentRect.top, x.value - parentRect.left);
   return new_pos;
 };
 const dragComponent = async element => {
