@@ -109,10 +109,10 @@ const deleteComp = () => {
 
 .drag-able {
   position: absolute;
-  left: -5px;
-  right: -5px;
-  top: -5px;
-  bottom: -25px;
+  left: -10px;
+  right: -10px;
+  top: -10px;
+  bottom: -35px;
   z-index: -1;
   cursor: move;
   &:hover {

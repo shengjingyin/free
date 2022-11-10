@@ -55,7 +55,8 @@ const openDebugger = () => {
 @debugger-height: 600px;
 .base-dashboard {
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .debugger-title {
   width: 100%;
