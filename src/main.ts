@@ -3,6 +3,7 @@ import './styles/lowcode.less';
 import { createApp } from 'vue';
 import App from './App.vue';
 // import router, { setupRouter } from './router';
+console.log('1111111111111', 1111111111111);
 
 import { createPinia } from 'pinia';
 
