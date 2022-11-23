@@ -24,17 +24,15 @@ echo "=================== clear success ========================="
 
 @REM 部署本地 nginx
 copy %build_path%\index.html %build_path%\404.html
-
+cd %build_path%
 echo > .nojekyll
+
 xcopy /e/y %build_path% %deploy_path%
 
 echo "=================== nginx deploy success ========================="
 
 @REM 部署远程github-page
-cd %build_path%
 call git init
-call git config user.name "shengjingyin"
-call git config user.email "739178270@qq.com"
 call git checkout -B main
 call git add -A
 call git commit -m 'deploy'
