@@ -43,6 +43,7 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { uniqueId } from 'lodash';
+import { BASE } from '@/shared/constants';
 const router = useRouter();
 const { SAVE_USER_INFO } = useUserStore();
 const user = reactive({
@@ -53,7 +54,7 @@ const mode = ref<'login' | 'signIn'>('login');
 const signIn = () => {
   const token = uniqueId();
   SAVE_USER_INFO(token);
-  router.push('/lowcode');
+  router.push(`${BASE}lowcode`);
 };
 const signUp = () => {
   mode.value = 'login';

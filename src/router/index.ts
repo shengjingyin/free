@@ -8,26 +8,11 @@ import { Window } from '@/types/dom';
 import { Nprogress } from '@/plugin/nprogress/index';
 import { defRoutes } from './defRouter';
 import { setupBeforeGuard } from './guard/before';
-import { filterByKVN } from '@/shared/arr';
 
 const router = createRouter({
   history: createWebHistory(), // history 与 hash 区别
   routes: defRoutes,
 });
-
-// 默认tab 展示
-export const defaultTabFix: () => Route[] = () => {
-  return filterByKVN(store.state.app.menuList, { key: 'tabFix', value: true });
-};
-
-const setupBeforeStore = (to: any) => {
-  // 更新当前路由信息
-  // store.commit('app/updateAppRouter', { current: to });
-  // // 添加当前
-  // store.commit('app/ADD_PROCESS_LIST', to);
-  // // 更新当前路由信息
-  // store.commit('app/UPDATE_CUR_ROUTE', { ...to });
-};
 
 // 路由守卫，跳转前
 router.beforeEach((to, from, next) => {

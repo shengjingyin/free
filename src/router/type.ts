@@ -1,4 +1,3 @@
-import type { RouteRecordRaw } from 'vue-router';
 export interface Route {
   path: string;
   name?: string;

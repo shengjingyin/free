@@ -5,6 +5,7 @@ import { RouteLocationNormalized } from 'vue-router';
 
 // import { setAsyncRouter } from '../asyncRouter';
 import { routeConfig } from '@/config';
+import { BASE } from '@/shared/constants';
 
 const { whiteList } = routeConfig;
 
@@ -29,7 +30,7 @@ const guard = async (
     if (whiteList.includes(to.path)) {
       next();
     } else {
-      next('/login');
+      next(`${BASE}login`);
     }
   }
 };
