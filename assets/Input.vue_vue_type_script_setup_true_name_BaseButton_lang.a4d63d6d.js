@@ -1,0 +1,1 @@
+import{d as a,r as e,a as p,o as c,c as l,m as u}from"./index.30778686.js";const d=a({__name:"Input",props:{options:{type:Object,required:!0}},setup(o,{expose:n}){const t=e(!1),s=e(!1);return n({disabled:t,loading:s}),(i,_)=>{const r=p("el-input");return c(),l(r,u({placeholder:"\u8BF7\u8F93\u5165"},o.options),null,16)}}});export{d as _};

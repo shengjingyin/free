@@ -1,0 +1,1 @@
+import{d as o,a as c,o as t,c as n}from"./index.30778686.js";const _=o({__name:"index",setup(s){return(r,a)=>{const e=c("el-switch");return t(),n(e,{style:{"--el-switch-on-color":"#13ce66","--el-switch-off-color":"#ff4949"}})}}});export{_ as default};

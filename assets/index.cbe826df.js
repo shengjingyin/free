@@ -1,0 +1,1 @@
+import{d as l,o,B as r}from"./index.30778686.js";const u=l({__name:"index",setup(a){for(let e=0;e<143;e++){let n=e+1,t=5-String(n).length;for(;t>0;)--t,n=`0${n}`}return(e,n)=>(o(),r("div",null," \u6D4B\u8BD5\u6587\u672C "))}});export{u as default};

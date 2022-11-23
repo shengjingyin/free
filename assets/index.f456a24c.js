@@ -1,0 +1,1 @@
+import{d as s,o as r,B as a,u as t}from"./index.30778686.js";import{_ as p}from"./_plugin-vue_export-helper.cdc0426e.js";const d=s({__name:"index",setup(u){const o=void 0;function c(_,e,n){}return(_,e)=>(r(),a("div",{onMousemove:e[0]||(e[0]=(...n)=>t(o)&&t(o)(...n))},null,32))}});const l=p(d,[["__scopeId","data-v-584b5050"]]);export{l as default};
