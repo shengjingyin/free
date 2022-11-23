@@ -1,8 +1,9 @@
 @echo off
 set deploy_path="D:\dev-tool\nginx-1.16.1\html\lowcode"
 set build_path=".\dist"
-set item_path=pwd
-
+set item_path=%cd%
+echo %item_path%
+pause
 call pnpm install
 
 echo "===================1¡¢install success========================="
@@ -26,6 +27,7 @@ xcopy /e/y %build_path% %deploy_path%
 echo "===================4¡¢nginx deploy success========================="
 
 @REM ²¿ÊðÔ¶³Ìgithub-page
+cd %build_path%
 call git init
 call git checkout -B main
 call git add -A
@@ -33,6 +35,6 @@ call git commit -m 'deploy'
 
 call git push -f git@github.com:shengjingyin/free.git main:gh-pages
 echo "===================5¡¢github deploy success========================="
-
+cd ../
 rd /s/q  %build_path%
 
