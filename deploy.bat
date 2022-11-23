@@ -1,22 +1,26 @@
 @echo off
+@REM 本地发布目录
 set deploy_path="D:\dev-tool\nginx-1.16.1\html\lowcode"
+@REM 打包目录
 set build_path=".\dist"
+@REM 项目绝对路径
 set item_path=%cd%
-echo %item_path%
-pause
+
+echo "=================== start ========================="
+
 call pnpm install
 
-echo "===================1、install success========================="
+echo "=================== install success ========================="
 
 call pnpm build
 
-echo "===================2、build success========================="
+echo "=================== build success ========================="
 
 rd /s/q  %deploy_path%
 
 md %deploy_path%
 
-echo "===================3、clear success========================="
+echo "=================== clear success ========================="
 
 @REM 部署本地 nginx
 copy %build_path%\index.html %build_path%\404.html
@@ -24,7 +28,7 @@ copy %build_path%\index.html %build_path%\404.html
 echo > .nojekyll
 xcopy /e/y %build_path% %deploy_path%
 
-echo "===================4、nginx deploy success========================="
+echo "=================== nginx deploy success ========================="
 
 @REM 部署远程github-page
 cd %build_path%
@@ -34,7 +38,8 @@ call git add -A
 call git commit -m 'deploy'
 
 call git push -f git@github.com:shengjingyin/free.git main:gh-pages
-echo "===================5、github deploy success========================="
-cd ../
+echo "=================== github deploy success ========================="
+cd %item_path%
 rd /s/q  %build_path%
 
+echo "=================== end ========================="
