@@ -33,11 +33,11 @@ echo "=================== nginx deploy success ========================="
 @REM ²¿ÊðÔ¶³Ìgithub-page
 cd %build_path%
 call git init
+call git config user.name "shengjingyin"
+call git config user.email "739178270@qq.com"
 call git checkout -B main
 call git add -A
 call git commit -m 'deploy'
-call git config user.name "shengjingyin"
-call git config user.email "739178270@qq.com"
 
 call git push -f git@github.com:shengjingyin/free.git main:gh-pages
 echo "=================== github deploy success ========================="
