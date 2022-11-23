@@ -1,23 +1,38 @@
 @echo off
 set deploy_path="D:\dev-tool\nginx-1.16.1\html\lowcode"
+set build_path=".\dist"
+set item_path=pwd
 
 call pnpm install
 
-echo "===================1、安装依赖完成========================="
+echo "===================1、install success========================="
 
 call pnpm build
 
-echo "===================2、打包完成========================="
+echo "===================2、build success========================="
 
 rd /s/q  %deploy_path%
 
 md %deploy_path%
 
-echo "===================3、删除旧的部署包完成========================="
+echo "===================3、clear success========================="
 
-xcopy /e/y .\dist %deploy_path%
+@REM 部署本地 nginx
+copy %build_path%\index.html %build_path%\404.html
 
-echo "===================4、部署完成========================="
+echo > .nojekyll
+xcopy /e/y %build_path% %deploy_path%
 
-rd /s/q  .\dist
+echo "===================4、nginx deploy success========================="
+
+@REM 部署远程github-page
+call git init
+call git checkout -B main
+call git add -A
+call git commit -m 'deploy'
+
+call git push -f git@github.com:shengjingyin/free.git main:gh-pages
+echo "===================5、github deploy success========================="
+
+rd /s/q  %build_path%
 
